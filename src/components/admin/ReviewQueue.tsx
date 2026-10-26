@@ -2,14 +2,16 @@ import { DefaultTemplate } from "@payloadcms/next/templates";
 import { Gutter } from "@payloadcms/ui";
 import { redirect } from "next/navigation";
 import type { AdminViewServerProps } from "payload";
-import { REQUIRED_PHOTO_SLOTS } from "@/domain/options";
+import { optionLabel } from "@/domain/labels";
+import { cardStatusOptions, REQUIRED_PHOTO_SLOTS } from "@/domain/options";
 import type { Photo, Species } from "@/payload-types";
-import { FetchPhotosButton } from "./FetchPhotosButton";
 import { PhotoReviewGrid } from "./PhotoReviewGrid";
+import { QueueButton } from "./QueueButton";
 
 /**
- * The review queue (product spec §7.5): photo candidates grouped by species.
- * Cards waiting for review are added in milestone 6.
+ * The review queue (product spec §7.5): cards waiting for review, oldest
+ * first, then photo candidates grouped by species, then every species with
+ * its photo coverage and actions.
  */
 export async function ReviewQueue({
   initPageResult,
@@ -40,6 +42,11 @@ export async function ReviewQueue({
   ]);
 
   const byspecies = groupPhotos(photos.docs);
+  // AI drafts wait for a read-through; approved cards wait to be published.
+  const cardsWaiting = species.docs
+    .filter((item) => item.status === "aiDraft" && hasDraftContent(item))
+    .concat(species.docs.filter((item) => item.status === "approved"))
+    .sort((a, b) => a.updatedAt.localeCompare(b.updatedAt));
   const withCandidates = species.docs.filter(
     (item) => (byspecies.get(item.id)?.candidates.length ?? 0) > 0,
   );
@@ -62,6 +69,23 @@ export async function ReviewQueue({
           et foto og tryk 1 til 5 for en plads (1 hele træet, 2 blad, 3 bark, 4
           vinterkvist, 5 skåret ved) eller X for at afvise.
         </p>
+
+        <h2>Kort til gennemgang</h2>
+        {cardsWaiting.length === 0 ? (
+          <p>Ingen kort venter.</p>
+        ) : (
+          <ul>
+            {cardsWaiting.map((item) => (
+              <li key={item.id}>
+                <a href={`/admin/collections/species/${item.id}`}>
+                  {item.name}
+                </a>{" "}
+                ({optionLabel(cardStatusOptions, item.status, "da")}, opdateret{" "}
+                {new Date(item.updatedAt).toLocaleDateString("da-DK")})
+              </li>
+            ))}
+          </ul>
+        )}
 
         <h2>Fotokandidater</h2>
         {withCandidates.length === 0 ? (
@@ -109,13 +133,19 @@ export async function ReviewQueue({
                       {item.name}
                     </a>
                   </td>
-                  <td style={cell}>{item.status}</td>
+                  <td style={cell}>
+                    {optionLabel(cardStatusOptions, item.status, "da")}
+                  </td>
                   <td style={cell}>
                     {filled.length} / {REQUIRED_PHOTO_SLOTS.length}
                   </td>
                   <td style={cell}>{group?.candidates.length ?? 0}</td>
-                  <td style={cell}>
-                    <FetchPhotosButton speciesId={item.id} />
+                  <td style={{ ...cell, display: "flex", gap: "0.5rem" }}>
+                    <QueueButton speciesId={item.id} action="fetch-photos" />
+                    {item.status === "aiDraft" ||
+                    item.status === "needsChanges" ? (
+                      <QueueButton speciesId={item.id} action="draft-card" />
+                    ) : null}
                   </td>
                 </tr>
               );
@@ -168,5 +198,12 @@ function SlotCoverage({ selected }: { selected: Photo[] }) {
       ).join(" · ")}
       {filled.has("cutWood") ? " · ✓ cutWood" : ""}
     </p>
+  );
+}
+
+/** An AI draft counts as waiting only once the drafting job has written something. */
+function hasDraftContent(species: Species) {
+  return Boolean(
+    species.greenCarving || species.foodSafety || species.sources?.length,
   );
 }

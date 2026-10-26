@@ -52,21 +52,21 @@ Danish lives at the root, English under `/en` with translated paths. English sta
 
 Every species card has the same fields, in this order. "Localized" means translated per language.
 
-| Field                             | Type                                                                       | Notes                                     |
-| --------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------- |
-| Names                             | Latin name + local names (da, sv, nb, de, nl, en)                          | Not localized. All names are searchable.  |
-| Warning species                   | Yes/no + a short reason (localized)                                        | Shows a red banner at the top of the card |
-| Carving green                     | Easy / medium / hard                                                       | Shown as a badge                          |
-| Hardness when dry                 | Soft / medium / hard + Janka value in N when known                         | Badge plus the number                     |
-| Grain and texture                 | Rich text, localized                                                       |                                           |
-| Colour and smell when freshly cut | Rich text, localized                                                       | Useful for identifying cut wood           |
-| Good for                          | Tags (spoons, bowls, kuksa, figures, handles, spatulas, boxes) + rich text | Tags drive the filter on the species list |
-| Riving and splitting              | Rich text, localized                                                       |                                           |
-| Drying                            | Rich text, localized                                                       |                                           |
-| Food safety and toxicity          | Rich text, localized + a "checked against a source" tick                   | Always shown with the disclaimer          |
-| Identification features           | Leaf, bark, winter twig and bud, overall shape, cut wood (rich text each)  | Shown next to the matching photo slot     |
-| Often confused with               | Links to other species                                                     | Shown as cards with a thumbnail           |
-| Sources                           | List of title, URL and the field it supports                               | Hidden behind a "Kilder" (Sources) button |
+| Field                             | Type                                                                       | Notes                                       |
+| --------------------------------- | -------------------------------------------------------------------------- | ------------------------------------------- |
+| Names                             | Latin name + local names (da, sv, nb, de, nl, en)                          | Not localized. All names are searchable.    |
+| Warning species                   | Yes/no + a short reason (localized)                                        | Shows a red banner at the top of the card   |
+| Carving green                     | Easy / medium / hard                                                       | A row in the card's key, with a 3-step mark |
+| Hardness when dry                 | Soft / medium / hard + Janka value in N when known                         | Key row plus the number                     |
+| Grain and texture                 | Rich text, localized                                                       |                                             |
+| Colour and smell when freshly cut | Rich text, localized                                                       | Useful for identifying cut wood             |
+| Good for                          | Tags (spoons, bowls, kuksa, figures, handles, spatulas, boxes) + rich text | Tags drive the filter on the species list   |
+| Riving and splitting              | Rich text, localized                                                       |                                             |
+| Drying                            | Rich text, localized                                                       |                                             |
+| Food safety and toxicity          | Rich text, localized + a "checked against a source" tick                   | Always shown with the disclaimer            |
+| Identification features           | Leaf, bark, winter twig and bud, overall shape, cut wood (rich text each)  | Shown next to the matching photo slot       |
+| Often confused with               | Links to other species                                                     | Shown as cards with a thumbnail             |
+| Sources                           | List of title, URL and the field it supports                               | Hidden behind a "Kilder" (Sources) button   |
 
 **Disclaimer (draft wording, to be finalized):**
 

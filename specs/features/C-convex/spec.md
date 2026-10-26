@@ -14,7 +14,7 @@ The public site must keep working exactly as it does now while the backend under
 1. **C1, foundation:** the Convex schema from `architecture.md` §3, public read queries, the seed from `specs/species.md` and Convex tests. Payload stays in place.
 2. **C2, public site:** every public page reads from Convex instead of Payload, with photos served from Convex file storage. The end-to-end tests run against a Convex backend.
 3. **C3, admin and jobs:** an admin under `/admin` with a species list and editor, the review queue (photos and drafts), the two page editors, and the photo and drafting jobs as Convex actions. Admin functions require the `admin` role. Clerk is wired in, with a placeholder login until the Clerk instance exists (`architecture.md` §6).
-4. **C4, removal:** Payload, Postgres, the migrations, docker compose, the S3 settings and the Vercel cron are removed. `.env.example`, the README, AGENTS.md and CI only describe Convex and Clerk.
+4. **C4, removal:** Payload, Postgres, the migrations, docker compose, the S3 settings and the Vercel cron are removed. `.env.example`, the README, AGENTS.md and CI only describe Convex and the admin login. C3 and C4 ship in one PR, because the new admin takes over `/admin` from Payload.
 5. Business rules keep their existing unit tests: publish rules, one selected photo per slot, the license filter, search and the filter key.
 
 ## Acceptance criteria
@@ -22,11 +22,11 @@ The public site must keep working exactly as it does now while the backend under
 - [x] The schema matches `architecture.md` §3, and `convex dev` deploys it.
 - [x] Visitors can read only published species, their selected photos and the pages (Convex test).
 - [x] The seed creates all 40 species and runs twice without duplicating anything (Convex test).
-- [ ] Publishing a card that breaks a publish rule throws (Convex test).
-- [ ] Selecting a photo demotes the previously selected photo in that slot (Convex test).
-- [ ] Every admin function refuses a caller without the `admin` role (Convex test).
-- [ ] The public end-to-end tests pass against Convex.
-- [ ] No Payload, Postgres or Supabase dependency, file or environment variable is left (C4).
+- [x] Publishing a card that breaks a publish rule throws (Convex test).
+- [x] Selecting a photo demotes the previously selected photo in that slot (Convex test).
+- [x] Every admin function refuses a caller without the `admin` role or the interim secret (Convex test).
+- [x] The public end-to-end tests pass against Convex.
+- [x] No Payload, Postgres or Supabase dependency, file or environment variable is left (C4).
 
 ## Out of scope
 

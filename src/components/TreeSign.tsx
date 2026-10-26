@@ -89,14 +89,14 @@ export function TreeSign({
         <div
           className={`absolute inset-x-0 bottom-0 px-3 pt-2 pb-3 ${species.isWarning ? "bg-warning text-warning-ink" : "bg-plate text-plate-ink"}`}
         >
-          <p className="text-balance font-display text-sign font-extrabold">
-            {species.name}
+          <p className="text-balance font-display xs:text-sign text-small font-medium xs:font-extrabold">
+            {species.name} {species.isWarning && "(giftig)"}
           </p>
-          {species.isWarning ? (
+          {/* {species.isWarning ? (
             <p className="font-display text-sm font-bold uppercase tracking-wide">
-              {tHome("toxic")}
+              {tHome("toxic")}aaa
             </p>
-          ) : null}
+          ) : null} */}
           <ul className="mt-2 flex gap-1.5">
             {badges.map((badge) => (
               <li

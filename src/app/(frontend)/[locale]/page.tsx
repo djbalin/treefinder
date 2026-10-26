@@ -59,7 +59,7 @@ export default async function HomePage({ params, searchParams }: Props) {
 
       <section aria-labelledby="trees" className="space-y-2.5">
         <h2 id="trees" className="sr-only">
-          {t("treesLabel")}
+          {t("treesLabel")}aaa
         </h2>
         <BadgeLegend
           label={t("legendLabel")}

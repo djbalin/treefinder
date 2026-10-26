@@ -1,5 +1,4 @@
 import { type PhotoSlot, REQUIRED_PHOTO_SLOTS } from "./options";
-import { isRichTextEmpty } from "./richText";
 
 /** The Danish card fields that must be filled in before publishing. */
 export const REQUIRED_DANISH_FIELDS = [
@@ -16,10 +15,10 @@ export type PublishCandidate = {
   name?: string | null;
   greenCarving?: string | null;
   dryHardness?: string | null;
-  grainTexture?: unknown;
-  goodFor?: unknown;
-  drying?: unknown;
-  foodSafety?: unknown;
+  grainTexture?: string | null;
+  goodFor?: string | null;
+  drying?: string | null;
+  foodSafety?: string | null;
   foodSafetyChecked?: boolean | null;
   isWarning?: boolean | null;
   warningReason?: string | null;
@@ -33,11 +32,8 @@ export type PublishBlocker =
   | { rule: "missingFields"; fields: string[] }
   | { rule: "missingWarningReason" };
 
-function isFilled(value: unknown): boolean {
-  if (value == null) return false;
-  if (typeof value === "string") return value.trim().length > 0;
-  if (typeof value === "object") return !isRichTextEmpty(value);
-  return true;
+function isFilled(value: string | null | undefined): boolean {
+  return value != null && value.trim().length > 0;
 }
 
 /**

@@ -25,20 +25,6 @@ export default defineConfig({
           server: { deps: { inline: ["convex-test"] } },
         },
       },
-      {
-        extends: true,
-        test: {
-          name: "int",
-          // Payload Local API against a real Postgres (DATABASE_URL).
-          include: ["tests/int/**/*.int.test.ts"],
-          environment: "node",
-          setupFiles: ["./vitest.setup.ts"],
-          // Tests share one database.
-          fileParallelism: false,
-          testTimeout: 30_000,
-          hookTimeout: 60_000,
-        },
-      },
     ],
   },
 });

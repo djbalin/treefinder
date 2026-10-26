@@ -8,24 +8,25 @@ MVP in progress. See [`specs/roadmap.md`](specs/roadmap.md). The visual design i
 
 ## Running locally
 
-Requires Node 24, pnpm 10 and Postgres (via Docker, or a local install).
+Requires Node 24, pnpm 10 and a Convex account.
 
 ```sh
-cp .env.example .env
 pnpm install
-pnpm db:up          # Postgres in docker compose
-pnpm migrate        # apply database migrations
-pnpm dev            # http://localhost:3000, admin at /admin
+npx convex dev      # creates or picks your dev deployment, writes .env.local, keeps pushing functions
+pnpm seed           # the 40 species from specs/species.md and the static pages
+pnpm dev            # http://localhost:3000, admin at /admin (admin/admin in development)
 ```
 
-| Command                       | What it does                            |
-| ----------------------------- | --------------------------------------- |
-| `pnpm lint` / `pnpm format`   | Biome check / fix                       |
-| `pnpm typecheck`              | TypeScript                              |
-| `pnpm test:unit`              | Unit tests (no database)                |
-| `pnpm test:int`               | Integration tests against Postgres      |
-| `pnpm build && pnpm test:e2e` | Playwright against the production build |
-| `pnpm migrate:create <name>`  | New migration after a collection change |
+Set `ADMIN_SECRET` in `.env.local` and the same value in Convex (`npx convex env set ADMIN_SECRET ...`). Card drafting needs `ANTHROPIC_API_KEY` in Convex.
+
+| Command                       | What it does                                   |
+| ----------------------------- | ---------------------------------------------- |
+| `pnpm lint` / `pnpm format`   | Biome check / fix                              |
+| `pnpm typecheck`              | TypeScript                                     |
+| `pnpm test:unit`              | Unit tests                                     |
+| `pnpm test:convex`            | Convex function tests (convex-test, in memory) |
+| `pnpm build && pnpm test:e2e` | Playwright against the production build        |
+| `pnpm check:filter-key`       | Filter key acceptance check on the real data   |
 
 ## Specs
 
@@ -39,7 +40,7 @@ This project uses spec-driven development. Start with [`specs/README.md`](specs/
 
 ## Stack
 
-Next.js 16, Payload CMS 3, Supabase (Postgres and Storage), Vercel, next-intl, Tailwind CSS 4, Biome, Vitest, Playwright and GitHub Actions.
+Next.js 16, Convex (database, file storage, functions and jobs), Vercel, next-intl, Tailwind CSS 4, Biome, Vitest, Playwright and GitHub Actions. Admin sign-in moves to Clerk once its instance exists.
 
 ## Working on this repo
 

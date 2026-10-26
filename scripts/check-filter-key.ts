@@ -5,25 +5,19 @@
  *
  *   pnpm check:filter-key
  */
-import "dotenv/config";
-import config from "@payload-config";
-import { getPayload } from "payload";
 import { acceptanceViolations, TRAIT_ORDER } from "@/domain/filterKey";
+import type { FilterTrait } from "@/domain/options";
+import { convexRun } from "./convexRun";
 
 async function main() {
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "species",
-    where: { launchWave: { equals: "launch" } },
-    locale: "da",
-    depth: 0,
-    pagination: false,
-  });
+  const launch = convexRun<
+    { name: string; traits: Partial<Record<FilterTrait, string[]>> }[]
+  >("checks:launchTraits");
 
-  const species = docs.map((item) => ({
+  const species = launch.map((item) => ({
     name: item.name,
     traits: Object.fromEntries(
-      TRAIT_ORDER.map((trait) => [trait, item.filterTraits?.[trait] ?? []]),
+      TRAIT_ORDER.map((trait) => [trait, item.traits[trait] ?? []]),
     ),
   }));
   const violations = acceptanceViolations(species);

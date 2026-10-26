@@ -20,8 +20,7 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@convex/*": ["./convex/*"],
-      "@payload-config": ["./src/payload.config.ts"]
+      "@convex/*": ["./convex/*"]
     },
     "target": "ES2022"
   },

@@ -4,9 +4,8 @@ import {
   getPublishBlockers,
   type PublishCandidate,
 } from "@/domain/publishRules";
-import { richTextFromParagraphs } from "@/domain/richText";
 
-const text = richTextFromParagraphs(["Noget tekst."]);
+const text = "Noget tekst.";
 
 const complete: PublishCandidate = {
   name: "Småbladet lind",
@@ -57,7 +56,7 @@ describe("getPublishBlockers", () => {
     const blockers = getPublishBlockers(
       {
         ...complete,
-        drying: richTextFromParagraphs(["   "]),
+        drying: "   ",
         greenCarving: null,
       },
       REQUIRED_PHOTO_SLOTS,

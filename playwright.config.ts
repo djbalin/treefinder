@@ -7,6 +7,8 @@ const baseURL = `http://localhost:${port}`;
 export default defineConfig({
   testDir: "./tests/e2e",
   testMatch: "**/*.e2e.ts",
+  // Creates published fixture species, and removes them afterwards.
+  globalSetup: "./tests/e2e/fixtures.ts",
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 2 : 0,
   workers: 1,
@@ -31,6 +33,8 @@ export default defineConfig({
       name: "mobile",
       use: {
         ...devices["Pixel 7"],
+        // Narrowest supported width (product spec §4).
+        viewport: { width: 360, height: 780 },
         launchOptions: {
           executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH || undefined,
         },

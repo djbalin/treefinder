@@ -10,13 +10,13 @@ These rules override convenience. Changing one takes an explicit PR that edits t
 4. **Commercially safe media only.** Only CC0, CC-BY and CC-BY-SA images, each shown with author, license and source. Never NC or all-rights-reserved images.
 5. **Legality is the user's responsibility,** but the app explains the legal ways to get wood.
 6. **Danish first.** Danish is the default and required locale. Other languages are optional per field.
-7. **No accounts and no personal data in v1.** Analytics must be cookie-free.
+7. **No visitor accounts and no visitor data in v1.** Only the admin signs in. Analytics must be cookie-free.
 
 ## Engineering
 
 1. **Specs before code.** See `specs/README.md`.
 2. **One PR per feature,** with green CI. No direct commits to `main`.
 3. **Every acceptance criterion has a test.** Unit tests (Vitest) for logic, Playwright for user flows.
-4. **Content lives in Payload,** not in code. UI strings live in next-intl message files.
+4. **Content lives in Convex,** not in code. UI strings live in next-intl message files.
 5. **Secrets only in environment variables.** No debug output or stray artifacts on `main`.
 6. **Respect external APIs:** a descriptive User-Agent for Wikimedia, about 1 request per second for iNaturalist, and a spend limit on the Claude API key.

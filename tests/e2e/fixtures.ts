@@ -7,10 +7,16 @@ import { richTextFromParagraphs } from "@/domain/richText";
 /** Every fixture slug starts with this prefix so teardown can find it. */
 export const PREFIX = "e2e-";
 
+export const admin = {
+  email: "e2e-admin@example.com",
+  password: "e2e-admin-password",
+};
+
 export const fixtures = {
   lime: { slug: `${PREFIX}lind`, name: "E2E lind" },
   yew: { slug: `${PREFIX}taks`, name: "E2E taks" },
   draft: { slug: `${PREFIX}kladde`, name: "E2E kladde" },
+  candidateAttribution: "E2E kandidat",
 };
 
 const text = (value: string) => richTextFromParagraphs([value]);
@@ -93,6 +99,10 @@ async function createPublished(
 }
 
 async function removeFixtures(payload: Payload) {
+  await payload.delete({
+    collection: "users",
+    where: { email: { equals: admin.email } },
+  });
   const existing = await payload.find({
     collection: "species",
     where: { slug: { like: PREFIX } },
@@ -127,6 +137,20 @@ export default async function globalSetup() {
     collection: "species",
     id: lime.id,
     data: { lookAlikes: [yew.id] },
+  });
+
+  await payload.create({ collection: "users", data: admin });
+  await payload.create({
+    collection: "photos",
+    data: {
+      species: lime.id,
+      status: "candidate",
+      source: "commons",
+      license: "CC0-1.0",
+      author: "E2E",
+      attribution: fixtures.candidateAttribution,
+      remoteUrl: "https://example.com/kandidat.jpg",
+    },
   });
 
   await payload.create({

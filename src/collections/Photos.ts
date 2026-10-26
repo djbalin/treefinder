@@ -14,6 +14,10 @@ import {
   photoStatusOptions,
 } from "@/domain/options";
 import { photosToDemote, validatePhotoChange } from "@/domain/photoRules";
+import {
+  rejectPhotoEndpoint,
+  selectPhotoEndpoint,
+} from "@/endpoints/photoActions";
 
 /**
  * Reference photos. A candidate only holds a link and its license metadata;
@@ -35,6 +39,7 @@ export const Photos: CollectionConfig = {
     update: isAdmin,
     delete: isAdmin,
   },
+  endpoints: [selectPhotoEndpoint, rejectPhotoEndpoint],
   upload: {
     staticDir: "media",
     mimeTypes: ["image/*"],

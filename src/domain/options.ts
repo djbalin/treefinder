@@ -149,6 +149,9 @@ export const LICENSES = [
   "CC-BY-SA-2.5",
   "CC-BY-SA-3.0",
   "CC-BY-SA-4.0",
+  // iNaturalist reports licenses without a version.
+  "CC-BY",
+  "CC-BY-SA",
   "own",
 ] as const;
 export type License = (typeof LICENSES)[number];

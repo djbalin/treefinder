@@ -17,3 +17,7 @@ export const DELETE = REST_DELETE(config)
 export const PATCH = REST_PATCH(config)
 export const PUT = REST_PUT(config)
 export const OPTIONS = REST_OPTIONS(config)
+
+// Added for Treefinder: admin actions run background jobs after the response
+// (architecture spec §5). Re-add this line if Payload regenerates the file.
+export const maxDuration = 60

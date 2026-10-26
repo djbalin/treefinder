@@ -168,6 +168,7 @@ describe("buildDraftUpdate", () => {
     );
 
     expect(update.greenCarving).toBe("easy");
+    expect(update.grainTexture).toBe("Fin ved.");
     expect(update.dryHardness).toBeNull();
     expect(update.jankaN).toBe(2645);
     expect(update.colourSmell).toBeNull();

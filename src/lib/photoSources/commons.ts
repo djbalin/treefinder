@@ -1,5 +1,5 @@
-import { normalizeLicense, stripHtml } from "@/domain/licenses";
-import type { PhotoSlot } from "@/domain/options";
+import { normalizeLicense, stripHtml } from "../../domain/licenses";
+import type { PhotoSlot } from "../../domain/options";
 import { type Fetcher, type PhotoCandidate, USER_AGENT } from "./types";
 
 const API = "https://commons.wikimedia.org/w/api.php";

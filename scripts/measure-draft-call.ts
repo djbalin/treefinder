@@ -7,10 +7,13 @@
  * result can be compared with the API route's maxDuration.
  */
 import "dotenv/config";
-import config from "@payload-config";
-import { getPayload } from "payload";
-import { createDraftClient, draftSection } from "@/lib/drafting/claude";
+import {
+  createDraftClient,
+  draftSection,
+  type SpeciesToDraft,
+} from "@/lib/drafting/claude";
 import { DRAFT_SECTIONS, type DraftSection } from "@/lib/drafting/sections";
+import { convexRun } from "./convexRun";
 
 async function main() {
   const [slug = "smaabladet-lind", sectionArg = "carving"] =
@@ -18,14 +21,9 @@ async function main() {
   if (!DRAFT_SECTIONS.includes(sectionArg as DraftSection)) {
     throw new Error(`Section must be one of ${DRAFT_SECTIONS.join(", ")}`);
   }
-  const payload = await getPayload({ config });
-  const { docs } = await payload.find({
-    collection: "species",
-    where: { slug: { equals: slug } },
-    locale: "da",
-    limit: 1,
+  const species = convexRun<SpeciesToDraft | null>("checks:speciesBySlug", {
+    slug,
   });
-  const species = docs[0];
   if (!species) throw new Error(`No species with slug ${slug}`);
 
   const started = performance.now();

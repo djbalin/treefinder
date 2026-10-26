@@ -1,6 +1,6 @@
 # Treefinder: agent instructions
 
-Treefinder is a free web app (mobile first) for wood carvers. Each tree species gets a carving card plus reference photos and a filter key so users can identify the tree themselves. Content is reviewed by a single admin through a Payload CMS dashboard.
+Treefinder is a free web app (mobile first) for wood carvers. Each tree species gets a carving card plus reference photos and a filter key so users can identify the tree themselves. Content is reviewed by a single admin in the app's own admin under `/admin`, backed by Convex.
 
 ## Spec-driven development
 
@@ -30,14 +30,14 @@ The visual direction is set with the impeccable design skill, one page at a time
 
 ## Local setup
 
-- Node 24 and pnpm 10. Postgres from `pnpm db:up` (docker compose) or any local Postgres matching `DATABASE_URL` in `.env`.
-- Schema changes: edit collections, then `pnpm migrate:create <name>` and commit the migration. Payload never pushes schema automatically.
-- Tests: `pnpm test:unit`, `pnpm test:int` (needs the database), `pnpm build && pnpm test:e2e` (runs against the production build).
+- Node 24 and pnpm 10. A Convex dev deployment from `npx convex dev`, which also keeps pushing functions while you work. `pnpm seed` fills it from `specs/species.md`.
+- Schema changes: edit `convex/schema.ts`. Convex applies them on push; changes that break existing documents need a migration (see the Convex skills).
+- Tests: `pnpm test:unit`, `pnpm test:convex`, `pnpm build && pnpm test:e2e` (runs against the production build and the Convex deployment in `.env.local`).
 
 ## Stack notes
 
 - **Next.js 16:** this version has breaking changes. APIs, conventions and file structure may differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing Next.js code, and heed deprecation notices.
-- **Payload 3** runs inside the Next.js app. Check the installed Payload version's docs and changelog rather than relying on memory.
+- **Convex** holds the data, file storage, functions and background jobs. Read `convex/_generated/ai/guidelines.md` before writing Convex code. Public queries return only published content; every admin function calls `requireAdmin` in `convex/lib/admin.ts`.
 - **Package manager:** pnpm. **Lint and format:** Biome.
 
 ## Code conventions
@@ -45,7 +45,7 @@ The visual direction is set with the impeccable design skill, one page at a time
 - TypeScript everywhere, strict mode.
 - When creating in-file sub-components in a React file, place them after the main component of the file.
 - User-facing strings go through next-intl. Danish is the default locale. Never hardcode UI text.
-- Card content lives in Payload with field localization. Never hardcode species content in the app.
+- Card content lives in Convex, with text stored per locale (`{ da, en? }`). Never hardcode species content in the app.
 - Secrets only in environment variables. Keep `.env.example` up to date.
 - No debug output (`console.log` and the like) on `main`.
 

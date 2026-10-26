@@ -7,7 +7,7 @@ import { routing } from "@/i18n/routing";
 export const proxy = createMiddleware(routing);
 
 export const config = {
-  // Every path except Payload (admin and API), Next internals and files with
+  // Every path except the admin, API routes, Next internals and files with
   // an extension. Those have no locale.
   matcher: ["/((?!admin|api|_next|.*\\..*).*)"],
 };

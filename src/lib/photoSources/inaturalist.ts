@@ -1,4 +1,4 @@
-import { normalizeLicense } from "@/domain/licenses";
+import { normalizeLicense } from "../../domain/licenses";
 import { type Fetcher, type PhotoCandidate, USER_AGENT } from "./types";
 
 const API = "https://api.inaturalist.org/v1";

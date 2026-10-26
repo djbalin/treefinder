@@ -4,12 +4,12 @@ import {
   commonsCategories,
   parseCommonsResponse,
 } from "@/lib/photoSources/commons";
+import { isAllowedImageUrl, newCandidates } from "@/lib/photoSources/filters";
 import {
   largePhotoUrl,
   parseObservations,
   pickTaxon,
 } from "@/lib/photoSources/inaturalist";
-import { isAllowedImageUrl, newCandidates } from "@/lib/photos";
 
 describe("normalizeLicense", () => {
   it.each([

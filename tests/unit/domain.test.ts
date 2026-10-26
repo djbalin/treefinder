@@ -1,7 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { photosToDemote, validatePhotoChange } from "@/domain/photoRules";
-import { isRichTextEmpty, richTextFromParagraphs } from "@/domain/richText";
 import { slugify } from "@/domain/slug";
 import { parseSpeciesTable } from "@/domain/speciesList";
 
@@ -14,18 +13,6 @@ describe("slugify", () => {
 
   it("drops punctuation and repeated separators", () => {
     expect(slugify("  Engriflet  hvidtjørn! ")).toBe("engriflet-hvidtjoern");
-  });
-});
-
-describe("isRichTextEmpty", () => {
-  it("treats missing and whitespace-only values as empty", () => {
-    expect(isRichTextEmpty(null)).toBe(true);
-    expect(isRichTextEmpty({ root: { children: [] } })).toBe(true);
-    expect(isRichTextEmpty(richTextFromParagraphs([" "]))).toBe(true);
-  });
-
-  it("finds text in nested nodes", () => {
-    expect(isRichTextEmpty(richTextFromParagraphs(["", "Tekst"]))).toBe(false);
   });
 });
 

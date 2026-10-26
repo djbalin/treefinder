@@ -1,15 +1,64 @@
 import {
   DIFFICULTIES,
+  type Difficulty,
   FILTER_TRAITS,
+  type FilterTraitValue,
   HARDNESS,
+  type Hardness,
   type SourceField,
   USES,
-} from "@/domain/options";
-import { richTextFromParagraphs } from "@/domain/richText";
-import type { Species } from "@/payload-types";
+  type Use,
+} from "../../domain/options";
 import { type DraftSection, SECTION_SOURCE_FIELDS } from "./sections";
 
 type Source = { title: string; url: string; field: SourceField };
+
+type Traits = {
+  [T in keyof typeof FILTER_TRAITS]: FilterTraitValue<T>[];
+};
+
+/**
+ * A Danish card update from one drafted section. Text is Markdown; null
+ * clears a field the model left empty.
+ */
+export type DraftUpdate = {
+  greenCarving?: Difficulty | null;
+  dryHardness?: Hardness | null;
+  jankaN?: number | null;
+  grainTexture?: string | null;
+  colourSmell?: string | null;
+  goodForTags?: Use[];
+  goodFor?: string | null;
+  riving?: string | null;
+  drying?: string | null;
+  foodSafety?: string | null;
+  isWarning?: boolean;
+  warningReason?: string | null;
+  idFeatures?: {
+    leaf: string | null;
+    bark: string | null;
+    twig: string | null;
+    shape: string | null;
+    cutWood: string | null;
+  };
+  filterTraits?: Traits;
+  localNames?: {
+    da: string[];
+    sv: string[];
+    nb: string[];
+    de: string[];
+    nl: string[];
+    en: string[];
+  };
+  sources: Source[];
+};
+
+/** The parts of the current card a draft builds on. */
+export type CurrentCard = {
+  sources?: Source[];
+  isWarning?: boolean;
+  localNames?: { da?: string[] };
+};
 
 function texts(value: unknown): string[] {
   return Array.isArray(value)
@@ -64,9 +113,10 @@ export function cleanSources(section: DraftSection, value: unknown): Source[] {
     .map(({ title, url, field }) => ({ title: title.trim(), url, field }));
 }
 
-const richText = (value: unknown) => {
-  const paragraphs = texts(value);
-  return paragraphs.length > 0 ? richTextFromParagraphs(paragraphs) : null;
+/** Paragraphs from the model as Markdown, or null when there are none. */
+const markdown = (value: unknown) => {
+  const paragraphs = texts(value).map((text) => text.trim());
+  return paragraphs.length > 0 ? paragraphs.join("\n\n") : null;
 };
 
 /**
@@ -78,8 +128,8 @@ const richText = (value: unknown) => {
 export function buildDraftUpdate(
   section: DraftSection,
   input: Record<string, unknown>,
-  current: Pick<Species, "sources" | "isWarning" | "localNames">,
-): Partial<Species> {
+  current: CurrentCard,
+): DraftUpdate {
   const ownFields = SECTION_SOURCE_FIELDS[section];
   const keptSources = (current.sources ?? [])
     .filter((source) => !ownFields.includes(source.field))
@@ -95,12 +145,12 @@ export function buildDraftUpdate(
           typeof input.jankaN === "number" && input.jankaN > 0
             ? Math.round(input.jankaN)
             : null,
-        grainTexture: richText(input.grainTexture),
-        colourSmell: richText(input.colourSmell),
+        grainTexture: markdown(input.grainTexture),
+        colourSmell: markdown(input.colourSmell),
         goodForTags: manyOf(USES, input.goodForTags),
-        goodFor: richText(input.goodFor),
-        riving: richText(input.riving),
-        drying: richText(input.drying),
+        goodFor: markdown(input.goodFor),
+        riving: markdown(input.riving),
+        drying: markdown(input.drying),
         sources,
       };
     case "safety": {
@@ -109,10 +159,10 @@ export function buildDraftUpdate(
           ? input.warningReason.trim()
           : "";
       return {
-        foodSafety: richText(input.foodSafety),
+        foodSafety: markdown(input.foodSafety),
         // The model may flag a species as toxic, but never unflag one.
         isWarning: Boolean(current.isWarning) || warning.length > 0,
-        warningReason: warning || undefined,
+        warningReason: warning || null,
         sources,
       };
     }
@@ -122,11 +172,11 @@ export function buildDraftUpdate(
       const names = (input.localNames ?? {}) as Record<string, unknown>;
       return {
         idFeatures: {
-          leaf: richText(features.leaf),
-          bark: richText(features.bark),
-          twig: richText(features.twig),
-          shape: richText(features.shape),
-          cutWood: richText(features.cutWood),
+          leaf: markdown(features.leaf),
+          bark: markdown(features.bark),
+          twig: markdown(features.twig),
+          shape: markdown(features.shape),
+          cutWood: markdown(features.cutWood),
         },
         filterTraits: {
           leafType: manyOf(FILTER_TRAITS.leafType, traits.leafType),

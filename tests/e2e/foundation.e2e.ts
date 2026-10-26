@@ -24,10 +24,9 @@ test("unknown pages return the Danish not-found page", async ({ page }) => {
   );
 });
 
-test("admin shows the Payload login", async ({ page }) => {
+test("admin shows the login", async ({ page }) => {
   await page.goto("/admin");
 
-  // With no admin yet, Payload shows its first-user screen instead.
-  await expect(page).toHaveURL(/\/admin\/(login|create-first-user)/);
-  await expect(page.locator("input[name='email']")).toBeVisible();
+  await expect(page).toHaveURL(/\/admin\/login/);
+  await expect(page.getByLabel("Brugernavn")).toBeVisible();
 });

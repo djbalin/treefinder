@@ -1,4 +1,5 @@
 import { execFileSync } from "node:child_process";
+import type { Page } from "@playwright/test";
 
 /*
  * Fixture species for the end-to-end tests live in Convex (convex/testing.ts).
@@ -9,10 +10,19 @@ import { execFileSync } from "node:child_process";
 /** Every fixture slug starts with this prefix so teardown can find it. */
 export const PREFIX = "e2e-";
 
+/** The placeholder admin login from the environment (admin/admin in dev). */
 export const admin = {
-  email: "e2e-admin@example.com",
-  password: "e2e-admin-password",
+  username: process.env.ADMIN_USERNAME ?? "admin",
+  password: process.env.ADMIN_PASSWORD ?? "admin",
 };
+
+export async function signInAsAdmin(page: Page) {
+  await page.goto("/admin/login");
+  await page.getByLabel("Brugernavn").fill(admin.username);
+  await page.getByLabel("Adgangskode").fill(admin.password);
+  await page.getByRole("button", { name: "Log ind" }).click();
+  await page.waitForURL(/\/admin$/);
+}
 
 export const fixtures = {
   lime: { slug: `${PREFIX}lind`, name: "E2E lind" },

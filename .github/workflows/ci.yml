@@ -55,6 +55,9 @@ jobs:
       - name: Unit tests
         run: pnpm test:unit
 
+      - name: Convex tests
+        run: pnpm test:convex
+
       - name: Migrate database
         run: pnpm migrate
 

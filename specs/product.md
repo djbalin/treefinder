@@ -11,7 +11,7 @@ Treefinder is a free web app, designed mobile first, that gives wood carvers a c
 - **Audience:** beginner and intermediate carvers in Northern and Western Europe.
 - **Launch:** Danish Facebook carving groups first, then r/Spooncarving and r/woodcarving once the English version is ready. Read each group's self-promotion rules before posting.
 - **Purpose:** a free community tool and a portfolio piece. Not a business for now, but nothing in v1 should rule out charging later (see the media licensing rule in the constitution).
-- **Learning goals for the maintainer:** Payload CMS, a data pipeline built on third-party APIs (Wikimedia Commons, iNaturalist, Claude), and testing and CI with one PR per feature.
+- **Learning goals for the maintainer:** Convex, a data pipeline built on third-party APIs (Wikimedia Commons, iNaturalist, Claude), and testing and CI with one PR per feature.
 
 ## 3. Scope
 
@@ -163,7 +163,7 @@ Each rule is enforced server-side and has a unit test.
 
 ## 8. Where to get wood
 
-A static page (a Payload global, localized) explaining the legal routes in Denmark: arborists, storm-felled trees, garden pruning, Naturstyrelsen's sankekort and selvskovning, and that collecting is often limited to the winter half of the year. It does not tell anyone to cut trees.
+A static page (a Convex page, localized) explaining the legal routes in Denmark: arborists, storm-felled trees, garden pruning, Naturstyrelsen's sankekort and selvskovning, and that collecting is often limited to the winter half of the year. It does not tell anyone to cut trees.
 
 ## 9. Later, not v1
 

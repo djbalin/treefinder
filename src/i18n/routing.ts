@@ -15,6 +15,14 @@ export const routing = defineRouting({
   // Danish visitors should not be redirected to English based on their
   // browser language while English is incomplete.
   localeDetection: false,
+  // Folders under app/[locale] use the Danish paths; English gets its own.
+  pathnames: {
+    "/": "/",
+    "/arter": { da: "/arter", en: "/species" },
+    "/arter/[slug]": { da: "/arter/[slug]", en: "/species/[slug]" },
+    "/skaf-trae": { da: "/skaf-trae", en: "/get-wood" },
+    "/om": { da: "/om", en: "/about" },
+  },
 });
 
 export type AppLocale = "da" | "en";

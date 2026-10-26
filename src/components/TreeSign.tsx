@@ -5,7 +5,11 @@ import { optionLabel } from "@/domain/labels";
 import { difficultyOptions, hardnessOptions } from "@/domain/options";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
-import type { Photo, Species } from "@/payload-types";
+import {
+  isOptimizable,
+  type PublicPhoto,
+  type SpeciesListItem,
+} from "@/lib/content";
 import { DifficultyGlyph, Glyph, HardnessGlyph } from "./Glyph";
 
 /**
@@ -18,14 +22,13 @@ export function TreeSign({
   photo,
   locale,
 }: {
-  species: Species;
-  photo?: Photo;
+  species: SpeciesListItem;
+  photo?: PublicPhoto;
   locale: AppLocale;
 }) {
   const t = useTranslations("Card");
   const tHome = useTranslations("Home");
-  const src =
-    photo?.sizes?.card?.url ?? photo?.url ?? photo?.remoteUrl ?? undefined;
+  const src = photo?.url;
 
   // Fixed cells: every tree has all three, an empty cell when a value is missing.
   const badges: { key: string; label?: string | null; glyph?: ReactNode }[] = [
@@ -78,7 +81,7 @@ export function TreeSign({
             alt=""
             fill
             sizes="(min-width: 1024px) 18rem, (min-width: 640px) 33vw, 50vw"
-            unoptimized={!photo?.url}
+            unoptimized={!isOptimizable(src)}
             className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
           />
         ) : (

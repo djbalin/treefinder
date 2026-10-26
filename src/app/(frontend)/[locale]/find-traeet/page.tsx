@@ -13,9 +13,9 @@ import { getPathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import {
   getPublishedSpecies,
-  getSelectedPhotos,
+  isOptimizable,
   photosBySlot,
-} from "@/lib/payload";
+} from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -36,23 +36,18 @@ export default async function FilterKeyPage({ params, searchParams }: Props) {
   const t = await getTranslations("FilterKey");
 
   const species = await getPublishedSpecies(locale);
-  const photos = await getSelectedPhotos(
-    species.map((item) => item.id),
-    locale,
-  );
 
   const items: FilterKeySpecies[] = species.map((item) => {
-    const slots = photosBySlot(photos, item.id);
-    const photo = slots.leaf ?? slots.wholeTree;
-    const src = photo?.sizes?.thumbnail?.url ?? photo?.url ?? photo?.remoteUrl;
+    const slots = photosBySlot(item.photos);
+    const src = (slots.leaf ?? slots.wholeTree)?.url;
     return {
       id: item.id,
       slug: item.slug,
       name: item.name,
       latinName: item.latinName,
-      thumbnail: src ? { src, local: Boolean(photo?.url) } : undefined,
+      thumbnail: src ? { src, local: isOptimizable(src) } : undefined,
       traits: Object.fromEntries(
-        TRAIT_ORDER.map((trait) => [trait, item.filterTraits?.[trait] ?? []]),
+        TRAIT_ORDER.map((trait) => [trait, item.filterTraits[trait] ?? []]),
       ),
     };
   });

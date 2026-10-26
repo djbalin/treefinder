@@ -10,8 +10,20 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   images: {
-    // Photo files served by Payload.
-    localPatterns: [{ pathname: "/api/photos/file/**" }],
+    // Selected photos in Convex file storage (cloud and local backend).
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.convex.cloud",
+        pathname: "/api/storage/**",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+        port: "3210",
+        pathname: "/api/storage/**",
+      },
+    ],
   },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {

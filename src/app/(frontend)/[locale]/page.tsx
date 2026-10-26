@@ -8,10 +8,9 @@ import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import {
   getPublishedSpecies,
-  getSelectedPhotos,
+  type PublicPhoto,
   photosBySlot,
-} from "@/lib/payload";
-import type { Photo } from "@/payload-types";
+} from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -31,10 +30,6 @@ export default async function HomePage({ params, searchParams }: Props) {
     : undefined;
   const species = (await getPublishedSpecies(locale)).filter(
     (item) => !picked || item.goodForTags?.includes(picked),
-  );
-  const photos = await getSelectedPhotos(
-    species.map((item) => item.id),
-    locale,
   );
 
   return (
@@ -81,7 +76,7 @@ export default async function HomePage({ params, searchParams }: Props) {
         {species.length > 0 ? (
           <ul className="grid grid-cols-2 gap-1.5 sm:grid-cols-3 lg:grid-cols-4">
             {species.map((item) => {
-              const bySlot = photosBySlot(photos, item.id);
+              const bySlot = photosBySlot(item.photos);
               return (
                 <TreeSign
                   key={item.id}
@@ -114,7 +109,7 @@ export default async function HomePage({ params, searchParams }: Props) {
       <PhotoCredits
         title={t("photoCredits")}
         credits={species.flatMap((item) => {
-          const bySlot = photosBySlot(photos, item.id);
+          const bySlot = photosBySlot(item.photos);
           const photo = bySlot.wholeTree ?? bySlot.leaf;
           return photo ? [{ name: item.name, photo }] : [];
         })}
@@ -152,7 +147,7 @@ function PhotoCredits({
   credits,
 }: {
   title: string;
-  credits: { name: string; photo: Photo }[];
+  credits: { name: string; photo: PublicPhoto }[];
 }) {
   if (credits.length === 0) return null;
   return (

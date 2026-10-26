@@ -17,9 +17,8 @@ import type { AppLocale } from "@/i18n/routing";
 import {
   allLocalNames,
   getPublishedSpecies,
-  getSelectedPhotos,
   photosBySlot,
-} from "@/lib/payload";
+} from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -61,10 +60,6 @@ export default async function SpeciesListPage({ params, searchParams }: Props) {
     use,
     greenCarving,
   }).map((match) => match.item);
-  const photos = await getSelectedPhotos(
-    results.map((item) => item.id),
-    locale,
-  );
 
   return (
     <div className="max-w-reading space-y-6">
@@ -127,7 +122,7 @@ export default async function SpeciesListPage({ params, searchParams }: Props) {
             <SpeciesListItem
               key={item.id}
               species={item}
-              thumbnail={photosBySlot(photos, item.id).wholeTree}
+              thumbnail={photosBySlot(item.photos).wholeTree}
               locale={locale}
             />
           ))}

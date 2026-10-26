@@ -74,7 +74,8 @@
   "About": {
     "disclaimerHeading": "Om fødevaresikkerhed",
     "creditsHeading": "Billedkreditering",
-    "noCredits": "Der er ingen billeder endnu."
+    "noCredits": "Der er ingen billeder endnu.",
+    "source": "kilde"
   },
   "NotFound": {
     "heading": "Siden findes ikke",

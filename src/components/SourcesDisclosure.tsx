@@ -2,9 +2,7 @@ import { useTranslations } from "next-intl";
 import { optionLabel } from "@/domain/labels";
 import { SOURCE_FIELDS, sourceFieldOptions } from "@/domain/options";
 import type { AppLocale } from "@/i18n/routing";
-import type { Species } from "@/payload-types";
-
-type Source = NonNullable<Species["sources"]>[number];
+import type { Source } from "@/lib/content";
 
 /**
  * Sources, collapsed by default and grouped by the card field they support
@@ -38,7 +36,7 @@ export function SourcesDisclosure({
             </h3>
             <ul className="list-disc pl-6">
               {group.items.map((source) => (
-                <li key={source.id ?? source.url}>
+                <li key={source.url}>
                   <a
                     className="text-accent underline hover:text-ink"
                     href={source.url}

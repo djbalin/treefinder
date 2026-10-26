@@ -1,8 +1,10 @@
-import "dotenv/config";
-import config from "@payload-config";
-import { getPayload, type Payload } from "payload";
-import { REQUIRED_PHOTO_SLOTS } from "@/domain/options";
-import { richTextFromParagraphs } from "@/domain/richText";
+import { execFileSync } from "node:child_process";
+
+/*
+ * Fixture species for the end-to-end tests live in Convex (convex/testing.ts).
+ * Global setup replaces them through the Convex CLI, against the deployment
+ * in .env.local (the local backend in CI), and removes them afterwards.
+ */
 
 /** Every fixture slug starts with this prefix so teardown can find it. */
 export const PREFIX = "e2e-";
@@ -20,198 +22,13 @@ export const fixtures = {
   ready: { slug: `${PREFIX}klar`, name: "E2E klar" },
 };
 
-const text = (value: string) => richTextFromParagraphs([value]);
-
-async function createPublished(
-  payload: Payload,
-  data: {
-    slug: string;
-    name: string;
-    latinName: string;
-    isWarning?: boolean;
-    warningReason?: string;
-    localNames?: string[];
-    filterTraits?: Record<string, string[]>;
-  },
-  finalStatus: "published" | "aiDraft" = "published",
-) {
-  const species = await payload.create({
-    collection: "species",
-    locale: "da",
-    data: {
-      slug: data.slug,
-      name: data.name,
-      latinName: data.latinName,
-      status: "approved",
-      isWarning: data.isWarning ?? false,
-      warningReason: data.warningReason,
-      greenCarving: "easy",
-      dryHardness: "soft",
-      jankaN: 2600,
-      goodForTags: ["spoons", "figures"],
-      grainTexture: text("Fin og jævn ved."),
-      colourSmell: text("Lys, næsten hvid."),
-      goodFor: text("Skeer og figurer."),
-      riving: text("Kløver let."),
-      drying: text("Tørrer hurtigt."),
-      foodSafety: text("Regnes for sikkert til madredskaber."),
-      foodSafetyChecked: true,
-      foodSafetyCheckedAt: "2026-10-01T00:00:00.000Z",
-      idFeatures: {
-        leaf: text("Hjerteformede blade."),
-        bark: text("Glat grå bark."),
-      },
-      localNames: { da: [data.name], en: data.localNames ?? [] },
-      filterTraits: data.filterTraits,
-      sources: [
-        {
-          title: "Kilde om snitning",
-          url: "https://example.com/snit",
-          field: "carving",
-        },
-        {
-          title: "Kilde om fødevaresikkerhed",
-          url: "https://example.com/mad",
-          field: "foodSafety",
-        },
-      ],
-    },
-  });
-
-  for (const slot of REQUIRED_PHOTO_SLOTS) {
-    await payload.create({
-      collection: "photos",
-      data: {
-        species: species.id,
-        slot,
-        status: "selected",
-        source: "upload",
-        license: "CC-BY-4.0",
-        author: "Test Fotograf",
-        attribution: `Test Fotograf, ${slot}`,
-        sourceUrl: "https://example.com/foto",
-        remoteUrl: "https://example.com/foto.jpg",
-      },
-    });
-  }
-
-  if (finalStatus === "aiDraft") {
-    return payload.update({
-      collection: "species",
-      id: species.id,
-      data: { status: "aiDraft" },
-    });
-  }
-  return payload.update({
-    collection: "species",
-    id: species.id,
-    data: { status: "published" },
-  });
-}
-
-async function removeFixtures(payload: Payload) {
-  await payload.delete({
-    collection: "users",
-    where: { email: { equals: admin.email } },
-  });
-  const existing = await payload.find({
-    collection: "species",
-    where: { slug: { like: PREFIX } },
-    pagination: false,
-    depth: 0,
-  });
-  const ids = existing.docs.map((doc) => doc.id);
-  if (ids.length === 0) return;
-  await payload.delete({
-    collection: "photos",
-    where: { species: { in: ids } },
-  });
-  await payload.delete({ collection: "species", where: { id: { in: ids } } });
+function convexRun(functionName: string) {
+  execFileSync("npx", ["convex", "run", functionName], { stdio: "inherit" });
 }
 
 export default async function globalSetup() {
-  const payload = await getPayload({ config });
-  await removeFixtures(payload);
-
-  const lime = await createPublished(payload, {
-    ...fixtures.lime,
-    latinName: "Tilia cordata",
-    localNames: ["Small-leaved lime", "linden"],
-    filterTraits: {
-      leafType: ["broad"],
-      arrangement: ["alternate"],
-      leafShape: ["simple"],
-      leafEdge: ["toothed"],
-      bark: ["smooth"],
-      thorns: ["no"],
-    },
-  });
-  const yew = await createPublished(payload, {
-    ...fixtures.yew,
-    latinName: "Taxus baccata",
-    isWarning: true,
-    warningReason: "Alle dele af taks er giftige.",
-    filterTraits: {
-      leafType: ["needles"],
-      arrangement: ["alternate"],
-      leafShape: ["simple"],
-      leafEdge: ["smooth"],
-      bark: ["peeling"],
-      thorns: ["no"],
-    },
-  });
-  await payload.update({
-    collection: "species",
-    id: lime.id,
-    data: { lookAlikes: [yew.id] },
-  });
-
-  // Complete card still in AI draft, for the publish flow in the admin.
-  await createPublished(
-    payload,
-    { ...fixtures.ready, latinName: "Corylus avellana" },
-    "aiDraft",
-  );
-
-  await payload.create({ collection: "users", data: admin });
-  await payload.create({
-    collection: "photos",
-    data: {
-      species: lime.id,
-      status: "candidate",
-      source: "commons",
-      license: "CC0-1.0",
-      author: "E2E",
-      attribution: fixtures.candidateAttribution,
-      remoteUrl: "https://example.com/kandidat.jpg",
-    },
-  });
-
-  await payload.create({
-    collection: "species",
-    locale: "da",
-    data: {
-      ...fixtures.draft,
-      latinName: "Draftus draftus",
-      status: "aiDraft",
-    },
-  });
-
-  for (const slug of ["whereToGetWood", "about"] as const) {
-    const page = await payload.findGlobal({ slug, locale: "da" });
-    if (!page.title) {
-      await payload.updateGlobal({
-        slug,
-        locale: "da",
-        data: {
-          title: slug === "about" ? "Om Treefinder" : "Skaf træ",
-          content: text("Testindhold."),
-        },
-      });
-    }
-  }
-
+  convexRun("testing:seedFixtures");
   return async () => {
-    await removeFixtures(payload);
+    convexRun("testing:clearFixtures");
   };
 }

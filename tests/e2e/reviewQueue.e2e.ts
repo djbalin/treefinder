@@ -5,6 +5,8 @@ test.describe("review queue", () => {
   // The admin is a desktop tool, and the test changes shared fixture data,
   // so it runs once, on the desktop project.
   test.skip(({ isMobile }) => isMobile, "Desktop admin only");
+  // The Payload admin is replaced by a Convex admin in milestone C3.
+  test.skip(true, "Admin moves to Convex in milestone C3");
 
   test.beforeEach(async ({ page }) => {
     await page.goto("/admin/login");

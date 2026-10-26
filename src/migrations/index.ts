@@ -1,9 +1,15 @@
 import * as migration_20261026_144841_initial from './20261026_144841_initial';
+import * as migration_20261026_145600_data_model from './20261026_145600_data_model';
 
 export const migrations = [
   {
     up: migration_20261026_144841_initial.up,
     down: migration_20261026_144841_initial.down,
-    name: '20261026_144841_initial'
+    name: '20261026_144841_initial',
+  },
+  {
+    up: migration_20261026_145600_data_model.up,
+    down: migration_20261026_145600_data_model.down,
+    name: '20261026_145600_data_model'
   },
 ];

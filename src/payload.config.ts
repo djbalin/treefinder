@@ -7,7 +7,10 @@ import { en } from "@payloadcms/translations/languages/en";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
+import { Photos } from "./collections/Photos";
+import { Species } from "./collections/Species";
 import { Users } from "./collections/Users";
+import { About, WhereToGetWood } from "./globals/pages";
 import { migrations } from "./migrations";
 
 const filename = fileURLToPath(import.meta.url);
@@ -20,7 +23,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users],
+  collections: [Species, Photos, Users],
+  globals: [WhereToGetWood, About],
   editor: lexicalEditor(),
   // Admin UI languages.
   i18n: {

@@ -67,6 +67,8 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    species: Species;
+    photos: Photo;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -75,6 +77,8 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    species: SpeciesSelect<false> | SpeciesSelect<true>;
+    photos: PhotosSelect<false> | PhotosSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -85,8 +89,14 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: ('false' | 'none' | 'null') | false | null | ('da' | 'en') | ('da' | 'en')[];
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    whereToGetWood: WhereToGetWood;
+    about: About;
+  };
+  globalsSelect: {
+    whereToGetWood: WhereToGetWoodSelect<false> | WhereToGetWoodSelect<true>;
+    about: AboutSelect<false> | AboutSelect<true>;
+  };
   locale: 'da' | 'en';
   widgets: {
     collections: CollectionsWidget;
@@ -113,6 +123,288 @@ export interface UserAuthOperations {
   unlock: {
     email: string;
     password: string;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "species".
+ */
+export interface Species {
+  id: number;
+  name: string;
+  latinName: string;
+  slug: string;
+  status: 'aiDraft' | 'needsChanges' | 'approved' | 'published';
+  launchWave?: ('launch' | '2') | null;
+  reviewNotes?: string | null;
+  isWarning?: boolean | null;
+  warningReason?: string | null;
+  greenCarving?: ('easy' | 'medium' | 'hard') | null;
+  dryHardness?: ('soft' | 'medium' | 'hard') | null;
+  jankaN?: number | null;
+  grainTexture?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  colourSmell?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  goodForTags?: ('spoons' | 'bowls' | 'kuksa' | 'figures' | 'handles' | 'spatulas' | 'boxes')[] | null;
+  goodFor?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  riving?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  drying?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  foodSafety?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  foodSafetyChecked?: boolean | null;
+  foodSafetyCheckedAt?: string | null;
+  idFeatures?: {
+    leaf?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    bark?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    twig?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    shape?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    cutWood?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  lookAlikes?: (number | Species)[] | null;
+  filterTraits?: {
+    leafType?: ('needles' | 'scales' | 'broad')[] | null;
+    arrangement?: ('opposite' | 'alternate')[] | null;
+    leafShape?: ('simple' | 'lobed' | 'pinnate' | 'palmate')[] | null;
+    leafEdge?: ('smooth' | 'toothed' | 'doubleToothed' | 'spiny')[] | null;
+    bark?: ('smooth' | 'peeling' | 'furrowed' | 'banded')[] | null;
+    thorns?: ('yes' | 'no')[] | null;
+  };
+  localNames?: {
+    da?: string[] | null;
+    sv?: string[] | null;
+    nb?: string[] | null;
+    de?: string[] | null;
+    nl?: string[] | null;
+    en?: string[] | null;
+  };
+  sources?:
+    | {
+        title: string;
+        url: string;
+        field:
+          | 'general'
+          | 'carving'
+          | 'hardness'
+          | 'grainTexture'
+          | 'colourSmell'
+          | 'goodFor'
+          | 'riving'
+          | 'drying'
+          | 'foodSafety'
+          | 'identification';
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos".
+ */
+export interface Photo {
+  id: number;
+  species: number | Species;
+  status: 'candidate' | 'selected' | 'rejected';
+  slot?: ('wholeTree' | 'leaf' | 'bark' | 'winterTwig' | 'cutWood') | null;
+  source: 'commons' | 'inaturalist' | 'upload';
+  license:
+    | 'CC0-1.0'
+    | 'CC-BY-2.0'
+    | 'CC-BY-2.5'
+    | 'CC-BY-3.0'
+    | 'CC-BY-4.0'
+    | 'CC-BY-SA-2.0'
+    | 'CC-BY-SA-2.5'
+    | 'CC-BY-SA-3.0'
+    | 'CC-BY-SA-4.0'
+    | 'own';
+  author: string;
+  attribution: string;
+  sourceUrl?: string | null;
+  remoteUrl?: string | null;
+  alt?: string | null;
+  fetchedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
   };
 }
 /**
@@ -164,10 +456,19 @@ export interface PayloadKv {
  */
 export interface PayloadLockedDocument {
   id: number;
-  document?: {
-    relationTo: 'users';
-    value: number | User;
-  } | null;
+  document?:
+    | ({
+        relationTo: 'species';
+        value: number | Species;
+      } | null)
+    | ({
+        relationTo: 'photos';
+        value: number | Photo;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
+      } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
@@ -209,6 +510,124 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "species_select".
+ */
+export interface SpeciesSelect<T extends boolean = true> {
+  name?: T;
+  latinName?: T;
+  slug?: T;
+  status?: T;
+  launchWave?: T;
+  reviewNotes?: T;
+  isWarning?: T;
+  warningReason?: T;
+  greenCarving?: T;
+  dryHardness?: T;
+  jankaN?: T;
+  grainTexture?: T;
+  colourSmell?: T;
+  goodForTags?: T;
+  goodFor?: T;
+  riving?: T;
+  drying?: T;
+  foodSafety?: T;
+  foodSafetyChecked?: T;
+  foodSafetyCheckedAt?: T;
+  idFeatures?:
+    | T
+    | {
+        leaf?: T;
+        bark?: T;
+        twig?: T;
+        shape?: T;
+        cutWood?: T;
+      };
+  lookAlikes?: T;
+  filterTraits?:
+    | T
+    | {
+        leafType?: T;
+        arrangement?: T;
+        leafShape?: T;
+        leafEdge?: T;
+        bark?: T;
+        thorns?: T;
+      };
+  localNames?:
+    | T
+    | {
+        da?: T;
+        sv?: T;
+        nb?: T;
+        de?: T;
+        nl?: T;
+        en?: T;
+      };
+  sources?:
+    | T
+    | {
+        title?: T;
+        url?: T;
+        field?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "photos_select".
+ */
+export interface PhotosSelect<T extends boolean = true> {
+  species?: T;
+  status?: T;
+  slot?: T;
+  source?: T;
+  license?: T;
+  author?: T;
+  attribution?: T;
+  sourceUrl?: T;
+  remoteUrl?: T;
+  alt?: T;
+  fetchedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -272,6 +691,78 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "whereToGetWood".
+ */
+export interface WhereToGetWood {
+  id: number;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about".
+ */
+export interface About {
+  id: number;
+  title: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "whereToGetWood_select".
+ */
+export interface WhereToGetWoodSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "about_select".
+ */
+export interface AboutSelect<T extends boolean = true> {
+  title?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

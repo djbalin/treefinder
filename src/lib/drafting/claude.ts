@@ -28,8 +28,7 @@ export function createDraftClient(): DraftClient {
     throw new Error("ANTHROPIC_API_KEY mangler, så kortet kan ikke skrives.");
   }
   return new Anthropic({
-    // Three sections run in one request; together they must fit inside the
-    // API route's maxDuration (300 s).
+    // Three sections run in one Convex action, which may run for 10 minutes.
     timeout: Number(process.env.DRAFT_TIMEOUT_MS ?? 90_000),
     maxRetries: 0,
   });

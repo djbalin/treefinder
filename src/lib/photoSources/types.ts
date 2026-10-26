@@ -1,4 +1,4 @@
-import type { License, PhotoSlot, PhotoSource } from "@/domain/options";
+import type { License, PhotoSlot, PhotoSource } from "../../domain/options";
 
 /** A photo found at a source, before it is stored as a `photos` candidate. */
 export type PhotoCandidate = {

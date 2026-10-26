@@ -4,7 +4,7 @@ import {
   HARDNESS,
   type SourceField,
   USES,
-} from "@/domain/options";
+} from "../../domain/options";
 
 /**
  * A card is drafted in three sections, one Claude call each, so every call

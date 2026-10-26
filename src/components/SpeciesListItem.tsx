@@ -4,7 +4,11 @@ import { optionLabel } from "@/domain/labels";
 import { difficultyOptions, useOptions } from "@/domain/options";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
-import type { Photo, Species } from "@/payload-types";
+import {
+  isOptimizable,
+  type PublicPhoto,
+  type SpeciesListItem as Species,
+} from "@/lib/content";
 import { Tag } from "./ui";
 
 export function SpeciesListItem({
@@ -13,12 +17,11 @@ export function SpeciesListItem({
   locale,
 }: {
   species: Species;
-  thumbnail?: Photo;
+  thumbnail?: PublicPhoto;
   locale: AppLocale;
 }) {
   const t = useTranslations("SpeciesList");
-  const src =
-    thumbnail?.sizes?.thumbnail?.url ?? thumbnail?.url ?? thumbnail?.remoteUrl;
+  const src = thumbnail?.url;
 
   return (
     <li className="flex gap-4 py-4">
@@ -29,7 +32,7 @@ export function SpeciesListItem({
             alt=""
             width={160}
             height={160}
-            unoptimized={!thumbnail?.url}
+            unoptimized={!isOptimizable(src)}
             className="size-full object-cover"
           />
         ) : null}

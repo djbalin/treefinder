@@ -15,7 +15,7 @@ import { FILTER_TRAITS, type FilterTrait } from "@/domain/options";
 import { Link } from "@/i18n/navigation";
 
 export type FilterKeySpecies = {
-  id: number;
+  id: string;
   slug: string;
   name: string;
   latinName: string;

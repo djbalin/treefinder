@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CardKey, type KeyRow } from "@/components/CardKey";
+import { Markdown } from "@/components/Markdown";
 import { PhotoPlate, type PlateEntry } from "@/components/PhotoPlate";
-import { RichText } from "@/components/RichText";
 import { SourcesDisclosure } from "@/components/SourcesDisclosure";
 import {
   PageTitle,
@@ -23,15 +23,13 @@ import {
   photoSlotOptions,
   useOptions,
 } from "@/domain/options";
-import { isRichTextEmpty } from "@/domain/richText";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import {
-  getSelectedPhotos,
   getSpeciesBySlug,
   photosBySlot,
-} from "@/lib/payload";
-import type { Species } from "@/payload-types";
+  type SpeciesCard,
+} from "@/lib/content";
 
 export const dynamic = "force-dynamic";
 
@@ -40,10 +38,7 @@ type Props = {
 };
 
 /** Which identification text sits next to which photo slot. */
-const ID_FEATURE_BY_SLOT: Record<
-  PhotoSlot,
-  keyof NonNullable<Species["idFeatures"]>
-> = {
+const ID_FEATURE_BY_SLOT: Record<PhotoSlot, keyof SpeciesCard["idFeatures"]> = {
   wholeTree: "shape",
   leaf: "leaf",
   bark: "bark",
@@ -66,14 +61,8 @@ export default async function SpeciesCardPage({ params }: Props) {
 
   const t = await getTranslations("Card");
   const tDisclaimer = await getTranslations("Disclaimer");
-  const photos = photosBySlot(
-    await getSelectedPhotos([species.id], locale),
-    species.id,
-  );
-  const lookAlikes = (species.lookAlikes ?? []).filter(
-    (item): item is Species =>
-      typeof item === "object" && item.status === "published",
-  );
+  const photos = photosBySlot(species.photos);
+  const lookAlikes = species.lookAlikes;
   const checkedOn = species.foodSafetyCheckedAt
     ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
         new Date(species.foodSafetyCheckedAt),
@@ -85,7 +74,7 @@ export default async function SpeciesCardPage({ params }: Props) {
       ({ value: slot }) =>
         slot !== "cutWood" ||
         photos.cutWood ||
-        !isRichTextEmpty(species.idFeatures?.cutWood),
+        Boolean(species.idFeatures.cutWood),
     )
     .map(({ value: slot, label }, index) => ({
       number: index + 1,
@@ -191,7 +180,7 @@ export default async function SpeciesCardPage({ params }: Props) {
         <CardText title={t("drying")} value={species.drying} />
 
         <Section title={t("foodSafety")}>
-          <RichText value={species.foodSafety} />
+          <Markdown value={species.foodSafety} />
           {checkedOn ? (
             <p className="font-label text-sm text-ink-muted">
               {t("checkedOn", { date: checkedOn })}
@@ -205,8 +194,8 @@ export default async function SpeciesCardPage({ params }: Props) {
         <Section title={t("identification")}>
           <ol className="space-y-5">
             {plate.map(({ number, slot, label }) => {
-              const text = species.idFeatures?.[ID_FEATURE_BY_SLOT[slot]];
-              if (isRichTextEmpty(text)) return null;
+              const text = species.idFeatures[ID_FEATURE_BY_SLOT[slot]];
+              if (!text) return null;
               return (
                 <li key={slot} className="flex gap-3">
                   <PlateNumber className="mt-1 border border-accent">
@@ -214,7 +203,7 @@ export default async function SpeciesCardPage({ params }: Props) {
                   </PlateNumber>
                   <div className="min-w-0 space-y-1">
                     <h3 className="font-label font-semibold">{label}</h3>
-                    <RichText value={text} />
+                    <Markdown value={text} />
                   </div>
                 </li>
               );
@@ -251,11 +240,11 @@ export default async function SpeciesCardPage({ params }: Props) {
   );
 }
 
-function CardText({ title, value }: { title: string; value: unknown }) {
-  if (isRichTextEmpty(value)) return null;
+function CardText({ title, value }: { title: string; value: string | null }) {
+  if (!value) return null;
   return (
     <Section title={title}>
-      <RichText value={value} />
+      <Markdown value={value} />
     </Section>
   );
 }

@@ -74,7 +74,8 @@
   "About": {
     "disclaimerHeading": "About food safety",
     "creditsHeading": "Image credits",
-    "noCredits": "There are no images yet."
+    "noCredits": "There are no images yet.",
+    "source": "source"
   },
   "NotFound": {
     "heading": "Page not found",

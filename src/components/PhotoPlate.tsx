@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { PhotoSlot } from "@/domain/options";
-import type { Photo } from "@/payload-types";
+import { isOptimizable, type PublicPhoto } from "@/lib/content";
 import { PlateNumber } from "./ui";
 
 export type PlateEntry = {
   number: number;
   slot: PhotoSlot;
   label: string;
-  photo?: Photo;
+  photo?: PublicPhoto;
 };
 
 /**
@@ -48,23 +48,20 @@ export function PhotoPlate({ entries }: { entries: PlateEntry[] }) {
 function PlateTile({ entry }: { entry: PlateEntry }) {
   const t = useTranslations("Card");
   const { number, label, photo } = entry;
-  const src = photo?.sizes?.card?.url ?? photo?.url ?? photo?.remoteUrl;
-  const full = photo?.url ?? photo?.remoteUrl ?? src;
+  const src = photo?.url;
 
   return (
     <div className="relative aspect-4/5 bg-surface-muted">
       {photo && src ? (
-        <a href={full ?? undefined} className="block size-full">
+        <a href={src} className="relative block size-full">
           <Image
             src={src}
             alt={photo.alt ?? label}
-            width={photo.width ?? 1200}
-            height={photo.height ?? 900}
+            fill
             sizes="(min-width: 1024px) 13rem, 50vw"
             loading={number <= 2 ? "eager" : "lazy"}
-            // Candidates link to external files until they are stored.
-            unoptimized={!photo.url}
-            className="size-full object-cover"
+            unoptimized={!isOptimizable(src)}
+            className="object-cover"
           />
         </a>
       ) : (
@@ -77,7 +74,7 @@ function PlateTile({ entry }: { entry: PlateEntry }) {
   );
 }
 
-function Credit({ photo }: { photo: Photo }) {
+function Credit({ photo }: { photo: PublicPhoto }) {
   const t = useTranslations("Card");
 
   return (

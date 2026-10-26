@@ -2,12 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import { optionLabel } from "@/domain/labels";
-import {
-  difficultyOptions,
-  filterTraitLabels,
-  filterValueLabels,
-  hardnessOptions,
-} from "@/domain/options";
+import { difficultyOptions, hardnessOptions } from "@/domain/options";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import type { Photo, Species } from "@/payload-types";
@@ -15,8 +10,8 @@ import { DifficultyGlyph, Glyph, HardnessGlyph } from "./Glyph";
 
 /**
  * One tree on the home page wall: its photo with an enamel name plate and
- * a fixed row of round badges (green carving, dry hardness, food safety,
- * leaf type), always in that order so trees compare at a glance.
+ * a fixed row of round badges (carvability, dry hardness, food safety),
+ * always in that order so trees compare at a glance.
  */
 export function TreeSign({
   species,
@@ -31,47 +26,45 @@ export function TreeSign({
   const tHome = useTranslations("Home");
   const src =
     photo?.sizes?.card?.url ?? photo?.url ?? photo?.remoteUrl ?? undefined;
-  const leafType = species.filterTraits?.leafType?.[0];
 
-  const badges: { key: string; label: string; glyph: ReactNode }[] = [];
-  if (species.greenCarving) {
-    badges.push({
+  // Fixed cells: every tree has all four, an empty cell when a value is missing.
+  const badges: { key: string; label?: string | null; glyph?: ReactNode }[] = [
+    {
       key: "carving",
-      label: `${t("greenCarving")}: ${optionLabel(difficultyOptions, species.greenCarving, locale)}`,
-      glyph: (
+      label:
+        species.greenCarving &&
+        `${t("greenCarving")}: ${optionLabel(difficultyOptions, species.greenCarving, locale)}`,
+      glyph: species.greenCarving && (
         <DifficultyGlyph value={species.greenCarving} className="size-5" />
       ),
-    });
-  }
-  if (species.dryHardness) {
-    badges.push({
+    },
+    {
       key: "hardness",
-      label: `${t("dryHardness")}: ${optionLabel(hardnessOptions, species.dryHardness, locale)}`,
-      glyph: <HardnessGlyph value={species.dryHardness} className="size-5" />,
-    });
-  }
-  badges.push(
+      label:
+        species.dryHardness &&
+        `${t("dryHardness")}: ${optionLabel(hardnessOptions, species.dryHardness, locale)}`,
+      glyph: species.dryHardness && (
+        <HardnessGlyph value={species.dryHardness} className="size-5" />
+      ),
+    },
     species.isWarning
       ? {
           key: "food",
           label: t("toxic"),
           glyph: <Glyph name="warning" className="size-5 text-warning" />,
         }
-      : {
-          key: "food",
-          label: species.foodSafetyChecked
-            ? tHome("foodSafe")
-            : tHome("foodUnchecked"),
-          glyph: <Glyph name="check" className="size-5" />,
-        },
-  );
-  if (leafType) {
-    badges.push({
-      key: "leaf",
-      label: `${filterTraitLabels.leafType[locale]}: ${filterValueLabels[leafType][locale]}`,
-      glyph: <Glyph name={leafType} className="size-5" />,
-    });
-  }
+      : species.foodSafetyChecked
+        ? {
+            key: "food",
+            label: tHome("foodSafe"),
+            glyph: <Glyph name="check" className="size-5 text-plate" />,
+          }
+        : {
+            key: "food",
+            label: tHome("foodUnchecked"),
+            glyph: <Glyph name="unknown" className="size-5 text-ink-muted" />,
+          },
+  ];
 
   return (
     <li>
@@ -94,20 +87,27 @@ export function TreeSign({
           </p>
         )}
         <div
-          className={`enamel absolute inset-x-2 bottom-2 rounded-plate px-2.5 pt-2 pb-2.5 ${species.isWarning ? "bg-warning text-warning-ink" : "bg-plate text-plate-ink"}`}
+          className={`absolute inset-x-0 bottom-0 px-3 pt-2 pb-3 ${species.isWarning ? "bg-warning text-warning-ink" : "bg-plate text-plate-ink"}`}
         >
-          <p className="text-balance font-display text-sign font-bold">
+          <p className="text-balance font-display text-sign font-extrabold">
             {species.name}
           </p>
-          <ul className="mt-1.5 flex gap-1">
+          {species.isWarning ? (
+            <p className="font-display text-sm font-bold uppercase tracking-wide">
+              {tHome("toxic")}
+            </p>
+          ) : null}
+          <ul className="mt-2 flex gap-1.5">
             {badges.map((badge) => (
               <li
                 key={badge.key}
-                title={badge.label}
+                title={badge.label || undefined}
                 className="flex size-7 items-center justify-center rounded-full bg-surface text-accent"
               >
                 {badge.glyph}
-                <span className="sr-only">{badge.label}</span>
+                {badge.label ? (
+                  <span className="sr-only">{badge.label}</span>
+                ) : null}
               </li>
             ))}
           </ul>

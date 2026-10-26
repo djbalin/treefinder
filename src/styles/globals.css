@@ -26,9 +26,3 @@
     font-variant-numeric: tabular-nums;
   }
 }
-
-/* The inset keyline every enamel plate carries. */
-@utility enamel {
-  outline: 1.5px solid var(--color-surface);
-  outline-offset: -5px;
-}

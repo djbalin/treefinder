@@ -5,7 +5,7 @@
   },
   "Nav": {
     "label": "Hovedmenu",
-    "home": "Treefinder",
+    "home": "Forside",
     "species": "Arter",
     "getWood": "Skaf træ",
     "about": "Om",
@@ -14,7 +14,6 @@
   },
   "Home": {
     "heading": "Hvilket træ skal du snitte i?",
-    "intro": "Snitteviden om hvert træ, tjekket af et menneske, med kilder.",
     "usesLabel": "Hvad vil du lave?",
     "treesLabel": "Træerne",
     "noTrees": "Ingen træer passer endnu.",
@@ -24,7 +23,13 @@
     "foodUnchecked": "Fødevaresikkerhed ikke kontrolleret",
     "browseAll": "Se alle arter",
     "getWoodLink": "Sådan skaffer du træ lovligt",
-    "filterKeyLink": "Find træet med nøglen"
+    "filterKeyLink": "Find træet med nøglen",
+    "toxic": "Giftig",
+    "legendLabel": "Tegnforklaring",
+    "legendCarving": "Snitbarhed",
+    "legendHardness": "Hårdhed",
+    "legendFood": "Mad",
+    "photoCredits": "Fotos"
   },
   "Search": {
     "label": "Søg efter et træ",

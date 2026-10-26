@@ -6,9 +6,12 @@ import type { AppLocale } from "@/i18n/routing";
 export async function SearchForm({
   locale,
   defaultValue,
+  inputId = "q",
 }: {
   locale: AppLocale;
   defaultValue?: string;
+  /** Unique per page, since the header carries a search on every page. */
+  inputId?: string;
 }) {
   const t = await getTranslations({ locale, namespace: "Search" });
   const action = getPathname({ locale, href: "/arter" });
@@ -18,22 +21,22 @@ export async function SearchForm({
       <form
         action={action}
         method="get"
-        className="flex rounded-control border-2 border-accent bg-surface p-1"
+        className="flex rounded-control border-2 border-accent bg-surface"
       >
-        <label htmlFor="q" className="sr-only">
+        <label htmlFor={inputId} className="sr-only">
           {t("label")}
         </label>
         <input
-          id="q"
+          id={inputId}
           name="q"
           type="search"
           defaultValue={defaultValue}
           placeholder={t("placeholder")}
-          className="min-w-0 flex-1 rounded-control bg-transparent px-3 py-2 text-ink placeholder:text-ink-muted"
+          className="min-w-0 flex-1 bg-transparent px-3 py-1.5 font-label text-ink placeholder:text-ink-muted"
         />
         <button
           type="submit"
-          className="rounded-control bg-action px-5 py-2 font-display font-bold text-action-ink hover:bg-surface"
+          className="bg-accent px-4 py-1.5 font-display font-bold text-accent-ink hover:bg-plate"
         >
           {t("submit")}
         </button>

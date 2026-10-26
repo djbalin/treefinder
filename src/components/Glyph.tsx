@@ -10,6 +10,7 @@ export type GlyphName =
   | Use
   | "check"
   | "warning"
+  | "unknown"
   | "broad"
   | "needles"
   | "scales"
@@ -30,13 +31,17 @@ const PATHS: Record<GlyphName, string[]> = {
     "M8.75 21l1.1-9.25h4.3L15.25 21Z",
   ],
   handles: [
-    "M10 11.5V3c2.75.75 4.25 3.75 4.25 8.5Z",
-    "M9 11.5h6.25v8.25a1.5 1.5 0 0 1-1.5 1.5H10.5A1.5 1.5 0 0 1 9 19.75Z",
+    "M4.4 21.6 2.4 19.6a1.4 1.4 0 0 1 0-2L8.9 11.1l4 4-6.5 6.5a1.4 1.4 0 0 1-2 0Z",
+    "M12.9 15.1 8.9 11.1 18.6 3.6c.9-.7 2.5.9 1.8 1.8Z",
   ],
   spatulas: ["M9 2.75h6v7.5a3 3 0 0 1-6 0Z", "M12 13.25v8"],
   boxes: ["M4.5 9.5h15v10.75h-15Z", "M3.25 5.75h17.5v3.75H3.25Z", "M10 13h4"],
   check: ["M4.5 12.5 9.5 17.5 19.5 6.5"],
   warning: ["M12 3 21.5 20H2.5Z", "M12 9.5v4.75", "M12 17.1v.15"],
+  unknown: [
+    "M9.25 9a2.9 2.9 0 1 1 3.9 2.75c-.75.3-1.15.9-1.15 1.65v.6",
+    "M12 17.6v.15",
+  ],
   broad: [
     "M12 21.25V11",
     "M12 21.25C5 17.5 4.5 9 12 2.75 19.5 9 19 17.5 12 21.25Z",
@@ -93,8 +98,8 @@ const LEVEL: Record<Difficulty | Hardness, number> = {
 };
 
 /**
- * A three-step scale for green carving: one, two or three cuts. Filled cuts
- * are the value.
+ * Carvability as knife cuts: one cut is easy, three is hard. The count is
+ * the value, so the levels stay apart at badge size.
  */
 export function DifficultyGlyph({
   value,
@@ -104,29 +109,26 @@ export function DifficultyGlyph({
   className?: string;
 }) {
   const level = LEVEL[value];
+  const first = 12 - (level - 1) * 3;
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className={className}>
-      {[0, 1, 2].map((step) => (
-        <circle
-          key={step}
-          cx={5 + step * 7}
-          cy={12}
-          r={2.75}
-          className={
-            step < level
-              ? "fill-current stroke-current"
-              : "fill-none stroke-current"
-          }
-          strokeWidth={1.5}
-        />
-      ))}
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={`fill-none stroke-current ${className}`}
+      strokeWidth={2.5}
+      strokeLinecap="round"
+    >
+      {Array.from({ length: level }, (_, step) => {
+        const x = first + step * 6;
+        return <path key={x} d={`M${x - 2.5} 19 ${x + 2.5} 5`} />;
+      })}
     </svg>
   );
 }
 
 /**
  * Dry hardness as three rising bars; the harder the wood, the more bars
- * are filled and the heavier the outline.
+ * are filled.
  */
 export function HardnessGlyph({
   value,
@@ -151,7 +153,8 @@ export function HardnessGlyph({
               ? "fill-current stroke-current"
               : "fill-none stroke-current"
           }
-          strokeWidth={0.75 + level * 0.5}
+          strokeWidth={2}
+          strokeLinejoin="round"
         />
       ))}
     </svg>

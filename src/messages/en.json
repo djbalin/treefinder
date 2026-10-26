@@ -5,7 +5,7 @@
   },
   "Nav": {
     "label": "Main menu",
-    "home": "Treefinder",
+    "home": "Home",
     "species": "Species",
     "getWood": "Get wood",
     "about": "About",
@@ -14,7 +14,6 @@
   },
   "Home": {
     "heading": "Which tree should you carve?",
-    "intro": "Carving knowledge for every tree, checked by a person, with sources.",
     "usesLabel": "What do you want to make?",
     "treesLabel": "The trees",
     "noTrees": "No trees match yet.",
@@ -24,7 +23,13 @@
     "foodUnchecked": "Food safety not checked",
     "browseAll": "See all species",
     "getWoodLink": "How to get wood legally",
-    "filterKeyLink": "Identify a tree with the key"
+    "filterKeyLink": "Identify a tree with the key",
+    "toxic": "Toxic",
+    "legendLabel": "Key",
+    "legendCarving": "Carvability",
+    "legendHardness": "Hardness",
+    "legendFood": "Food",
+    "photoCredits": "Photos"
   },
   "Search": {
     "label": "Search for a tree",

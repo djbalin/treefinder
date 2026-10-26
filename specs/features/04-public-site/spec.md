@@ -1,6 +1,6 @@
 # 04. Public site: spec
 
-Status: agreed
+Status: done
 Milestone: 4 (see `specs/roadmap.md`)
 
 ## Problem
@@ -19,13 +19,13 @@ Published cards have nowhere to be read. Visitors need the pages in product spec
 
 ## Acceptance criteria
 
-- [ ] "lind", "linden" and "Tilia cordata" all find small-leaved lime (unit and end-to-end).
-- [ ] Only published species appear; unpublished species 404 (end-to-end).
-- [ ] The disclaimer sits under food safety on every card and on the about page (end-to-end).
-- [ ] Warning species show the banner above everything else (end-to-end).
-- [ ] Sources are collapsed by default and grouped by field (end-to-end).
-- [ ] Every photo shows a credit line (end-to-end).
-- [ ] No horizontal scrolling at 360 px (end-to-end, mobile project).
+- [x] "lind", "linden" and "Tilia cordata" all find small-leaved lime (unit and end-to-end).
+- [x] Only published species appear; unpublished species 404 (end-to-end).
+- [x] The disclaimer sits under food safety on every card and on the about page (end-to-end).
+- [x] Warning species show the banner above everything else (end-to-end).
+- [x] Sources are collapsed by default and grouped by field (end-to-end).
+- [x] Every photo shows a credit line (end-to-end).
+- [x] No horizontal scrolling at 360 px (end-to-end, mobile project).
 
 ## Out of scope
 

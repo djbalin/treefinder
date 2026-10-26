@@ -1,6 +1,6 @@
 # 06. Drafting pipeline: spec
 
-Status: agreed
+Status: done
 Milestone: 6 (see `specs/roadmap.md`)
 
 ## Problem
@@ -22,10 +22,10 @@ Writing 40 carving cards with a source for every claim is the slowest part of la
 
 ## Acceptance criteria
 
-- [ ] The Claude request uses `claude-opus-5-5`, web search, a strict submit tool and refusal fallbacks; paused turns resume and text answers are asked again (unit, fake client).
-- [ ] Building the update drops invalid values and keeps other sections' sources (unit).
-- [ ] The workflow drafts all three sections, and leaves approved cards alone (integration, fake Claude).
-- [ ] An AI draft is published from the admin and appears on the site (end-to-end).
+- [x] The Claude request uses `claude-opus-5-5`, web search, a strict submit tool and refusal fallbacks; paused turns resume and text answers are asked again (unit, fake client).
+- [x] Building the update drops invalid values and keeps other sections' sources (unit).
+- [x] The workflow drafts all three sections, and leaves approved cards alone (integration, fake Claude).
+- [x] An AI draft is published from the admin and appears on the site (end-to-end).
 
 ## Out of scope
 

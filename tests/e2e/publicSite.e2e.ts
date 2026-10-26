@@ -91,9 +91,7 @@ test.describe("species card", () => {
   }) => {
     await page.goto(`/arter/${fixtures.yew.slug}`);
 
-    const banner = page
-      .getByRole("alert")
-      .filter({ hasText: "Alle dele af taks er giftige." });
+    const banner = page.getByRole("region", { name: "Advarsel" });
     await expect(banner).toContainText("Alle dele af taks er giftige.");
 
     const bannerBox = await banner.boundingBox();

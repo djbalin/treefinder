@@ -67,7 +67,7 @@ export default async function SpeciesListPage({ params, searchParams }: Props) {
   );
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-reading space-y-6">
       <PageTitle>{t("title")}</PageTitle>
       <SearchForm locale={locale} defaultValue={q} />
 

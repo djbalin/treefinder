@@ -23,7 +23,7 @@ export default async function WhereToGetWoodPage({ params }: Props) {
   const page = await getPage("whereToGetWood", locale);
 
   return (
-    <article className="space-y-6">
+    <article className="max-w-reading space-y-6">
       <PageTitle>{page.title}</PageTitle>
       <RichText value={page.content} />
     </article>

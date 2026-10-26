@@ -72,7 +72,7 @@ export default async function FilterKeyPage({ params, searchParams }: Props) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-reading space-y-6">
       <PageTitle>{t("title")}</PageTitle>
       <p className="text-ink-muted">{t("intro")}</p>
       <FilterKey

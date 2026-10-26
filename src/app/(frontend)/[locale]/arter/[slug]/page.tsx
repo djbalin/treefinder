@@ -1,13 +1,23 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { PhotoFigure } from "@/components/PhotoFigure";
+import { CardKey, type KeyRow } from "@/components/CardKey";
+import { PhotoPlate, type PlateEntry } from "@/components/PhotoPlate";
 import { RichText } from "@/components/RichText";
 import { SourcesDisclosure } from "@/components/SourcesDisclosure";
-import { Badge, PageTitle, Section, Tag, WarningBanner } from "@/components/ui";
+import {
+  PageTitle,
+  PlateNumber,
+  Section,
+  WarningBanner,
+} from "@/components/ui";
 import { optionLabel } from "@/domain/labels";
 import {
+  DIFFICULTIES,
   difficultyOptions,
+  filterTraitLabels,
+  filterValueLabels,
+  HARDNESS,
   hardnessOptions,
   type PhotoSlot,
   photoSlotOptions,
@@ -70,118 +80,173 @@ export default async function SpeciesCardPage({ params }: Props) {
       )
     : null;
 
-  return (
-    <article className="space-y-8">
-      {species.isWarning ? (
-        <WarningBanner title={t("warning")}>
-          {species.warningReason}
-        </WarningBanner>
-      ) : null}
+  const plate: PlateEntry[] = photoSlotOptions
+    .filter(
+      ({ value: slot }) =>
+        slot !== "cutWood" ||
+        photos.cutWood ||
+        !isRichTextEmpty(species.idFeatures?.cutWood),
+    )
+    .map(({ value: slot, label }, index) => ({
+      number: index + 1,
+      slot,
+      label: label[locale],
+      photo: photos[slot],
+    }));
 
-      <header className="space-y-2">
+  const keyRows: KeyRow[] = [];
+  if (species.greenCarving) {
+    keyRows.push({
+      label: t("greenCarving"),
+      value: optionLabel(difficultyOptions, species.greenCarving, locale),
+      scale: DIFFICULTIES.indexOf(species.greenCarving) + 1,
+    });
+  }
+  if (species.dryHardness) {
+    const hardness = optionLabel(hardnessOptions, species.dryHardness, locale);
+    keyRows.push({
+      label: t("dryHardness"),
+      value: species.jankaN ? (
+        <>
+          <span className="whitespace-nowrap">{hardness} ·</span>{" "}
+          <span className="whitespace-nowrap">
+            {t("janka", { value: species.jankaN })}
+          </span>
+        </>
+      ) : (
+        hardness
+      ),
+      scale: HARDNESS.indexOf(species.dryHardness) + 1,
+    });
+  }
+  const leafTypes = species.filterTraits?.leafType ?? [];
+  if (leafTypes.length > 0) {
+    keyRows.push({
+      label: filterTraitLabels.leafType[locale],
+      value: leafTypes
+        .map((value) => filterValueLabels[value][locale])
+        .join(", "),
+      mark: leafTypes[0],
+    });
+  }
+  if (species.goodForTags?.length) {
+    keyRows.push({
+      label: t("goodFor"),
+      value: species.goodForTags
+        .map((use) => optionLabel(useOptions, use, locale))
+        .join(", "),
+    });
+  }
+  if (species.isWarning) {
+    keyRows.push({
+      label: t("foodSafetyKey"),
+      value: t("toxic"),
+      mark: "warning",
+      tone: "warning",
+    });
+  } else if (species.foodSafetyChecked && checkedOn) {
+    keyRows.push({
+      label: t("foodSafetyKey"),
+      // Keep the date on one line in the narrow key column.
+      value: t("checkedOn", { date: checkedOn.replaceAll(" ", "\u00a0") }),
+      mark: "check",
+    });
+  }
+
+  return (
+    <article className="grid gap-x-12 gap-y-6 [grid-template-areas:'warning'_'head'_'key'_'plate'_'text'] lg:grid-cols-[var(--container-plate)_minmax(0,var(--container-reading))] lg:grid-rows-[auto_auto_auto_1fr] lg:[grid-template-areas:'warning_warning'_'plate_head'_'plate_key'_'plate_text']">
+      <header className="[grid-area:head]">
         <PageTitle>{species.name}</PageTitle>
-        <p className="italic text-ink-muted">{species.latinName}</p>
-        <div className="flex flex-wrap gap-2">
-          {species.greenCarving ? (
-            <Badge
-              label={t("greenCarving")}
-              value={optionLabel(
-                difficultyOptions,
-                species.greenCarving,
-                locale,
-              )}
-            />
-          ) : null}
-          {species.dryHardness ? (
-            <Badge
-              label={t("dryHardness")}
-              value={
-                species.jankaN
-                  ? `${optionLabel(hardnessOptions, species.dryHardness, locale)} · ${t("janka", { value: species.jankaN })}`
-                  : optionLabel(hardnessOptions, species.dryHardness, locale)
-              }
-            />
-          ) : null}
-        </div>
+        <p className="mt-1 text-xl italic text-ink-muted">
+          {species.latinName}
+        </p>
       </header>
 
-      <PhotoFigure
-        photo={photos.wholeTree}
-        caption={optionLabel(photoSlotOptions, "wholeTree", locale)}
-      />
-
-      <CardText title={t("grainTexture")} value={species.grainTexture} />
-      <CardText title={t("colourSmell")} value={species.colourSmell} />
-
-      <Section title={t("goodFor")}>
-        {species.goodForTags?.length ? (
-          <div className="flex flex-wrap gap-1">
-            {species.goodForTags.map((use) => (
-              <Tag key={use}>{optionLabel(useOptions, use, locale)}</Tag>
-            ))}
-          </div>
-        ) : null}
-        <RichText value={species.goodFor} />
-      </Section>
-
-      <CardText title={t("riving")} value={species.riving} />
-      <CardText title={t("drying")} value={species.drying} />
-
-      <Section title={t("foodSafety")}>
-        <RichText value={species.foodSafety} />
-        {checkedOn ? (
-          <p className="text-sm text-ink-muted">
-            {t("checkedOn", { date: checkedOn })}
-          </p>
-        ) : null}
-        <p className="rounded-panel border border-line bg-surface-muted p-3 text-sm">
-          {tDisclaimer("text")}
-        </p>
-      </Section>
-
-      <Section title={t("identification")}>
-        <div className="grid gap-6 sm:grid-cols-2">
-          {photoSlotOptions.map(({ value: slot, label }) =>
-            slot === "wholeTree" ||
-            (slot === "cutWood" &&
-              !photos.cutWood &&
-              isRichTextEmpty(species.idFeatures?.cutWood)) ? null : (
-              <div key={slot} className="space-y-2">
-                <PhotoFigure photo={photos[slot]} caption={label[locale]} />
-                <RichText
-                  value={species.idFeatures?.[ID_FEATURE_BY_SLOT[slot]]}
-                />
-              </div>
-            ),
-          )}
+      {/* After the h1 in the outline; the grid shows it above everything. */}
+      {species.isWarning ? (
+        <div className="[grid-area:warning]">
+          <WarningBanner title={t("warning")}>
+            {species.warningReason}
+          </WarningBanner>
         </div>
-        <RichText value={species.idFeatures?.shape} />
-      </Section>
-
-      {lookAlikes.length > 0 ? (
-        <Section title={t("lookAlikes")}>
-          <ul className="list-disc pl-6">
-            {lookAlikes.map((other) => (
-              <li key={other.id}>
-                <Link
-                  href={{
-                    pathname: "/arter/[slug]",
-                    params: { slug: other.slug },
-                  }}
-                  className="underline"
-                >
-                  {other.name}
-                </Link>{" "}
-                <span className="italic text-ink-muted">
-                  ({other.latinName})
-                </span>
-              </li>
-            ))}
-          </ul>
-        </Section>
       ) : null}
 
-      <SourcesDisclosure sources={species.sources ?? []} locale={locale} />
+      <div className="[grid-area:plate]">
+        <div className="lg:sticky lg:top-6">
+          <PhotoPlate entries={plate} />
+        </div>
+      </div>
+
+      <div className="[grid-area:key]">
+        <CardKey rows={keyRows} />
+      </div>
+
+      <div className="space-y-10 pt-4 [grid-area:text]">
+        <CardText title={t("grainTexture")} value={species.grainTexture} />
+        <CardText title={t("colourSmell")} value={species.colourSmell} />
+
+        <CardText title={t("goodFor")} value={species.goodFor} />
+
+        <CardText title={t("riving")} value={species.riving} />
+        <CardText title={t("drying")} value={species.drying} />
+
+        <Section title={t("foodSafety")}>
+          <RichText value={species.foodSafety} />
+          {checkedOn ? (
+            <p className="font-label text-sm text-ink-muted">
+              {t("checkedOn", { date: checkedOn })}
+            </p>
+          ) : null}
+          <p className="border-y border-line py-2 font-label text-sm">
+            {tDisclaimer("text")}
+          </p>
+        </Section>
+
+        <Section title={t("identification")}>
+          <ol className="space-y-5">
+            {plate.map(({ number, slot, label }) => {
+              const text = species.idFeatures?.[ID_FEATURE_BY_SLOT[slot]];
+              if (isRichTextEmpty(text)) return null;
+              return (
+                <li key={slot} className="flex gap-3">
+                  <PlateNumber className="mt-1 border border-accent">
+                    {number}
+                  </PlateNumber>
+                  <div className="min-w-0 space-y-1">
+                    <h3 className="font-label font-semibold">{label}</h3>
+                    <RichText value={text} />
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </Section>
+
+        {lookAlikes.length > 0 ? (
+          <Section title={t("lookAlikes")}>
+            <ul className="space-y-1">
+              {lookAlikes.map((other) => (
+                <li key={other.id}>
+                  <Link
+                    href={{
+                      pathname: "/arter/[slug]",
+                      params: { slug: other.slug },
+                    }}
+                    className="font-semibold text-accent underline hover:text-ink"
+                  >
+                    {other.name}
+                  </Link>{" "}
+                  <span className="italic text-ink-muted">
+                    ({other.latinName})
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Section>
+        ) : null}
+
+        <SourcesDisclosure sources={species.sources ?? []} locale={locale} />
+      </div>
     </article>
   );
 }

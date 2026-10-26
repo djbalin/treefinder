@@ -14,7 +14,7 @@ export default async function HomePage({ params }: Props) {
   const t = await getTranslations("Home");
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-reading space-y-6">
       <PageTitle>{t("heading")}</PageTitle>
       <p className="text-ink-muted">{t("intro")}</p>
       <SearchForm locale={locale} />

@@ -1,32 +1,41 @@
 /*
  * Design tokens: the single source of visual values.
  *
- * PLACEHOLDER. These are deliberately neutral values for the MVP. The visual
- * world will be established later with the impeccable design skill, which will
- * replace this file (and DESIGN.md will be generated from the result).
- * Components must only use these tokens, never raw colours or sizes, so the
- * replacement does not touch component code.
+ * The field guide plate: a white handbook page, near-black ink, plate green
+ * for numbers, key symbols and links, ochre for the key's scale marks, and
+ * warning red only for toxic species. Hairline ink rules and square corners.
+ * Components must only use these tokens, never raw colours or sizes.
  */
 @theme {
   /* Colour roles */
   --color-surface: #ffffff;
-  --color-surface-muted: #f4f4f5;
-  --color-ink: #18181b;
-  --color-ink-muted: #52525b;
-  --color-line: #d4d4d8;
-  --color-accent: #3f3f46;
+  --color-surface-muted: #f2f3ee;
+  --color-ink: #1d1d1b;
+  --color-ink-muted: #585a52;
+  --color-line: #1d1d1b;
+  --color-accent: #46602f;
   --color-accent-ink: #ffffff;
-  --color-warning: #b91c1c;
-  --color-warning-surface: #fef2f2;
+  --color-key: #a8791a;
+  --color-warning: #a3221b;
+  --color-warning-surface: #fbeceb;
 
-  /* Type */
-  --font-body: ui-sans-serif, system-ui, sans-serif;
-  --font-display: ui-sans-serif, system-ui, sans-serif;
+  /* Type: next/font sets --font-serif and --font-sans on <html> */
+  --font-body: var(--font-serif), Georgia, serif;
+  --font-display: var(--font-serif), Georgia, serif;
+  --font-label: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.6;
+  --text-title: 2.5rem;
+  --text-title--line-height: 1.05;
+  --text-title--letter-spacing: -0.015em;
 
   /* Shape */
-  --radius-control: 0.375rem;
-  --radius-panel: 0.5rem;
+  --radius-control: 0.125rem;
+  --radius-panel: 0;
 
   /* Layout */
-  --container-reading: 42rem;
+  --container-reading: 38rem;
+  --container-page: 72rem;
+  --container-plate: 26rem;
 }

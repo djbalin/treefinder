@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Archivo, Source_Serif_4 } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -6,6 +7,17 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { routing } from "@/i18n/routing";
 import "@/styles/globals.css";
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
+});
+
+const sans = Archivo({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 type Props = {
   children: ReactNode;
@@ -34,11 +46,14 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html lang={locale}>
-      <body className="min-h-dvh antialiased">
+    <html lang={locale} className={`${serif.variable} ${sans.variable}`}>
+      <body className="min-h-dvh text-body antialiased">
         <NextIntlClientProvider>
           <SiteHeader />
-          <main id="content" className="mx-auto max-w-reading px-4 py-8">
+          <main
+            id="content"
+            className="mx-auto max-w-page px-4 pt-6 pb-16 sm:pt-10"
+          >
             {children}
           </main>
         </NextIntlClientProvider>

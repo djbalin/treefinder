@@ -1,0 +1,345 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T16:43:01+00:00",
+  "title": "Design System: Treefinder",
+  "extensions": {
+    "colorMeta": {
+      "surface": {
+        "role": "neutral",
+        "displayName": "Handbook White",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 90)",
+          "oklch(25% 0 90)",
+          "oklch(35% 0 90)",
+          "oklch(45% 0 90)",
+          "oklch(58% 0 90)",
+          "oklch(72% 0 90)",
+          "oklch(85% 0 90)",
+          "oklch(95% 0 90)"
+        ]
+      },
+      "surface-muted": {
+        "role": "neutral",
+        "displayName": "Pale Sage",
+        "canonical": "oklch(96.2% 0.007 115.7)",
+        "tonalRamp": [
+          "oklch(15% 0.007 115.7)",
+          "oklch(25% 0.007 115.7)",
+          "oklch(35% 0.007 115.7)",
+          "oklch(45% 0.007 115.7)",
+          "oklch(58% 0.007 115.7)",
+          "oklch(72% 0.007 115.7)",
+          "oklch(85% 0.007 115.7)",
+          "oklch(95% 0.007 115.7)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Printer's Ink",
+        "canonical": "oklch(23% 0.004 106.7)",
+        "tonalRamp": [
+          "oklch(15% 0.004 106.7)",
+          "oklch(25% 0.004 106.7)",
+          "oklch(35% 0.004 106.7)",
+          "oklch(45% 0.004 106.7)",
+          "oklch(58% 0.004 106.7)",
+          "oklch(72% 0.004 106.7)",
+          "oklch(85% 0.004 106.7)",
+          "oklch(95% 0.004 106.7)"
+        ]
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Ink Grey",
+        "canonical": "oklch(46.3% 0.013 118.3)",
+        "tonalRamp": [
+          "oklch(15% 0.013 118.3)",
+          "oklch(25% 0.013 118.3)",
+          "oklch(35% 0.013 118.3)",
+          "oklch(45% 0.013 118.3)",
+          "oklch(58% 0.013 118.3)",
+          "oklch(72% 0.013 118.3)",
+          "oklch(85% 0.013 118.3)",
+          "oklch(95% 0.013 118.3)"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline Ink",
+        "canonical": "oklch(23% 0.004 106.7)",
+        "tonalRamp": [
+          "oklch(15% 0.004 106.7)",
+          "oklch(25% 0.004 106.7)",
+          "oklch(35% 0.004 106.7)",
+          "oklch(45% 0.004 106.7)",
+          "oklch(58% 0.004 106.7)",
+          "oklch(72% 0.004 106.7)",
+          "oklch(85% 0.004 106.7)",
+          "oklch(95% 0.004 106.7)"
+        ]
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Plate Green",
+        "canonical": "oklch(45.6% 0.08 131.8)",
+        "tonalRamp": [
+          "oklch(15% 0.08 131.8)",
+          "oklch(25% 0.08 131.8)",
+          "oklch(35% 0.08 131.8)",
+          "oklch(45% 0.08 131.8)",
+          "oklch(58% 0.08 131.8)",
+          "oklch(72% 0.08 131.8)",
+          "oklch(85% 0.08 131.8)",
+          "oklch(95% 0.08 131.8)"
+        ]
+      },
+      "accent-ink": {
+        "role": "primary",
+        "displayName": "Paper White on Green",
+        "canonical": "oklch(100% 0 0)",
+        "tonalRamp": [
+          "oklch(15% 0 90)",
+          "oklch(25% 0 90)",
+          "oklch(35% 0 90)",
+          "oklch(45% 0 90)",
+          "oklch(58% 0 90)",
+          "oklch(72% 0 90)",
+          "oklch(85% 0 90)",
+          "oklch(95% 0 90)"
+        ]
+      },
+      "key": {
+        "role": "secondary",
+        "displayName": "Scale Ochre",
+        "canonical": "oklch(60.8% 0.118 79.2)",
+        "tonalRamp": [
+          "oklch(15% 0.118 79.2)",
+          "oklch(25% 0.118 79.2)",
+          "oklch(35% 0.118 79.2)",
+          "oklch(45% 0.118 79.2)",
+          "oklch(58% 0.118 79.2)",
+          "oklch(72% 0.118 79.2)",
+          "oklch(85% 0.118 79.2)",
+          "oklch(95% 0.118 79.2)"
+        ]
+      },
+      "warning": {
+        "role": "tertiary",
+        "displayName": "Warning Red",
+        "canonical": "oklch(46.8% 0.166 28.6)",
+        "tonalRamp": [
+          "oklch(15% 0.166 28.6)",
+          "oklch(25% 0.166 28.6)",
+          "oklch(35% 0.166 28.6)",
+          "oklch(45% 0.166 28.6)",
+          "oklch(58% 0.166 28.6)",
+          "oklch(72% 0.166 28.6)",
+          "oklch(85% 0.166 28.6)",
+          "oklch(95% 0.166 28.6)"
+        ]
+      },
+      "warning-surface": {
+        "role": "tertiary",
+        "displayName": "Warning Wash",
+        "canonical": "oklch(95.5% 0.016 22.1)",
+        "tonalRamp": [
+          "oklch(15% 0.016 22.1)",
+          "oklch(25% 0.016 22.1)",
+          "oklch(35% 0.016 22.1)",
+          "oklch(45% 0.016 22.1)",
+          "oklch(58% 0.016 22.1)",
+          "oklch(72% 0.016 22.1)",
+          "oklch(85% 0.016 22.1)",
+          "oklch(95% 0.016 22.1)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Species name, one per page; nothing above it."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings in the reading column, under a hairline rule."
+      },
+      "subtitle": {
+        "displayName": "Subtitle",
+        "purpose": "Latin name in italic Ink Grey under the title."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text in the 38rem reading column."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Archivo apparatus: key values, ID sub-heads, sources toggle, header."
+      },
+      "label-small": {
+        "displayName": "Label Small",
+        "purpose": "Key terms on phones, plate captions and credits, dates, disclaimer."
+      }
+    },
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ],
+    "containers": [
+      {
+        "name": "reading",
+        "value": "38rem"
+      },
+      {
+        "name": "page",
+        "value": "72rem"
+      },
+      {
+        "name": "plate",
+        "value": "26rem"
+      }
+    ],
+    "focus": {
+      "value": "2px solid var(--color-accent); outline-offset: 2px",
+      "purpose": "Every focusable element."
+    }
+  },
+  "components": [
+    {
+      "name": "Site Header",
+      "kind": "nav",
+      "refersTo": "site-header",
+      "description": "Thin ruled masthead: Archivo wordmark and muted nav links over one hairline rule.",
+      "html": "<header class=\"ds-header\"><nav class=\"ds-header-nav\"><a class=\"ds-header-mark\" href=\"#\">Treefinder</a><div class=\"ds-header-links\"><a href=\"#\">Arter</a><a href=\"#\">Find træet</a><a href=\"#\">Skaf træ</a><a href=\"#\">Om</a></div></nav></header>",
+      "css": ".ds-header{border-bottom:1px solid var(--color-line, #1d1d1b);font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;background:var(--color-surface, #fff);} .ds-header-nav{display:flex;align-items:baseline;gap:2rem;padding:0.75rem 1rem;flex-wrap:wrap;} .ds-header-mark{font-size:1.125rem;font-weight:700;letter-spacing:-0.025em;color:var(--color-ink, #1d1d1b);text-decoration:none;} .ds-header-links{display:flex;gap:1.25rem;flex-wrap:wrap;} .ds-header-links a{padding:0.25rem 0;color:var(--color-ink-muted, #585a52);text-decoration:none;text-underline-offset:0.18em;} .ds-header-links a:hover{color:var(--color-ink, #1d1d1b);text-decoration:underline;} .ds-header a:focus-visible{outline:2px solid var(--color-accent, #46602f);outline-offset:2px;}"
+    },
+    {
+      "name": "Species Title",
+      "kind": "custom",
+      "refersTo": "page-title",
+      "description": "Serif species name with italic Latin name beneath; nothing above it.",
+      "html": "<header class=\"ds-title\"><h1>Småbladet lind</h1><p>Tilia cordata</p></header>",
+      "css": ".ds-title h1{margin:0;font-family:var(--font-serif, 'Source Serif 4'), Georgia, serif;font-size:2.5rem;line-height:1.05;letter-spacing:-0.015em;font-weight:700;color:var(--color-ink, #1d1d1b);text-wrap:balance;} .ds-title p{margin:0.25rem 0 0;font-family:var(--font-serif, 'Source Serif 4'), Georgia, serif;font-style:italic;font-size:1.25rem;line-height:1.4;color:var(--color-ink-muted, #585a52);}"
+    },
+    {
+      "name": "Card Key",
+      "kind": "custom",
+      "refersTo": "card-key-row",
+      "description": "Ruled symbol key of carving facts with ochre scale marks and drawn single-stroke symbols.",
+      "html": "<dl class=\"ds-key\"><div><dt>Snitning, grønt træ</dt><dd><svg viewBox=\"0 0 34 10\" class=\"ds-scale\" aria-hidden=\"true\"><rect x=\"0.75\" y=\"0.75\" width=\"8.5\" height=\"8.5\" class=\"on\"/><rect x=\"12.75\" y=\"0.75\" width=\"8.5\" height=\"8.5\"/><rect x=\"24.75\" y=\"0.75\" width=\"8.5\" height=\"8.5\"/></svg><span>Let</span></dd></div><div><dt>Bladtype</dt><dd><svg viewBox=\"0 0 16 16\" class=\"ds-mark\" aria-hidden=\"true\"><path d=\"M8 14.5V7\"/><path d=\"M8 14.5C3 12 2.5 6 8 1.5 13.5 6 13 12 8 14.5Z\"/></svg><span>Løvblade</span></dd></div><div><dt>Fødevaresikkerhed</dt><dd><svg viewBox=\"0 0 16 16\" class=\"ds-mark\" aria-hidden=\"true\"><path d=\"M2.5 8.5 6.5 12.5 13.5 3.5\"/></svg><span>Kontrolleret 12. oktober 2026</span></dd></div><div class=\"warn\"><dt>Fødevaresikkerhed</dt><dd><svg viewBox=\"0 0 16 16\" class=\"ds-mark\" aria-hidden=\"true\"><path d=\"M8 1.75 14.75 14H1.25Z\"/><path d=\"M8 6.25v3.5\"/><path d=\"M8 11.9v.1\"/></svg><span>Giftig, ikke til madredskaber</span></dd></div></dl>",
+      "css": ".ds-key{margin:0;border-bottom:1px solid var(--color-line, #1d1d1b);font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;max-width:38rem;} .ds-key>div{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:0 0.75rem;align-items:start;border-top:1px solid var(--color-line, #1d1d1b);padding:0.5rem 0;line-height:1.5rem;} .ds-key dt{color:var(--color-ink-muted, #585a52);font-size:1rem;} .ds-key dd{margin:0;display:flex;gap:0 0.5rem;align-items:flex-start;font-weight:600;color:var(--color-ink, #1d1d1b);} .ds-key .warn dd{color:var(--color-warning, #a3221b);} .ds-scale{margin-top:0.5rem;height:0.625rem;width:auto;flex-shrink:0;} .ds-scale rect{fill:transparent;stroke:var(--color-key, #a8791a);stroke-width:1.5;} .ds-scale rect.on{fill:var(--color-key, #a8791a);} .ds-mark{margin-top:0.25rem;width:1rem;height:1rem;flex-shrink:0;fill:none;stroke:var(--color-accent, #46602f);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;} .ds-key .warn .ds-mark{stroke:var(--color-warning, #a3221b);}"
+    },
+    {
+      "name": "Photo Plate",
+      "kind": "card",
+      "refersTo": "photo-plate",
+      "description": "Framed 2 by 2 plate of 4:5 tiles with numbered tabs and a numbered credit caption.",
+      "html": "<figure class=\"ds-plate\"><div class=\"ds-plate-grid\"><div class=\"ds-tile\"><span class=\"ds-num\">1</span></div><div class=\"ds-tile\"><span class=\"ds-num\">2</span></div><div class=\"ds-tile\"><span class=\"ds-num\">3</span></div><div class=\"ds-tile\"><p>Intet foto endnu</p><span class=\"ds-num\">4</span></div></div><figcaption><ol><li><span class=\"n\">1</span><span><b>Hele træet.</b> Foto: Stefan.lefnaer, Wikimedia Commons (<a href=\"#\">CC-BY-SA-3.0</a>)</span></li><li><span class=\"n\">2</span><span><b>Blad.</b> Foto: AnRo0002, Wikimedia Commons (<a href=\"#\">CC0-1.0</a>)</span></li></ol></figcaption></figure>",
+      "css": ".ds-plate{margin:0;max-width:26rem;} .ds-plate-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border:1px solid var(--color-line, #1d1d1b);} .ds-tile{position:relative;aspect-ratio:4/5;background:var(--color-surface-muted, #f2f3ee);display:flex;align-items:center;justify-content:center;} .ds-tile p{margin:0;padding:0.5rem;text-align:center;font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:0.875rem;color:var(--color-ink-muted, #585a52);} .ds-num{position:absolute;left:6px;top:6px;display:inline-flex;width:1.5rem;height:1.5rem;align-items:center;justify-content:center;background:var(--color-surface, #fff);font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:0.875rem;font-weight:700;color:var(--color-accent, #46602f);} .ds-plate figcaption ol{list-style:none;margin:0.75rem 0 0;padding:0;font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:0.875rem;line-height:1.43;color:var(--color-ink-muted, #585a52);} .ds-plate figcaption li{display:flex;gap:0.5rem;margin-bottom:0.25rem;} .ds-plate .n{width:1rem;flex-shrink:0;font-weight:700;color:var(--color-accent, #46602f);} .ds-plate b{font-weight:600;color:var(--color-ink, #1d1d1b);} .ds-plate a{color:inherit;text-decoration:underline;text-underline-offset:0.18em;white-space:nowrap;} .ds-plate a:hover{color:var(--color-ink, #1d1d1b);} .ds-plate a:focus-visible{outline:2px solid var(--color-accent, #46602f);outline-offset:2px;}"
+    },
+    {
+      "name": "Section with Keyed Identification",
+      "kind": "custom",
+      "refersTo": "section-heading",
+      "description": "Ruled serif section heading; identification items keyed to the plate by bordered numbers.",
+      "html": "<section class=\"ds-section\"><h2>Sådan kender du træet</h2><ol><li><span class=\"ds-knum\">1</span><div><h3>Hele træet</h3><p>Et stort træ med tæt, hvælvet krone. Gamle træer har ofte mange skud fra foden af stammen.</p></div></li><li><span class=\"ds-knum\">2</span><div><h3>Blad</h3><p>Hjerteformede blade, 3 til 8 cm, med fin savtakket rand.</p></div></li></ol></section>",
+      "css": ".ds-section{max-width:38rem;font-family:var(--font-serif, 'Source Serif 4'), Georgia, serif;color:var(--color-ink, #1d1d1b);font-size:1.0625rem;line-height:1.6;} .ds-section h2{margin:0 0 0.75rem;border-top:1px solid var(--color-line, #1d1d1b);padding-top:0.75rem;font-size:1.5rem;font-weight:600;line-height:1.25;} .ds-section ol{list-style:none;margin:0;padding:0;} .ds-section li{display:flex;gap:0.75rem;margin-bottom:1.25rem;} .ds-knum{margin-top:0.25rem;display:inline-flex;width:1.5rem;height:1.5rem;flex-shrink:0;align-items:center;justify-content:center;border:1px solid var(--color-accent, #46602f);background:var(--color-surface, #fff);font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:0.875rem;font-weight:700;color:var(--color-accent, #46602f);} .ds-section h3{margin:0 0 0.25rem;font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:1rem;font-weight:600;} .ds-section p{margin:0;}"
+    },
+    {
+      "name": "Warning Banner",
+      "kind": "custom",
+      "refersTo": "warning-banner",
+      "description": "Toxic species only: warning wash between 2px red rules, uppercase Archivo title.",
+      "html": "<section class=\"ds-warning\"><h2>Advarsel</h2><div>Alle dele af taks er giftige, undtagen den røde frøkappe. Brug aldrig taks til madredskaber.</div></section>",
+      "css": ".ds-warning{border-top:2px solid var(--color-warning, #a3221b);border-bottom:2px solid var(--color-warning, #a3221b);background:var(--color-warning-surface, #fbeceb);color:var(--color-warning, #a3221b);padding:0.75rem 1rem;font-family:var(--font-serif, 'Source Serif 4'), Georgia, serif;} .ds-warning h2{margin:0;font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;font-size:1.0625rem;font-weight:700;text-transform:uppercase;letter-spacing:0.025em;} .ds-warning div{margin-top:0.25rem;font-weight:500;line-height:1.6;}"
+    },
+    {
+      "name": "Text Link",
+      "kind": "custom",
+      "refersTo": "text-link",
+      "description": "Plate green underlined link that turns ink on hover; green focus outline.",
+      "html": "<p class=\"ds-linkp\"><a class=\"ds-link\" href=\"#\">Taks</a> <i>(Taxus baccata)</i></p>",
+      "css": ".ds-linkp{font-family:var(--font-serif, 'Source Serif 4'), Georgia, serif;font-size:1.0625rem;color:var(--color-ink-muted, #585a52);} .ds-link{font-weight:600;color:var(--color-accent, #46602f);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.18em;} .ds-link:hover{color:var(--color-ink, #1d1d1b);} .ds-link:focus-visible{outline:2px solid var(--color-accent, #46602f);outline-offset:2px;}"
+    },
+    {
+      "name": "Sources Disclosure",
+      "kind": "custom",
+      "refersTo": "sources-disclosure",
+      "description": "Native details between hairline rules; green marker and green source links.",
+      "html": "<details class=\"ds-sources\" open><summary>Kilder (3)</summary><div><h3>Fødevaresikkerhed</h3><ul><li><a href=\"#\">Wood Database: Basswood</a></li><li><a href=\"#\">Den Store Danske: Lind</a></li></ul></div></details>",
+      "css": ".ds-sources{border-top:1px solid var(--color-line, #1d1d1b);border-bottom:1px solid var(--color-line, #1d1d1b);padding:0.75rem 0;font-family:var(--font-sans, Archivo), ui-sans-serif, system-ui, sans-serif;color:var(--color-ink, #1d1d1b);max-width:38rem;} .ds-sources summary{cursor:pointer;font-weight:600;} .ds-sources summary::marker{color:var(--color-accent, #46602f);} .ds-sources summary:hover{color:var(--color-accent, #46602f);} .ds-sources summary:focus-visible{outline:2px solid var(--color-accent, #46602f);outline-offset:2px;} .ds-sources div{margin-top:0.75rem;} .ds-sources h3{margin:0;font-size:0.875rem;font-weight:600;text-transform:uppercase;letter-spacing:0.025em;color:var(--color-ink-muted, #585a52);} .ds-sources ul{margin:0;padding-left:1.5rem;list-style:disc;} .ds-sources a{color:var(--color-accent, #46602f);text-decoration:underline;text-underline-offset:0.18em;} .ds-sources a:hover{color:var(--color-ink, #1d1d1b);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Flora Handbook Plate",
+    "overview": "Treefinder reads like a page from a Nordic flora handbook: a white page, near-black ink, a numbered plate of photographs keyed to text, and a symbol key of facts ruled off with hairlines. The species card at `/arter/[slug]` is the first and so far only surface built in this world, and it sets the system. A carver should be able to read it calmly on a phone at home, see what tree this is, how it carves, and whether it is safe, then follow any claim to its source.\n\nThe world is quiet and printed rather than app-like. Hierarchy comes from weight, rules and position, not from boxes, colour fields or shadows. Colour is spent sparingly: one plate green does the pointing (plate numbers, key symbols, links, focus), ochre fills only the carving-scale marks, and warning red appears only on toxic species. Everything else is ink on white. The design refuses the species-app default of swipe carousels, chip rows and rounded cards.\n\nScope: only the species card has had its own design pass. The species list, filter key, home page, \"where to get wood\" and about pages inherit the tokens and the site header but keep their pre-pass placeholder layouts and components. The Payload admin is unstyled by this system. Their patterns are not yet part of this document unless stated.",
+    "keyCharacteristics": [
+      "White handbook page, near-black ink, hairline ink rules.",
+      "Square corners everywhere on content; no shadows, no gradients.",
+      "Source Serif 4 for titles and reading text; Archivo for header, key, captions and other apparatus.",
+      "A numbered photo plate whose numbers key the photos to the identification text.",
+      "A ruled symbol key of carving facts with drawn, single-stroke marks.",
+      "Warning red reserved for toxicity alone."
+    ],
+    "rules": [
+      {
+        "name": "The One Pointer Rule",
+        "body": "Plate green marks what keys, links or has focus. It is never a fill for surfaces or decoration on the card.",
+        "section": "colors"
+      },
+      {
+        "name": "The Red Is Reserved Rule",
+        "body": "Warning red and its wash appear only when a species is toxic. A safe card has no red at all.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ochre Never Speaks Rule",
+        "body": "Ochre draws the scale marks and nothing else; never use it for text.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Reads, the Sans Keys Rule",
+        "body": "Prose and titles are serif; anything that labels, keys, credits or navigates is Archivo.",
+        "section": "typography"
+      },
+      {
+        "name": "The Weight Not Size Rule",
+        "body": "In the key and captions, rank is carried by weight and colour (semibold ink value against regular grey term), not by bigger type.",
+        "section": "typography"
+      },
+      {
+        "name": "The Two-Page Spread Rule",
+        "body": "On desktop the plate is the left page and the text is the right page. Do not interleave photos into the reading column.",
+        "section": "layout"
+      },
+      {
+        "name": "The Printed Page Rule",
+        "body": "If it could not be printed on a handbook page, it does not belong: no shadows, blurs, glows or gradients.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** build hierarchy from hairline ink rules, weight and position before reaching for size or colour.",
+      "**Do** key photos to text with plate numbers, and keep every photo's author, licence and source in the plate caption.",
+      "**Do** put carving facts in a ruled key with drawn single-stroke marks and the three-step ochre scale.",
+      "**Do** set reading text in the serif at 1.0625rem / 1.6 within the 38rem reading column.",
+      "**Do** take every colour, family, title and body size, radius and container width from `src/styles/tokens.css`.",
+      "**Do** keep the food-safety disclaimer and, for toxic species, the warning banner visible without interaction."
+    ],
+    "donts": [
+      "**Don't** add shadows, gradients or rounded content panels; corners are square and the page is flat.",
+      "**Don't** present a species' photos as a swipe carousel or its carving facts as chips or rounded cards.",
+      "**Don't** use warning red on a species that is not toxic, or use it for emphasis elsewhere.",
+      "**Don't** set text in ochre.",
+      "**Don't** put a small label or kicker above the species name; the title opens the card."
+    ]
+  }
+}

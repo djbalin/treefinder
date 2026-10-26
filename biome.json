@@ -13,7 +13,9 @@
       "!.next",
       "!src/payload-types.ts",
       "!src/migrations",
-      "!src/app/(payload)"
+      "!src/app/(payload)",
+      "!.impeccable",
+      "!DESIGN.md"
     ]
   },
   "formatter": {

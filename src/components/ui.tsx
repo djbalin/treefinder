@@ -2,23 +2,27 @@ import type { ReactNode } from "react";
 import { slugify } from "@/domain/slug";
 
 /*
- * Placeholder UI primitives. Every visual value comes from the tokens in
- * src/styles/tokens.css; the impeccable design pass restyles these in one
- * place.
+ * Shared UI primitives in the field guide world. Every visual value comes
+ * from the tokens in src/styles/tokens.css.
  */
 
-export function Badge({ label, value }: { label: string; value: ReactNode }) {
-  return (
-    <span className="inline-flex items-baseline gap-1 rounded-control border border-line bg-surface-muted px-2 py-1 text-sm">
-      <span className="text-ink-muted">{label}</span>
-      <span className="font-medium">{value}</span>
-    </span>
-  );
+export function Tag({ children }: { children: ReactNode }) {
+  return <span className="font-label text-sm text-ink-muted">{children}</span>;
 }
 
-export function Tag({ children }: { children: ReactNode }) {
+/** The number that keys a plate photo to its identification text. */
+export function PlateNumber({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <span className="rounded-control bg-surface-muted px-2 py-0.5 text-sm text-ink-muted">
+    <span
+      aria-hidden="true"
+      className={`inline-flex size-6 shrink-0 items-center justify-center bg-surface font-label text-sm font-bold text-accent ${className}`}
+    >
       {children}
     </span>
   );
@@ -31,14 +35,17 @@ export function WarningBanner({
   title: string;
   children: ReactNode;
 }) {
+  const id = `warning-${slugify(title)}`;
   return (
-    <div
-      role="alert"
-      className="rounded-panel border border-warning bg-warning-surface p-4 text-warning"
+    <section
+      aria-labelledby={id}
+      className="border-y-2 border-warning bg-warning-surface px-4 py-3 text-warning"
     >
-      <p className="font-semibold">{title}</p>
-      <div>{children}</div>
-    </div>
+      <h2 id={id} className="font-label font-bold uppercase tracking-wide">
+        {title}
+      </h2>
+      <div className="mt-1 font-medium">{children}</div>
+    </section>
   );
 }
 
@@ -51,8 +58,11 @@ export function Section({
 }) {
   const id = `section-${slugify(title)}`;
   return (
-    <section aria-labelledby={id} className="space-y-2">
-      <h2 id={id} className="font-display text-xl font-semibold">
+    <section aria-labelledby={id} className="space-y-3">
+      <h2
+        id={id}
+        className="border-t border-line pt-3 font-display text-2xl font-semibold leading-tight"
+      >
         {title}
       </h2>
       {children}
@@ -62,7 +72,7 @@ export function Section({
 
 export function PageTitle({ children }: { children: ReactNode }) {
   return (
-    <h1 className="font-display text-3xl font-semibold leading-tight">
+    <h1 className="text-balance font-display text-title font-bold">
       {children}
     </h1>
   );

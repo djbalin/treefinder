@@ -29,7 +29,7 @@ export default async function AboutPage({ params }: Props) {
   const photos = await getSelectedPhotos([...nameById.keys()], locale);
 
   return (
-    <article className="space-y-8">
+    <article className="max-w-reading space-y-8">
       <PageTitle>{page.title}</PageTitle>
       <RichText value={page.content} />
 

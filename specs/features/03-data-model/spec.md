@@ -1,6 +1,6 @@
 # 03. Data model: spec
 
-Status: agreed
+Status: done
 Milestone: 3 (see `specs/roadmap.md`)
 
 ## Problem
@@ -20,11 +20,11 @@ The app has no content model. Cards, photos, the static pages and the publish wo
 
 ## Acceptance criteria
 
-- [ ] Each publish rule has a unit test.
-- [ ] Publishing an incomplete card through the Local API fails; a complete card publishes (integration test).
-- [ ] Visitors cannot read unpublished species or non-selected photos (integration test).
-- [ ] One selected photo per slot (unit and integration test).
-- [ ] The species table parser reads all 40 species, 18 launch species and 3 warnings (unit test).
+- [x] Each publish rule has a unit test.
+- [x] Publishing an incomplete card through the Local API fails; a complete card publishes (integration test).
+- [x] Visitors cannot read unpublished species or non-selected photos (integration test).
+- [x] One selected photo per slot (unit and integration test).
+- [x] The species table parser reads all 40 species, 18 launch species and 3 warnings (unit test).
 - [ ] The seed runs twice without duplicating anything.
 
 ## Out of scope

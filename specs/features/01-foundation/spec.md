@@ -1,6 +1,6 @@
 # 01. Foundation: spec
 
-Status: agreed
+Status: done
 Milestone: 1 (see `specs/roadmap.md`)
 
 ## Problem
@@ -21,11 +21,11 @@ There is no application yet. Every later milestone needs a working Next.js + Pay
 
 ## Acceptance criteria
 
-- [ ] `pnpm lint`, `pnpm typecheck`, `pnpm test:unit` pass.
-- [ ] `pnpm test:int` connects to Postgres and lists users via the Payload Local API.
-- [ ] `pnpm build` succeeds.
-- [ ] Playwright: `/` shows the Danish heading; `/en` returns 404 while English is disabled; `/admin` shows the Payload login.
-- [ ] CI runs all of the above on a PR.
+- [x] `pnpm lint`, `pnpm typecheck`, `pnpm test:unit` pass.
+- [x] `pnpm test:int` connects to Postgres and lists users via the Payload Local API.
+- [x] `pnpm build` succeeds.
+- [x] Playwright: `/` shows the Danish heading; `/en` returns 404 while English is disabled; `/admin` shows the Payload login.
+- [x] CI runs all of the above on a PR.
 
 ## Out of scope
 

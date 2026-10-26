@@ -1,6 +1,6 @@
 # 05. Photo pipeline: spec
 
-Status: agreed
+Status: done
 Milestone: 5 (see `specs/roadmap.md`)
 
 ## Problem
@@ -26,10 +26,10 @@ Every published card needs four reference photos under commercially safe license
 
 ## Acceptance criteria
 
-- [ ] License mapping, Commons and iNaturalist parsing, host allowlist and de-duplication have unit tests.
-- [ ] Running the workflow twice against fake APIs stores each candidate once (integration).
-- [ ] Selecting a candidate downloads and attaches its file; unknown hosts are refused (integration).
-- [ ] The review queue lists a candidate and X rejects it (end-to-end).
+- [x] License mapping, Commons and iNaturalist parsing, host allowlist and de-duplication have unit tests.
+- [x] Running the workflow twice against fake APIs stores each candidate once (integration).
+- [x] Selecting a candidate downloads and attaches its file; unknown hosts are refused (integration).
+- [x] The review queue lists a candidate and X rejects it (end-to-end).
 
 ## Out of scope
 

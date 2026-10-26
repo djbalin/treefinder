@@ -26,21 +26,21 @@ export function SourcesDisclosure({
   })).filter((group) => group.items.length > 0);
 
   return (
-    <details className="rounded-panel border border-line p-4">
-      <summary className="cursor-pointer font-semibold">
+    <details className="group border-y border-line py-3 font-label">
+      <summary className="cursor-pointer font-semibold marker:text-accent hover:text-accent">
         {t("sources")} ({sources.length})
       </summary>
       <div className="mt-3 space-y-3">
         {groups.map((group) => (
           <div key={group.field}>
-            <h3 className="text-sm font-semibold text-ink-muted">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-ink-muted">
               {optionLabel(sourceFieldOptions, group.field, locale)}
             </h3>
             <ul className="list-disc pl-6">
               {group.items.map((source) => (
                 <li key={source.id ?? source.url}>
                   <a
-                    className="underline"
+                    className="text-accent underline hover:text-ink"
                     href={source.url}
                     rel="noopener noreferrer"
                     target="_blank"

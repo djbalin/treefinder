@@ -1,6 +1,6 @@
 # 07. Filter key: spec
 
-Status: agreed (MVP, to be evaluated by the maintainer)
+Status: done (MVP, to be evaluated by the maintainer)
 Milestone: 7 (see `specs/roadmap.md`)
 
 ## Problem
@@ -19,9 +19,9 @@ Browsing 40 species to identify a tree is tedious. Product spec §6.2 defines a 
 
 ## Acceptance criteria
 
-- [ ] Matching rules, distinguishing traits, URL parsing and the acceptance check have unit tests.
-- [ ] Picking and resetting traits narrows and restores the list, and the URL follows (end-to-end).
-- [ ] A selection in the URL is applied on load (end-to-end).
+- [x] Matching rules, distinguishing traits, URL parsing and the acceptance check have unit tests.
+- [x] Picking and resetting traits narrows and restores the list, and the URL follows (end-to-end).
+- [x] A selection in the URL is applied on load (end-to-end).
 
 ## Out of scope
 

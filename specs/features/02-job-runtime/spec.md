@@ -1,6 +1,6 @@
 # 02. Job runtime: spec
 
-Status: agreed
+Status: done
 Milestone: 2 (see `specs/roadmap.md`)
 
 ## Problem
@@ -24,8 +24,8 @@ The photo and drafting jobs call slow external APIs. A Claude call with web sear
 
 ## Acceptance criteria
 
-- [ ] `architecture.md` §5 describes this runtime model.
-- [ ] Milestone 5 and 6 specs follow it (checked in their PRs).
+- [x] `architecture.md` §5 describes this runtime model.
+- [x] Milestone 5 and 6 specs follow it (checked in their PRs).
 - [ ] The measurement is recorded in `architecture.md` once a Claude API key exists (milestone 6).
 
 ## Out of scope

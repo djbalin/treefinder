@@ -46,6 +46,8 @@
     "riving": "Riving and splitting",
     "drying": "Drying",
     "foodSafety": "Food safety and toxicity",
+    "foodSafetyKey": "Food safety",
+    "toxic": "Toxic, not for kitchen tools",
     "checkedOn": "Checked {date}",
     "identification": "How to recognise it",
     "noPhoto": "No photo yet",

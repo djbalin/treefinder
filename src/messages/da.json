@@ -46,6 +46,8 @@
     "riving": "Kløvning",
     "drying": "Tørring",
     "foodSafety": "Fødevaresikkerhed og giftighed",
+    "foodSafetyKey": "Fødevaresikkerhed",
+    "toxic": "Giftig, ikke til madredskaber",
     "checkedOn": "Kontrolleret {date}",
     "identification": "Sådan kender du træet",
     "noPhoto": "Intet foto endnu",

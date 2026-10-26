@@ -18,22 +18,20 @@ function idParam(req: PayloadRequest): number | null {
   return Number.isInteger(id) ? id : null;
 }
 
-/**
- * POST /api/species/:id/fetch-photos. Queues the photo workflow and runs it
- * right after the response is sent (architecture spec §5, runtime model).
- */
-export const fetchPhotosEndpoint: Endpoint = {
-  path: "/:id/fetch-photos",
-  method: "post",
-  handler: async (req) => {
+/** Queues a workflow for a species and runs it after the response is sent. */
+function queueSpeciesWorkflow(
+  workflow: "fetchPhotoCandidates" | "draftCard",
+): Endpoint["handler"] {
+  return async (req) => {
     const denied = requireAdmin(req);
     if (denied) return denied;
     const species = idParam(req);
-    if (species === null)
+    if (species === null) {
       return Response.json({ error: "Ugyldigt id." }, { status: 400 });
+    }
 
     const job = await req.payload.jobs.queue({
-      workflow: "fetchPhotoCandidates",
+      workflow,
       input: { species },
       req,
     });
@@ -42,7 +40,27 @@ export const fetchPhotosEndpoint: Endpoint = {
       await payload.jobs.runByID({ id: job.id });
     });
     return Response.json({ jobId: job.id }, { status: 202 });
-  },
+  };
+}
+
+/**
+ * POST /api/species/:id/draft-card. Queues the card drafting workflow
+ * (product spec §7.4) and runs it after the response.
+ */
+export const draftCardEndpoint: Endpoint = {
+  path: "/:id/draft-card",
+  method: "post",
+  handler: queueSpeciesWorkflow("draftCard"),
+};
+
+/**
+ * POST /api/species/:id/fetch-photos. Queues the photo workflow and runs it
+ * right after the response is sent (architecture spec §5, runtime model).
+ */
+export const fetchPhotosEndpoint: Endpoint = {
+  path: "/:id/fetch-photos",
+  method: "post",
+  handler: queueSpeciesWorkflow("fetchPhotoCandidates"),
 };
 
 /** POST /api/photos/:id/select with `{ "slot": "bark" }`. */

@@ -12,6 +12,7 @@ import { Photos } from "./collections/Photos";
 import { Species } from "./collections/Species";
 import { Users } from "./collections/Users";
 import { About, WhereToGetWood } from "./globals/pages";
+import { draftCardWorkflow, draftSectionTasks } from "./jobs/draftCard";
 import {
   fetchCommonsTask,
   fetchInaturalistTask,
@@ -71,8 +72,8 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   jobs: {
-    tasks: [fetchCommonsTask, fetchInaturalistTask],
-    workflows: [fetchPhotoCandidatesWorkflow],
+    tasks: [fetchCommonsTask, fetchInaturalistTask, ...draftSectionTasks],
+    workflows: [fetchPhotoCandidatesWorkflow, draftCardWorkflow],
     access: {
       queue: ({ req }) => Boolean(req.user),
       // Admins, or the daily Vercel Cron sweep (architecture spec §5).

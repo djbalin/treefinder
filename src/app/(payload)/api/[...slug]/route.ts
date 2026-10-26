@@ -20,4 +20,4 @@ export const OPTIONS = REST_OPTIONS(config)
 
 // Added for Treefinder: admin actions run background jobs after the response
 // (architecture spec §5). Re-add this line if Payload regenerates the file.
-export const maxDuration = 60
+export const maxDuration = 300

@@ -108,6 +108,9 @@ export interface Config {
     tasks: {
       fetchCommonsPhotos: TaskFetchCommonsPhotos;
       fetchInaturalistPhotos: TaskFetchInaturalistPhotos;
+      draftCarving: TaskDraftCarving;
+      draftSafety: TaskDraftSafety;
+      draftIdentification: TaskDraftIdentification;
       inline: {
         input: unknown;
         output: unknown;
@@ -115,6 +118,7 @@ export interface Config {
     };
     workflows: {
       fetchPhotoCandidates: WorkflowFetchPhotoCandidates;
+      draftCard: WorkflowDraftCard;
     };
   };
 }
@@ -515,7 +519,13 @@ export interface PayloadJob {
     | {
         executedAt: string;
         completedAt: string;
-        taskSlug: 'inline' | 'fetchCommonsPhotos' | 'fetchInaturalistPhotos';
+        taskSlug:
+          | 'inline'
+          | 'fetchCommonsPhotos'
+          | 'fetchInaturalistPhotos'
+          | 'draftCarving'
+          | 'draftSafety'
+          | 'draftIdentification';
         taskID: string;
         input?:
           | {
@@ -548,8 +558,17 @@ export interface PayloadJob {
         id?: string | null;
       }[]
     | null;
-  workflowSlug?: 'fetchPhotoCandidates' | null;
-  taskSlug?: ('inline' | 'fetchCommonsPhotos' | 'fetchInaturalistPhotos') | null;
+  workflowSlug?: ('fetchPhotoCandidates' | 'draftCard') | null;
+  taskSlug?:
+    | (
+        | 'inline'
+        | 'fetchCommonsPhotos'
+        | 'fetchInaturalistPhotos'
+        | 'draftCarving'
+        | 'draftSafety'
+        | 'draftIdentification'
+      )
+    | null;
   queue?: string | null;
   waitUntil?: string | null;
   processing?: boolean | null;
@@ -938,9 +957,54 @@ export interface TaskFetchInaturalistPhotos {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskDraftCarving".
+ */
+export interface TaskDraftCarving {
+  input: {
+    species: number;
+  };
+  output: {
+    drafted: boolean;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskDraftSafety".
+ */
+export interface TaskDraftSafety {
+  input: {
+    species: number;
+  };
+  output: {
+    drafted: boolean;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TaskDraftIdentification".
+ */
+export interface TaskDraftIdentification {
+  input: {
+    species: number;
+  };
+  output: {
+    drafted: boolean;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "WorkflowFetchPhotoCandidates".
  */
 export interface WorkflowFetchPhotoCandidates {
+  input: {
+    species: number;
+  };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WorkflowDraftCard".
+ */
+export interface WorkflowDraftCard {
   input: {
     species: number;
   };

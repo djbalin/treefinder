@@ -123,7 +123,7 @@ export default async function HomePage({ params, searchParams }: Props) {
   );
 }
 
-/** One row decoding the four badges every tree carries, in their order. */
+/** One row decoding the three badges every tree carries, in their order. */
 function BadgeLegend({
   label,
   items,

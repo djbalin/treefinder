@@ -1,10 +1,11 @@
 /*
  * Design tokens: the single source of visual values.
  *
- * Enamel signs, flat: a fixed set of solid colours with no tints between
- * them. Ink for the header, cobalt for links, actions and routes, forest
- * green for name plates, signal red only for toxic species, on a white
- * ground. Components must only use these tokens, never raw colours or sizes.
+ * Flat enamel: a fixed set of solid colours. Ink for the header, cobalt for
+ * links, actions and routes, forest green for name bands, signal red only
+ * for toxic species, on an off-white ground; lichen grey and the pale
+ * warning wash are the only tints. Components must only use these tokens,
+ * never raw colours or sizes.
  */
 @theme {
   /* Colour roles */

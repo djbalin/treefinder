@@ -25,7 +25,7 @@ The first pass (October 2026) gave the species card a calm "field guide plate" l
 - [ ] The end-to-end tests pass: the home heading, search from the home page, the card tests, no horizontal scrolling at 360 px.
 - [x] Text, icons and controls meet WCAG 2.2 AA contrast; the design detector reports no findings on the changed files.
 - [x] Badges have screen-reader labels; toxicity is shown in words, not only colour.
-- [ ] `DESIGN.md` and `.impeccable/design.json` describe the flat enamel world.
+- [x] `DESIGN.md` and `.impeccable/design.json` describe the flat enamel world.
 
 ## Out of scope
 

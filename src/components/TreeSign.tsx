@@ -27,7 +27,7 @@ export function TreeSign({
   const src =
     photo?.sizes?.card?.url ?? photo?.url ?? photo?.remoteUrl ?? undefined;
 
-  // Fixed cells: every tree has all four, an empty cell when a value is missing.
+  // Fixed cells: every tree has all three, an empty cell when a value is missing.
   const badges: { key: string; label?: string | null; glyph?: ReactNode }[] = [
     {
       key: "carving",

@@ -21,6 +21,6 @@
 - [x] Home page: tree wall, badges, use pills, legend, photo credits
 - [x] Finish review rounds and fixes
 - [x] Maintainer revisions: no yellow, no logo, no hero card, compact header, use carousel, three badges
-- [ ] `DESIGN.md` and `.impeccable/design.json` for the new world
+- [x] `DESIGN.md` and `.impeccable/design.json` for the new world
 - [ ] End-to-end tests green in CI
 - [ ] Next passes: species card, species list, filter key, static pages, review queue

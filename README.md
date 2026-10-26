@@ -4,7 +4,7 @@ A free web app for wood carvers: a carving card per tree species (how it carves 
 
 ## Status
 
-MVP in progress. See [`specs/roadmap.md`](specs/roadmap.md). The UI is a neutral placeholder until the visual design pass.
+MVP in progress. See [`specs/roadmap.md`](specs/roadmap.md). The visual design is in progress with the impeccable skill; see [`DESIGN.md`](DESIGN.md).
 
 ## Running locally
 

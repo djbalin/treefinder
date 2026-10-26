@@ -1,37 +1,39 @@
 # D. Design pass: spec
 
-Status: draft
+Status: agreed (in progress, page by page)
 Milestone: see `specs/roadmap.md`
 
 ## Problem
 
-The public site still uses neutral placeholder styling. Carvers arriving from a link in a Facebook group should meet a card that reads calmly on a phone, looks like it belongs to the carving world, and makes its safety information impossible to miss. The visual direction is set with the impeccable design skill, starting on the species card, and every other page inherits it.
+The public site started with neutral placeholder styling. Carvers arriving from a link in a Facebook group should meet a site that looks like it belongs to the carving world, shows the trees before it explains them, and makes safety information impossible to miss. The visual direction is set with the impeccable design skill, one page at a time, and `DESIGN.md` records the result.
+
+The first pass (October 2026) gave the species card a calm "field guide plate" look. The maintainer found it too formal and text-heavy, so the second pass replaced the whole visual world, starting on the home page. `PRODUCT.md` was updated to match: colourful and brave, glyphs carry the carving factors, fewer words.
 
 ## Requirements
 
-1. The visual world is the "field guide plate": a white handbook page, near-black ink, plate green for numbers and links, ochre key marks, warning red only for toxic species, Source Serif 4 for reading and Archivo for labels. All values live in `src/styles/tokens.css`.
-2. The species card shows its reference photos as one numbered plate (whole tree, leaf, bark, winter twig, and cut wood when present), with every credit line in the plate caption.
-3. Carving facts sit in a ruled key under the name: green carving and dry hardness with a three-step mark, leaf type, and the food safety check date.
-4. The identification text is numbered to match the plate.
-5. On a phone the order is name, key, plate, then the text. On desktop the plate sits sticky on the left, beside the name, key and text.
-6. The warning banner stays above everything else on warning species (product spec §5).
+1. The visual world is "flat enamel": solid, untinted colour on a white ground. An ink header bar, cobalt for links, actions and the picked filter, forest green for name bands and the food-safety check, signal red only for toxic species. No yellow. Gabarito for names, navigation and labels, Figtree for text. Square-cut tiles, authored glyphs in one stroke weight, no keylines, gradients or shadows. All values live in `src/styles/tokens.css`.
+2. The header is one slim ink bar with the page links and the search, on every page. There is no logo.
+3. The home page is a wall of published trees: each tile is the tree's photo with a full-width name band and three badges in a fixed order: carvability (one to three knife cuts), dry hardness (rising bars) and food safety (checked, not checked, or toxic). Toxic trees get a red band with the word "Giftig".
+4. A one-line legend above the wall names the three badges. A single horizontal row of use pills ("Hvad vil du lave?") filters the wall through `?brug=`.
+5. Every photo on the home page is credited with author, license and source.
+6. The species card keeps its numbered plate, ruled key and numbered identification text from the first pass, now in the new tokens, until its own pass in the new world.
 7. Other pages keep their current structure inside the new world until their own pass.
-8. `DESIGN.md` is generated from the built result.
+8. `DESIGN.md` and `.impeccable/design.json` describe the current world.
 
 ## Acceptance criteria
 
-- [x] The existing card end-to-end tests still pass: fields, Janka value, disclaimer, photo credits, look-alike link, collapsed sources, warning banner above the heading.
-- [x] No horizontal scrolling at 360 px (existing end-to-end check).
-- [x] Text meets WCAG 2.2 AA contrast; the design detector reports no findings on the changed files.
-- [x] `DESIGN.md` and `.impeccable/design.json` exist and match `tokens.css`.
+- [ ] The end-to-end tests pass: the home heading, search from the home page, the card tests, no horizontal scrolling at 360 px.
+- [x] Text, icons and controls meet WCAG 2.2 AA contrast; the design detector reports no findings on the changed files.
+- [x] Badges have screen-reader labels; toxicity is shown in words, not only colour.
+- [ ] `DESIGN.md` and `.impeccable/design.json` describe the flat enamel world.
 
 ## Out of scope
 
-- Restyling the species list, filter key, home and static pages beyond inheriting tokens and the header.
+- Restyling the species card, species list, filter key and static pages in the new world (next passes).
 - The Payload admin and review queue.
-- Look-alike thumbnails (product spec §5 calls for cards with a thumbnail; the card keeps a linked list for now).
+- Dark mode.
 
 ## Open questions
 
-- A botanical family field would let the card carry a field-guide running head. Content decision for later.
-- Dark mode is not designed yet.
+- Should the home page feature a tree (season, launch species) or stay a neutral wall?
+- Commons attributions sometimes arrive as raw metadata ("No machine-readable author provided…"); the review queue should make cleaning them easy.

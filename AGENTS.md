@@ -19,14 +19,14 @@ The specs in `specs/` are the source of truth. Code follows the specs, not the o
 - CI must be green: lint, type check, unit tests and Playwright.
 - NEVER run the dev server (`pnpm dev`, `next dev`, etc.) after making changes. After finishing a task, stop and let the maintainer verify by running the server themselves.
 
-## Visual design (placeholder)
+## Visual design
 
-The UI is a deliberate placeholder until the visual direction is set with the impeccable design skill (`PRODUCT.md` holds its product context). Until then:
+The visual direction is set with the impeccable design skill, one page at a time (milestone D). `PRODUCT.md` holds the product context and `DESIGN.md` describes the current visual world; direction briefs per page live in `.impeccable/surfaces/`.
 
-- Do not invest in visual design. Keep pages plain, semantic and accessible.
+- Read `DESIGN.md` before changing any UI, and follow it.
 - Every visual value comes from the tokens in `src/styles/tokens.css`. Never hardcode colours, fonts or sizes in components.
-- Build pages from small shared components in `src/components/`, so the impeccable pass can restyle them in one place.
-- Do not create `DESIGN.md`. Impeccable generates it after the design pass.
+- Build pages from small shared components in `src/components/`, and draw icons with the glyph set in `src/components/Glyph.tsx`.
+- Do not edit `DESIGN.md` by hand. Impeccable regenerates it after a design pass.
 
 ## Local setup
 

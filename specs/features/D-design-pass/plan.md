@@ -6,6 +6,17 @@ Ran the impeccable new-work flow for a Read surface: one rolled direction, Impec
 
 Rejected: a "wood library" (xylothek) world, which was the rolled direction, and the species-app standard (carousel, chips, rounded cards).
 
+## Second pass: home page and a new world
+
+The maintainer asked for something more colourful, brave and less text-heavy, starting on the home page. A first direction round (riso festival line-up) was re-rolled with the steer "a bit less bold, tree photos clearly on the home page"; the second round's "Scandinavian enamel signs" was chosen. After the build and two review rounds the maintainer asked for it bolder and less kitsch: yellow, keylines, the logo, the hero card and the arrow signposts were removed, the use filter went back to one horizontal row, and the leaf-type badge was dropped. The direction contract lives in `.impeccable/surfaces/src-app-frontend-locale-page-tsx.md`.
+
+| Area   | Files or modules                                   | Change                                                            |
+| ------ | -------------------------------------------------- | ----------------------------------------------------------------- |
+| Tokens | `src/styles/tokens.css`, `src/styles/globals.css`  | Flat enamel palette, Gabarito and Figtree, smaller radii          |
+| Header | `SiteHeader`, `SearchForm`                         | Slim ink bar with links and search; unique search input ids       |
+| Home   | `src/app/(frontend)/[locale]/page.tsx`, `TreeSign` | Photo wall with name bands and badges, use pills, legend, credits |
+| Glyphs | `src/components/Glyph.tsx`                         | Authored glyph set for uses, food safety and carving factors      |
+
 ## Changes
 
 | Area   | Files or modules                                                     | Change                                                                |
@@ -17,6 +28,9 @@ Rejected: a "wood library" (xylothek) world, which was the rolled direction, and
 | Pages  | other frontend pages                                                 | Capped at reading width                                               |
 
 ## Tests
+
+Second pass: `tests/e2e/foundation.e2e.ts` checks the new home heading; the search test now uses the header search.
+
 
 | Acceptance criterion           | Test                                           |
 | ------------------------------ | ---------------------------------------------- |

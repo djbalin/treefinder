@@ -17,6 +17,7 @@ export const fixtures = {
   yew: { slug: `${PREFIX}taks`, name: "E2E taks" },
   draft: { slug: `${PREFIX}kladde`, name: "E2E kladde" },
   candidateAttribution: "E2E kandidat",
+  ready: { slug: `${PREFIX}klar`, name: "E2E klar" },
 };
 
 const text = (value: string) => richTextFromParagraphs([value]);
@@ -31,6 +32,7 @@ async function createPublished(
     warningReason?: string;
     localNames?: string[];
   },
+  finalStatus: "published" | "aiDraft" = "published",
 ) {
   const species = await payload.create({
     collection: "species",
@@ -91,6 +93,13 @@ async function createPublished(
     });
   }
 
+  if (finalStatus === "aiDraft") {
+    return payload.update({
+      collection: "species",
+      id: species.id,
+      data: { status: "aiDraft" },
+    });
+  }
   return payload.update({
     collection: "species",
     id: species.id,
@@ -138,6 +147,13 @@ export default async function globalSetup() {
     id: lime.id,
     data: { lookAlikes: [yew.id] },
   });
+
+  // Complete card still in AI draft, for the publish flow in the admin.
+  await createPublished(
+    payload,
+    { ...fixtures.ready, latinName: "Corylus avellana" },
+    "aiDraft",
+  );
 
   await payload.create({ collection: "users", data: admin });
   await payload.create({

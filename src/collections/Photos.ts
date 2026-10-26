@@ -17,7 +17,7 @@ import { photosToDemote, validatePhotoChange } from "@/domain/photoRules";
 import {
   rejectPhotoEndpoint,
   selectPhotoEndpoint,
-} from "@/endpoints/photoActions";
+} from "@/endpoints/adminActions";
 
 /**
  * Reference photos. A candidate only holds a link and its license metadata;

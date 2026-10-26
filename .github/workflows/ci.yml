@@ -58,6 +58,15 @@ jobs:
       - name: Migrate database
         run: pnpm migrate
 
+      - name: Check migrations match the collections
+        run: |
+          pnpm payload migrate:create schema-check --skip-empty
+          if [ -n "$(git status --porcelain src/migrations)" ]; then
+            echo "Collections changed without a migration. Run: pnpm migrate:create <name>"
+            git status --porcelain src/migrations
+            exit 1
+          fi
+
       - name: Integration tests
         run: pnpm test:int
 

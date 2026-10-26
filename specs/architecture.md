@@ -112,14 +112,14 @@ Auth collection for admins only. No public sign-up. The first admin is created b
 | Job                    | Input      | Steps                                                                                                                                                                                                | Output                                                                        |
 | ---------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `fetchPhotoCandidates` | species ID | Query Commons (species category plus bark and leaf subcategories) and iNaturalist (research grade, license filter in the query). Normalize metadata, filter licenses, skip duplicates by source URL. | Up to about 20 `photos` with status `candidate`                               |
-| `draftCard`            | species ID | Call the Claude API with the web search tool and a structured output schema matching the card fields. Write in Danish, with sources per field.                                                       | Card fields updated, status `aiDraft`. Previous text kept in version history. |
+| `draftCard`            | species ID | Three sections (carving, safety, identification), one Claude call each with web search and a strict `submit_card` tool matching the section. Write in Danish, with sources per field.                | Card fields updated, status `aiDraft`. Previous text kept in version history. |
 
 API etiquette: a descriptive User-Agent for Wikimedia, about 1 request per second for iNaturalist, and a spend limit on the Claude API key.
 
 ### Runtime model (milestone 2)
 
 - Payload's `jobs.autoRun` is not used: Payload's own config docs say it should not run on serverless platforms like Vercel.
-- An admin button queues the job (`payload.jobs.queue`) and runs it right away in the same route handler, after the response has been sent (`after(() => payload.jobs.runByID(...))`). The route sets an explicit `maxDuration`.
+- An admin button queues the job (`payload.jobs.queue`) and runs it right away in the same route handler, after the response has been sent (`after(() => payload.jobs.runByID(...))`). The REST route sets `maxDuration = 300`, since a card draft runs three web-searching Claude calls (90 s timeout each) in one run.
 - A daily Vercel Cron call to `/api/payload-jobs/run`, authorized with `CRON_SECRET`, sweeps up failed or cut-off jobs.
 - Jobs are split into short, idempotent tasks so an interrupted run resumes: `fetchPhotoCandidates` runs one task per source, `draftCard` one Claude call per group of card sections, each stored before the next starts.
 - Open: Vercel's exact duration and cron limits for this plan are unverified, and a Claude call with web search has not been timed yet (needs an API key, milestone 6).

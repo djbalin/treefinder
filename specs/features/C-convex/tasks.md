@@ -11,9 +11,9 @@
 
 ## C2: public site
 
-- [ ] Public pages read from Convex
-- [ ] Photos from Convex file storage
-- [ ] End-to-end tests against a Convex backend, locally and in CI
+- [x] Public pages read from Convex
+- [x] Photos from Convex file storage
+- [x] End-to-end tests against a Convex backend, locally and in CI (admin e2e skipped until C3)
 
 ## C3: admin and jobs
 

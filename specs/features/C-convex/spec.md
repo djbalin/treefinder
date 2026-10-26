@@ -35,4 +35,4 @@ The public site must keep working exactly as it does now while the backend under
 
 ## Open questions
 
-- CI backend for end-to-end tests: a local Convex backend or a preview deployment (decided in C2).
+- Decided in C2: CI runs an anonymous local Convex backend for the end-to-end tests.

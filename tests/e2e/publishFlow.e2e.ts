@@ -4,6 +4,8 @@ import { admin, fixtures } from "./fixtures";
 // Product spec §7.5: one species goes from AI draft to Published through the
 // admin UI. Desktop only, since it changes shared fixture data.
 test.skip(({ isMobile }) => isMobile, "Desktop admin only");
+// The Payload admin is replaced by a Convex admin in milestone C3.
+test.skip(true, "Admin moves to Convex in milestone C3");
 
 test("an AI draft is published from the admin and appears on the site", async ({
   page,

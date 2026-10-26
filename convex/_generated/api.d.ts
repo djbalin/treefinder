@@ -15,6 +15,7 @@ import type * as returns from "../returns.js";
 import type * as seed from "../seed.js";
 import type * as seedData from "../seedData.js";
 import type * as species from "../species.js";
+import type * as testing from "../testing.js";
 import type * as validators from "../validators.js";
 
 import type {
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   seed: typeof seed;
   seedData: typeof seedData;
   species: typeof species;
+  testing: typeof testing;
   validators: typeof validators;
 }>;
 

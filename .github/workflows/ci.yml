@@ -73,6 +73,18 @@ jobs:
       - name: Integration tests
         run: pnpm test:int
 
+      - name: Start a local Convex backend
+        # Anonymous local backend, no account needed. `convex dev` writes the
+        # deployment and NEXT_PUBLIC_CONVEX_URL to .env.local, which the build
+        # and the e2e fixtures read.
+        run: |
+          CONVEX_AGENT_MODE=anonymous npx convex dev --tail-logs disable > convex-dev.log 2>&1 &
+          for i in $(seq 1 90); do
+            grep -q "Convex functions ready" convex-dev.log && break
+            sleep 2
+          done
+          grep -q "Convex functions ready" convex-dev.log || { cat convex-dev.log; exit 1; }
+
       - name: Build
         run: pnpm build
 

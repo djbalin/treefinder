@@ -13,8 +13,15 @@
     "filterKey": "Find træet"
   },
   "Home": {
-    "heading": "Find det rigtige træ at snitte i",
-    "intro": "Treefinder samler viden om de træer, du kan snitte i: hvordan træet er at arbejde med, hvad det egner sig til, hvordan du tørrer det, og hvordan du genkender det.",
+    "heading": "Hvilket træ skal du snitte i?",
+    "intro": "Snitteviden om hvert træ, tjekket af et menneske, med kilder.",
+    "usesLabel": "Hvad vil du lave?",
+    "treesLabel": "Træerne",
+    "noTrees": "Ingen træer passer endnu.",
+    "showAll": "Vis alle træer",
+    "noPhoto": "Intet foto endnu",
+    "foodSafe": "Kontrolleret til madredskaber",
+    "foodUnchecked": "Fødevaresikkerhed ikke kontrolleret",
     "browseAll": "Se alle arter",
     "getWoodLink": "Sådan skaffer du træ lovligt",
     "filterKeyLink": "Find træet med nøglen"

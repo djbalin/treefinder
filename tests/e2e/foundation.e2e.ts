@@ -5,7 +5,7 @@ test("home page renders in Danish", async ({ page }) => {
 
   await expect(page.locator("html")).toHaveAttribute("lang", "da");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "Find det rigtige træ at snitte i",
+    "Hvilket træ skal du snitte i?",
   );
 });
 

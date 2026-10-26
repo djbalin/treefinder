@@ -25,7 +25,7 @@ Tree identification apps already exist and are free. Treefinder's claim is the c
 ## Operating Context
 
 - Discovered through links shared in Danish Facebook carving groups, later r/Spooncarving and r/woodcarving.
-- Used mostly for planning and reading at home, on phone or desktop. Mobile first, but long-form reading of a card is the main activity.
+- Used mostly for planning and browsing at home, on phone or desktop. Mobile first. Visitors browse the trees and scan a card's key facts before they read its longer text.
 - Content is created by one admin in a Payload dashboard: AI drafts and photo candidates are reviewed before anything is published.
 
 ## Capabilities and Constraints
@@ -40,7 +40,8 @@ Tree identification apps already exist and are free. Treefinder's claim is the c
 ## Brand Commitments
 
 - **Voice:** an experienced friend. Informal Danish "du", practical and plain, like a seasoned carver showing you the ropes. No hype.
-- **Anti-references:** corporate SaaS (bland cards, blue buttons, stock UI kit), and over-designed or artsy styling that gets in the way of reading a card on a phone.
+- **Visual ambition (maintainer, 2026-10-26):** colourful, brave and adventurous rather than formal. Icons and glyphs carry the carving factors (difficulty, hardness, food safety, uses, leaf type) so the site needs fewer words.
+- **Anti-references:** corporate SaaS (bland cards, blue buttons, stock UI kit), and a formal, text-heavy reference-book look. Boldness must never make a card unreadable on a phone or hide safety information.
 
 ## Evidence on Hand
 
@@ -51,7 +52,7 @@ No real content yet. Card text will come from AI drafts checked by the admin. Ph
 1. The carving knowledge is the product. Everything else serves getting a carver to the right card.
 2. Trust comes from checked claims and visible sources, not from tone.
 3. Safety information is never hidden or softened.
-4. Readable first: a card must work as a calm read on a phone.
+4. Show before telling: glyphs and photos carry the key facts at a glance, and text explains. Everything stays readable on a phone.
 
 ## Accessibility & Inclusion
 

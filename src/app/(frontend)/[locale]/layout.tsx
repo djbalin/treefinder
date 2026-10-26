@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Source_Serif_4 } from "next/font/google";
+import { Figtree, Gabarito } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -8,15 +8,14 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { routing } from "@/i18n/routing";
 import "@/styles/globals.css";
 
-const serif = Source_Serif_4({
+const sign = Gabarito({
   subsets: ["latin"],
-  style: ["normal", "italic"],
-  variable: "--font-serif",
+  variable: "--font-sign",
 });
 
-const sans = Archivo({
+const text = Figtree({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-text",
 });
 
 type Props = {
@@ -46,7 +45,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} className={`${serif.variable} ${sans.variable}`}>
+    <html lang={locale} className={`${sign.variable} ${text.variable}`}>
       <body className="min-h-dvh text-body antialiased">
         <NextIntlClientProvider>
           <SiteHeader />

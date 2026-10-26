@@ -45,6 +45,15 @@
         ],
         "createdAt": "2026-10-26T16:42:43.256Z",
         "reason": "Agent: sketch of the category standard, Inter depicts the default on purpose; never shipped"
+      },
+      {
+        "rule": "design-system-font",
+        "value": "*",
+        "files": [
+          ".impeccable/mocks/decision/**"
+        ],
+        "createdAt": "2026-10-26T17:03:50.496Z",
+        "reason": "Agent: redesign decision sketches propose worlds that replace the current DESIGN.md"
       }
     ]
   }

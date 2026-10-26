@@ -3,10 +3,62 @@
     "title": "Treefinder",
     "description": "Practical knowledge for wood carvers: how each tree carves, what it is good for, and how to recognise it."
   },
+  "Nav": {
+    "label": "Main menu",
+    "home": "Treefinder",
+    "species": "Species",
+    "getWood": "Get wood",
+    "about": "About",
+    "skipToContent": "Skip to content"
+  },
   "Home": {
     "heading": "Find the right wood to carve",
     "intro": "Treefinder collects what you need to know about the trees you can carve: how the wood works, what it suits, how to dry it, and how to recognise it.",
-    "comingSoon": "This site is under construction."
+    "browseAll": "Browse all species",
+    "getWoodLink": "How to get wood legally"
+  },
+  "Search": {
+    "label": "Search for a tree",
+    "placeholder": "e.g. lime, birch or Tilia",
+    "submit": "Search"
+  },
+  "SpeciesList": {
+    "title": "Species",
+    "count": "{count, plural, =0 {No species} one {# species} other {# species}}",
+    "empty": "No species match your search.",
+    "filterUse": "Good for",
+    "filterGreenCarving": "Carving green",
+    "any": "Any",
+    "apply": "Show",
+    "reset": "Reset",
+    "warning": "Warning"
+  },
+  "Card": {
+    "warning": "Warning",
+    "greenCarving": "Carving green",
+    "dryHardness": "Hardness when dry",
+    "janka": "Janka {value} N",
+    "grainTexture": "Grain and texture",
+    "colourSmell": "Colour and smell when fresh",
+    "goodFor": "Good for",
+    "riving": "Riving and splitting",
+    "drying": "Drying",
+    "foodSafety": "Food safety and toxicity",
+    "checkedOn": "Checked {date}",
+    "identification": "How to recognise it",
+    "noPhoto": "No photo yet",
+    "lookAlikes": "Often confused with",
+    "sources": "Sources",
+    "photoCredit": "Photo: {attribution}",
+    "latinName": "Latin name"
+  },
+  "Disclaimer": {
+    "text": "This information is guidance only and does not replace your own judgement. If you are unsure whether a wood is safe for food utensils, don't use it."
+  },
+  "About": {
+    "disclaimerHeading": "About food safety",
+    "creditsHeading": "Image credits",
+    "noCredits": "There are no images yet."
   },
   "NotFound": {
     "heading": "Page not found",

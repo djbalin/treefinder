@@ -9,6 +9,10 @@ const dirname = path.dirname(fileURLToPath(import.meta.url));
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  images: {
+    // Photo files served by Payload.
+    localPatterns: [{ pathname: "/api/photos/file/**" }],
+  },
   webpack: (webpackConfig) => {
     webpackConfig.resolve.extensionAlias = {
       ".cjs": [".cts", ".cjs"],

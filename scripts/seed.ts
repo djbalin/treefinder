@@ -11,6 +11,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import config from "@payload-config";
 import { getPayload, type Payload } from "payload";
+import { richTextFromParagraphs } from "@/domain/richText";
 import { parseSpeciesTable, type SpeciesSeed } from "@/domain/speciesList";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -116,23 +117,51 @@ async function addLookAlike(payload: Payload, id: number, otherId: number) {
   });
 }
 
-async function seedPages(payload: Payload) {
-  const pages = [
-    { slug: "whereToGetWood", da: "Skaf træ", en: "Where to get wood" },
-    { slug: "about", da: "Om Treefinder", en: "About Treefinder" },
-  ] as const;
+/**
+ * Starter text for the static pages, in Danish only. The admin edits it in
+ * Payload; the seed never overwrites a page that already has a title.
+ */
+const PAGE_SEEDS = [
+  {
+    slug: "whereToGetWood",
+    titleDa: "Skaf træ",
+    titleEn: "Where to get wood",
+    paragraphs: [
+      "Du må ikke bare fælde eller skære grene af træer, du finder. Her er de lovlige veje til friskt træ at snitte i.",
+      "Træplejere og anlægsgartnere fælder og beskærer træer hver uge og skal ofte af med veddet. Spørg dem, du ser arbejde i nærheden, eller ring til et lokalt firma.",
+      "Stormfald: efter en storm ligger der væltede træer i haver, parker og langs veje. Spørg altid ejeren, før du tager noget.",
+      "Haver: naboer, kolonihaver og familie beskærer frugttræer og hække om vinteren. Æble, pære og kirsebær er gode at snitte i.",
+      "Sankekort: i statsskovene kan du købe et sankekort hos Naturstyrelsen, som giver lov til at samle løst træ som grene og kvas fra skovbunden. Uden kort må du kun samle små kviste til eget brug.",
+      "Selvskovning: nogle skovejere og Naturstyrelsen lader dig fælde udpegede træer mod betaling. Træerne er som regel mærket på forhånd.",
+      "Sankning og selvskovning foregår ofte kun i vinterhalvåret. Tjek reglerne for den enkelte skov.",
+    ],
+  },
+  {
+    slug: "about",
+    titleDa: "Om Treefinder",
+    titleEn: "About Treefinder",
+    paragraphs: [
+      "Treefinder er et gratis opslagsværk for træskærere. Hvert træ har et kort med, hvordan det er at snitte i, hvad det egner sig til, hvordan du tørrer det, og hvordan du kender det.",
+      "Alle oplysninger har en kilde, og kortene bliver gennemgået, før de bliver udgivet.",
+    ],
+  },
+] as const;
 
-  for (const page of pages) {
+async function seedPages(payload: Payload) {
+  for (const page of PAGE_SEEDS) {
     const current = await payload.findGlobal({ slug: page.slug, locale: "da" });
     if (current.title) continue;
     await payload.updateGlobal({
       slug: page.slug,
-      data: { title: page.da },
+      data: {
+        title: page.titleDa,
+        content: richTextFromParagraphs([...page.paragraphs]),
+      },
       locale: "da",
     });
     await payload.updateGlobal({
       slug: page.slug,
-      data: { title: page.en },
+      data: { title: page.titleEn },
       locale: "en",
     });
   }

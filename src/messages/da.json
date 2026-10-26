@@ -3,10 +3,62 @@
     "title": "Treefinder",
     "description": "Praktisk viden om træ til træskærere: hvordan hvert træ er at snitte, hvad det kan bruges til, og hvordan du kender det."
   },
+  "Nav": {
+    "label": "Hovedmenu",
+    "home": "Treefinder",
+    "species": "Arter",
+    "getWood": "Skaf træ",
+    "about": "Om",
+    "skipToContent": "Spring til indhold"
+  },
   "Home": {
     "heading": "Find det rigtige træ at snitte i",
     "intro": "Treefinder samler viden om de træer, du kan snitte i: hvordan træet er at arbejde med, hvad det egner sig til, hvordan du tørrer det, og hvordan du genkender det.",
-    "comingSoon": "Siden er under opbygning."
+    "browseAll": "Se alle arter",
+    "getWoodLink": "Sådan skaffer du træ lovligt"
+  },
+  "Search": {
+    "label": "Søg efter et træ",
+    "placeholder": "fx lind, birk eller Tilia",
+    "submit": "Søg"
+  },
+  "SpeciesList": {
+    "title": "Arter",
+    "count": "{count, plural, =0 {Ingen arter} one {# art} other {# arter}}",
+    "empty": "Ingen arter matcher din søgning.",
+    "filterUse": "Velegnet til",
+    "filterGreenCarving": "Snitning (grønt træ)",
+    "any": "Alle",
+    "apply": "Vis",
+    "reset": "Nulstil",
+    "warning": "Advarsel"
+  },
+  "Card": {
+    "warning": "Advarsel",
+    "greenCarving": "Snitning, grønt træ",
+    "dryHardness": "Hårdhed, tørt",
+    "janka": "Janka {value} N",
+    "grainTexture": "Ved og tekstur",
+    "colourSmell": "Farve og duft, frisk",
+    "goodFor": "Velegnet til",
+    "riving": "Kløvning",
+    "drying": "Tørring",
+    "foodSafety": "Fødevaresikkerhed og giftighed",
+    "checkedOn": "Kontrolleret {date}",
+    "identification": "Sådan kender du træet",
+    "noPhoto": "Intet foto endnu",
+    "lookAlikes": "Forveksles med",
+    "sources": "Kilder",
+    "photoCredit": "Foto: {attribution}",
+    "latinName": "Latinsk navn"
+  },
+  "Disclaimer": {
+    "text": "Oplysningerne er vejledende og erstatter ikke din egen vurdering. Er du i tvivl om, hvorvidt et træ er sikkert til madredskaber, så lad være med at bruge det."
+  },
+  "About": {
+    "disclaimerHeading": "Om fødevaresikkerhed",
+    "creditsHeading": "Billedkreditering",
+    "noCredits": "Der er ingen billeder endnu."
   },
   "NotFound": {
     "heading": "Siden findes ikke",

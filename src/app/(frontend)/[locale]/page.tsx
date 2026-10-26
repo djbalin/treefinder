@@ -1,7 +1,11 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { SearchForm } from "@/components/SearchForm";
+import { PageTitle } from "@/components/ui";
+import { Link } from "@/i18n/navigation";
+import type { AppLocale } from "@/i18n/routing";
 
 type Props = {
-  params: Promise<{ locale: string }>;
+  params: Promise<{ locale: AppLocale }>;
 };
 
 export default async function HomePage({ params }: Props) {
@@ -10,10 +14,22 @@ export default async function HomePage({ params }: Props) {
   const t = await getTranslations("Home");
 
   return (
-    <section className="space-y-4">
-      <h1 className="font-display text-3xl font-semibold">{t("heading")}</h1>
+    <div className="space-y-6">
+      <PageTitle>{t("heading")}</PageTitle>
       <p className="text-ink-muted">{t("intro")}</p>
-      <p className="text-ink-muted">{t("comingSoon")}</p>
-    </section>
+      <SearchForm locale={locale} />
+      <ul className="space-y-2">
+        <li>
+          <Link href="/arter" className="underline">
+            {t("browseAll")}
+          </Link>
+        </li>
+        <li>
+          <Link href="/skaf-trae" className="underline">
+            {t("getWoodLink")}
+          </Link>
+        </li>
+      </ul>
+    </div>
   );
 }

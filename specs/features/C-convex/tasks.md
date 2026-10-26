@@ -4,10 +4,10 @@
 
 - [x] Convex project created; AI files and skills committed
 - [x] Specs: architecture, constitution, product, roadmap, this feature folder
-- [ ] Schema
-- [ ] Public read queries (species list, species by slug, photos, pages)
-- [ ] Seed from `specs/species.md`, idempotent
-- [ ] Convex tests for visitor access and the seed
+- [x] Schema
+- [x] Public read queries (species list, species by slug, photos, pages)
+- [x] Seed from `specs/species.md`, idempotent
+- [x] Convex tests for visitor access and the seed
 
 ## C2: public site
 

@@ -19,9 +19,9 @@ The public site must keep working exactly as it does now while the backend under
 
 ## Acceptance criteria
 
-- [ ] The schema matches `architecture.md` §3, and `convex dev` deploys it.
-- [ ] Visitors can read only published species, their selected photos and the pages (Convex test).
-- [ ] The seed creates all 40 species and runs twice without duplicating anything (Convex test).
+- [x] The schema matches `architecture.md` §3, and `convex dev` deploys it.
+- [x] Visitors can read only published species, their selected photos and the pages (Convex test).
+- [x] The seed creates all 40 species and runs twice without duplicating anything (Convex test).
 - [ ] Publishing a card that breaks a publish rule throws (Convex test).
 - [ ] Selecting a photo demotes the previously selected photo in that slot (Convex test).
 - [ ] Every admin function refuses a caller without the `admin` role (Convex test).

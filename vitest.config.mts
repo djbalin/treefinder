@@ -18,6 +18,16 @@ export default defineConfig({
       {
         extends: true,
         test: {
+          name: "convex",
+          // Convex functions against convex-test's in-memory backend.
+          include: ["convex/**/*.test.ts"],
+          environment: "edge-runtime",
+          server: { deps: { inline: ["convex-test"] } },
+        },
+      },
+      {
+        extends: true,
+        test: {
           name: "int",
           // Payload Local API against a real Postgres (DATABASE_URL).
           include: ["tests/int/**/*.int.test.ts"],

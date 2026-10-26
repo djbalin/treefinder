@@ -8,13 +8,31 @@
  * @module
  */
 
+import type * as lib_localize from "../lib/localize.js";
+import type * as pages from "../pages.js";
+import type * as photos from "../photos.js";
+import type * as returns from "../returns.js";
+import type * as seed from "../seed.js";
+import type * as seedData from "../seedData.js";
+import type * as species from "../species.js";
+import type * as validators from "../validators.js";
+
 import type {
   ApiFromModules,
   FilterApi,
   FunctionReference,
 } from "convex/server";
 
-declare const fullApi: ApiFromModules<{}>;
+declare const fullApi: ApiFromModules<{
+  "lib/localize": typeof lib_localize;
+  pages: typeof pages;
+  photos: typeof photos;
+  returns: typeof returns;
+  seed: typeof seed;
+  seedData: typeof seedData;
+  species: typeof species;
+  validators: typeof validators;
+}>;
 
 /**
  * A utility for referencing Convex functions in your app's public API.

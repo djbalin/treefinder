@@ -5,7 +5,7 @@
   },
   "Nav": {
     "label": "Main menu",
-    "home": "Treefinder",
+    "home": "Home",
     "species": "Species",
     "getWood": "Get wood",
     "about": "About",
@@ -13,11 +13,23 @@
     "filterKey": "Identify"
   },
   "Home": {
-    "heading": "Find the right wood to carve",
-    "intro": "Treefinder collects what you need to know about the trees you can carve: how the wood works, what it suits, how to dry it, and how to recognise it.",
-    "browseAll": "Browse all species",
+    "heading": "Which tree should you carve?",
+    "usesLabel": "What do you want to make?",
+    "treesLabel": "The trees",
+    "noTrees": "No trees match yet.",
+    "showAll": "Show all trees",
+    "noPhoto": "No photo yet",
+    "foodSafe": "Checked for kitchen tools",
+    "foodUnchecked": "Food safety not checked",
+    "browseAll": "See all species",
     "getWoodLink": "How to get wood legally",
-    "filterKeyLink": "Identify a tree with the key"
+    "filterKeyLink": "Identify a tree with the key",
+    "toxic": "Toxic",
+    "legendLabel": "Key",
+    "legendCarving": "Carvability",
+    "legendHardness": "Hardness",
+    "legendFood": "Food",
+    "photoCredits": "Photos"
   },
   "Search": {
     "label": "Search for a tree",

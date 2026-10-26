@@ -56,7 +56,7 @@ flowchart LR
 
 ### `species`
 
-Versions and drafts enabled.
+Versions are kept. Payload's built-in drafts are not used: `status` is the card workflow. `name` (localized, required) is the display name.
 
 | Field                                             | Type                                                       | Localized   |
 | ------------------------------------------------- | ---------------------------------------------------------- | ----------- |
@@ -88,6 +88,7 @@ Versions and drafts enabled.
 | `source`                           | select: commons, inaturalist, upload (later: userSubmission) |
 | `sourceUrl`, `remoteUrl`           | text                                                         |
 | `author`, `license`, `attribution` | text; select (CC0, CC-BY, CC-BY-SA with versions); text      |
+| `alt`                              | text, localized                                              |
 | `fetchedAt`                        | date                                                         |
 
 A candidate keeps only `remoteUrl` and metadata. Selecting it downloads the file into the upload collection, stored in Supabase Storage.

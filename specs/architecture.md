@@ -36,21 +36,21 @@ flowchart LR
 
 ## 2. Stack
 
-| Area            | Choice                                                                                                                                             |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Framework       | Next.js 16 (App Router) + Payload 3, TypeScript, pnpm                                                                                              |
-| Styling         | Tailwind CSS 4                                                                                                                                     |
-| Lint and format | Biome                                                                                                                                              |
-| Translations    | next-intl for UI strings and routing. Payload field localization for content. Danish is the default.                                               |
-| Database        | Supabase Postgres via `@payloadcms/db-postgres`. Schema changes only through committed migrations, applied on production start (`prodMigrations`). |
-| Images          | Supabase Storage via Payload's S3 storage adapter. Next.js image optimization on the public site.                                                  |
-| Hosting         | Vercel, with a preview deploy per PR                                                                                                               |
-| Background jobs | Payload jobs queue, triggered by Vercel Cron                                                                                                       |
-| AI              | Claude API (model picked when building), web search tool, structured output. Spend limit set on the API key.                                       |
-| Analytics       | Vercel Web Analytics (cookie-free, no consent banner)                                                                                              |
-| Unit tests      | Vitest                                                                                                                                             |
-| Browser tests   | Playwright                                                                                                                                         |
-| CI              | GitHub Actions on every PR: lint, type check, unit tests, Playwright against the build                                                             |
+| Area            | Choice                                                                                                                                                         |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework       | Next.js 16 (App Router) + Payload 3, TypeScript, pnpm                                                                                                          |
+| Styling         | Tailwind CSS 4                                                                                                                                                 |
+| Lint and format | Biome                                                                                                                                                          |
+| Translations    | next-intl for UI strings and routing. Payload field localization for content. Danish is the default.                                                           |
+| Database        | Supabase Postgres via `@payloadcms/db-postgres`. Schema changes only through committed migrations, applied on production start (`prodMigrations`).             |
+| Images          | Supabase Storage via Payload's S3 storage adapter. Next.js image optimization on the public site.                                                              |
+| Hosting         | Vercel, with a preview deploy per PR                                                                                                                           |
+| Background jobs | Payload jobs queue. An admin action queues a job and runs it immediately after the response (`after()`); a daily Vercel Cron call sweeps up leftovers. See §5. |
+| AI              | Claude API (model picked when building), web search tool, structured output. Spend limit set on the API key.                                                   |
+| Analytics       | Vercel Web Analytics (cookie-free, no consent banner)                                                                                                          |
+| Unit tests      | Vitest                                                                                                                                                         |
+| Browser tests   | Playwright                                                                                                                                                     |
+| CI              | GitHub Actions on every PR: lint, type check, unit tests, Playwright against the build                                                                         |
 
 ## 3. Data model (Payload)
 
@@ -114,6 +114,14 @@ Auth collection for admins only. No public sign-up. The first admin is created b
 | `draftCard`            | species ID | Call the Claude API with the web search tool and a structured output schema matching the card fields. Write in Danish, with sources per field.                                                       | Card fields updated, status `aiDraft`. Previous text kept in version history. |
 
 API etiquette: a descriptive User-Agent for Wikimedia, about 1 request per second for iNaturalist, and a spend limit on the Claude API key.
+
+### Runtime model (milestone 2)
+
+- Payload's `jobs.autoRun` is not used: Payload's own config docs say it should not run on serverless platforms like Vercel.
+- An admin button queues the job (`payload.jobs.queue`) and runs it right away in the same route handler, after the response has been sent (`after(() => payload.jobs.runByID(...))`). The route sets an explicit `maxDuration`.
+- A daily Vercel Cron call to `/api/payload-jobs/run`, authorized with `CRON_SECRET`, sweeps up failed or cut-off jobs.
+- Jobs are split into short, idempotent tasks so an interrupted run resumes: `fetchPhotoCandidates` runs one task per source, `draftCard` one Claude call per group of card sections, each stored before the next starts.
+- Open: Vercel's exact duration and cron limits for this plan are unverified, and a Claude call with web search has not been timed yet (needs an API key, milestone 6).
 
 ## 6. Routing and i18n
 

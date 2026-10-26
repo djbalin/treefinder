@@ -31,14 +31,14 @@ Treefinder is a free web app, designed mobile first, that gives wood carvers a c
 
 Danish lives at the root, English under `/en` with translated paths. English stays hidden until its cards are translated.
 
-| Page | Danish path | English path | What it does |
-| --- | --- | --- | --- |
-| Home | `/` | `/en` | Search by any name, a link to the filter key, and an intro |
-| All species | `/arter` | `/en/species` | Searchable list with photo thumbnails, filtered by carving use and difficulty |
-| Species card | `/arter/[slug]` | `/en/species/[slug]` | Carving card and reference photos |
-| Filter key | `/find-traeet` | `/en/identify` | Pick traits, see matching species |
-| Where to get wood | `/skaf-trae` | `/en/get-wood` | Arborists, storm-felled trees, garden pruning, sankekort, selvskovning |
-| About | `/om` | `/en/about` | About the project, food safety disclaimer, image credits |
+| Page              | Danish path     | English path         | What it does                                                                  |
+| ----------------- | --------------- | -------------------- | ----------------------------------------------------------------------------- |
+| Home              | `/`             | `/en`                | Search by any name, a link to the filter key, and an intro                    |
+| All species       | `/arter`        | `/en/species`        | Searchable list with photo thumbnails, filtered by carving use and difficulty |
+| Species card      | `/arter/[slug]` | `/en/species/[slug]` | Carving card and reference photos                                             |
+| Filter key        | `/find-traeet`  | `/en/identify`       | Pick traits, see matching species                                             |
+| Where to get wood | `/skaf-trae`    | `/en/get-wood`       | Arborists, storm-felled trees, garden pruning, sankekort, selvskovning        |
+| About             | `/om`           | `/en/about`          | About the project, food safety disclaimer, image credits                      |
 
 **Acceptance criteria**
 
@@ -52,21 +52,21 @@ Danish lives at the root, English under `/en` with translated paths. English sta
 
 Every species card has the same fields, in this order. "Localized" means translated per language.
 
-| Field | Type | Notes |
-| --- | --- | --- |
-| Names | Latin name + local names (da, sv, nb, de, nl, en) | Not localized. All names are searchable. |
-| Warning species | Yes/no + a short reason (localized) | Shows a red banner at the top of the card |
-| Carving green | Easy / medium / hard | Shown as a badge |
-| Hardness when dry | Soft / medium / hard + Janka value in N when known | Badge plus the number |
-| Grain and texture | Rich text, localized | |
-| Colour and smell when freshly cut | Rich text, localized | Useful for identifying cut wood |
-| Good for | Tags (spoons, bowls, kuksa, figures, handles, spatulas, boxes) + rich text | Tags drive the filter on the species list |
-| Riving and splitting | Rich text, localized | |
-| Drying | Rich text, localized | |
-| Food safety and toxicity | Rich text, localized + a "checked against a source" tick | Always shown with the disclaimer |
-| Identification features | Leaf, bark, winter twig and bud, overall shape, cut wood (rich text each) | Shown next to the matching photo slot |
-| Often confused with | Links to other species | Shown as cards with a thumbnail |
-| Sources | List of title, URL and the field it supports | Hidden behind a "Kilder" (Sources) button |
+| Field                             | Type                                                                       | Notes                                     |
+| --------------------------------- | -------------------------------------------------------------------------- | ----------------------------------------- |
+| Names                             | Latin name + local names (da, sv, nb, de, nl, en)                          | Not localized. All names are searchable.  |
+| Warning species                   | Yes/no + a short reason (localized)                                        | Shows a red banner at the top of the card |
+| Carving green                     | Easy / medium / hard                                                       | Shown as a badge                          |
+| Hardness when dry                 | Soft / medium / hard + Janka value in N when known                         | Badge plus the number                     |
+| Grain and texture                 | Rich text, localized                                                       |                                           |
+| Colour and smell when freshly cut | Rich text, localized                                                       | Useful for identifying cut wood           |
+| Good for                          | Tags (spoons, bowls, kuksa, figures, handles, spatulas, boxes) + rich text | Tags drive the filter on the species list |
+| Riving and splitting              | Rich text, localized                                                       |                                           |
+| Drying                            | Rich text, localized                                                       |                                           |
+| Food safety and toxicity          | Rich text, localized + a "checked against a source" tick                   | Always shown with the disclaimer          |
+| Identification features           | Leaf, bark, winter twig and bud, overall shape, cut wood (rich text each)  | Shown next to the matching photo slot     |
+| Often confused with               | Links to other species                                                     | Shown as cards with a thumbnail           |
+| Sources                           | List of title, URL and the field it supports                               | Hidden behind a "Kilder" (Sources) button |
 
 **Disclaimer (draft wording, to be finalized):**
 
@@ -87,27 +87,26 @@ Users identify a tree by comparing reference photos and narrowing the list with 
 
 ### 6.1 Photo slots per species
 
-| Slot | Required | Purpose |
-| --- | --- | --- |
-| Whole tree | Yes | Shape and size from a distance |
-| Leaf (or needles) | Yes | The easiest feature in summer |
-| Bark, mature | Yes | Identification in winter and on logs |
-| Winter twig and bud | Yes | Identification without leaves |
-| Cut wood or end grain | No | What carvers actually hold |
+| Slot                  | Required | Purpose                              |
+| --------------------- | -------- | ------------------------------------ |
+| Whole tree            | Yes      | Shape and size from a distance       |
+| Leaf (or needles)     | Yes      | The easiest feature in summer        |
+| Bark, mature          | Yes      | Identification in winter and on logs |
+| Winter twig and bud   | Yes      | Identification without leaves        |
+| Cut wood or end grain | No       | What carvers actually hold           |
 
 ### 6.2 Filter key (MVP, to be evaluated)
 
 Six traits, each shown as tappable chips with a small line icon. Every trait starts as "ved ikke" (don't know). The result list updates live, with a count.
 
-| Trait | Values |
-| --- | --- |
-| Leaf type | Needles, scales, broad leaves |
-| Leaf or bud arrangement | Opposite, alternate |
-| Leaf shape | Simple, lobed, pinnate (compound), palmate (compound) |
-| Leaf edge | Smooth, toothed, double-toothed, spiny |
-| Bark | Smooth, peeling or papery, furrowed or cracked, smooth with horizontal bands (lenticels) |
-| Thorns on twigs | Yes, no |
-
+| Trait                   | Values                                                                                   |
+| ----------------------- | ---------------------------------------------------------------------------------------- |
+| Leaf type               | Needles, scales, broad leaves                                                            |
+| Leaf or bud arrangement | Opposite, alternate                                                                      |
+| Leaf shape              | Simple, lobed, pinnate (compound), palmate (compound)                                    |
+| Leaf edge               | Smooth, toothed, double-toothed, spiny                                                   |
+| Bark                    | Smooth, peeling or papery, furrowed or cracked, smooth with horizontal bands (lenticels) |
+| Thorns on twigs         | Yes, no                                                                                  |
 - **Matching:** within a trait, any selected value matches. Across traits, every answered trait must match. Unanswered traits are ignored. A species can have several values per trait, for example young and old bark.
 - **Winter:** leaf arrangement doubles as bud arrangement, and bark and thorns still work without leaves. The UI hints at this.
 - **Results:** a thumbnail, the name, and the one or two traits that set it apart from the other results.

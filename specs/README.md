@@ -2,15 +2,15 @@
 
 This project uses spec-driven development: decide what to build and why in writing, then build it.
 
-| File | Purpose |
-| --- | --- |
-| [`constitution.md`](constitution.md) | Non-negotiable principles for product and engineering |
-| [`product.md`](product.md) | What the app does: audience, scope, pages, carving card, self-identification, admin workflow |
-| [`architecture.md`](architecture.md) | How it is built: stack, architecture, data model, jobs, testing, risks |
-| [`species.md`](species.md) | Draft species list with launch waves (becomes the seed data) |
-| [`roadmap.md`](roadmap.md) | Milestones in build order, with status |
-| [`_template/`](_template/) | Templates for a feature's `spec.md`, `plan.md` and `tasks.md` |
-| `features/NN-name/` | One folder per milestone or feature, created from the template when work starts |
+| File                                 | Purpose                                                                                      |
+| ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| [`constitution.md`](constitution.md) | Non-negotiable principles for product and engineering                                        |
+| [`product.md`](product.md)           | What the app does: audience, scope, pages, carving card, self-identification, admin workflow |
+| [`architecture.md`](architecture.md) | How it is built: stack, architecture, data model, jobs, testing, risks                       |
+| [`species.md`](species.md)           | Draft species list with launch waves (becomes the seed data)                                 |
+| [`roadmap.md`](roadmap.md)           | Milestones in build order, with status                                                       |
+| [`_template/`](_template/)           | Templates for a feature's `spec.md`, `plan.md` and `tasks.md`                                |
+| `features/NN-name/`                  | One folder per milestone or feature, created from the template when work starts              |
 
 ## Flow per feature
 

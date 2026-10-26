@@ -8,7 +8,7 @@ The specs in `specs/` are the source of truth. Code follows the specs, not the o
 
 - Read `specs/constitution.md` before any change. Its rules are non-negotiable.
 - `specs/product.md` covers what the app does, `specs/architecture.md` covers how it is built, and `specs/roadmap.md` lists the milestones in order.
-- Before implementing a milestone, create `specs/features/NN-name/` from `specs/_template/` (`spec.md`, `plan.md`, `tasks.md`). Get the spec agreed before writing code.
+- Before implementing a milestone, create `specs/features/NN-name/` from `specs/_template/` (`spec.md`, `plan.md`, `tasks.md`). For the MVP build-out, the feature spec and its implementation may ship in the same PR, and the maintainer reviews both together.
 - If implementation shows a spec is wrong or incomplete, update the spec in the same PR and say so in the PR description. Never let code and spec drift apart silently.
 - Tick off tasks in the feature's `tasks.md` and update the milestone's status in `specs/roadmap.md` as part of the PR.
 
@@ -18,6 +18,21 @@ The specs in `specs/` are the source of truth. Code follows the specs, not the o
 - Keep commits small and meaningful. The git history is part of the portfolio.
 - CI must be green: lint, type check, unit tests and Playwright.
 - NEVER run the dev server (`pnpm dev`, `next dev`, etc.) after making changes. After finishing a task, stop and let the maintainer verify by running the server themselves.
+
+## Visual design (placeholder)
+
+The UI is a deliberate placeholder until the visual direction is set with the impeccable design skill (`PRODUCT.md` holds its product context). Until then:
+
+- Do not invest in visual design. Keep pages plain, semantic and accessible.
+- Every visual value comes from the tokens in `src/styles/tokens.css`. Never hardcode colours, fonts or sizes in components.
+- Build pages from small shared components in `src/components/`, so the impeccable pass can restyle them in one place.
+- Do not create `DESIGN.md`. Impeccable generates it after the design pass.
+
+## Local setup
+
+- Node 24 and pnpm 10. Postgres from `pnpm db:up` (docker compose) or any local Postgres matching `DATABASE_URL` in `.env`.
+- Schema changes: edit collections, then `pnpm migrate:create <name>` and commit the migration. Payload never pushes schema automatically.
+- Tests: `pnpm test:unit`, `pnpm test:int` (needs the database), `pnpm build && pnpm test:e2e` (runs against the production build).
 
 ## Stack notes
 

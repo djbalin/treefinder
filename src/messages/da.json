@@ -1,0 +1,15 @@
+{
+  "Metadata": {
+    "title": "Treefinder",
+    "description": "Praktisk viden om træ til træskærere: hvordan hvert træ er at snitte, hvad det kan bruges til, og hvordan du kender det."
+  },
+  "Home": {
+    "heading": "Find det rigtige træ at snitte i",
+    "intro": "Treefinder samler viden om de træer, du kan snitte i: hvordan træet er at arbejde med, hvad det egner sig til, hvordan du tørrer det, og hvordan du genkender det.",
+    "comingSoon": "Siden er under opbygning."
+  },
+  "NotFound": {
+    "heading": "Siden findes ikke",
+    "backHome": "Til forsiden"
+  }
+}

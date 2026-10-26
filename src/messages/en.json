@@ -1,0 +1,15 @@
+{
+  "Metadata": {
+    "title": "Treefinder",
+    "description": "Practical knowledge for wood carvers: how each tree carves, what it is good for, and how to recognise it."
+  },
+  "Home": {
+    "heading": "Find the right wood to carve",
+    "intro": "Treefinder collects what you need to know about the trees you can carve: how the wood works, what it suits, how to dry it, and how to recognise it.",
+    "comingSoon": "This site is under construction."
+  },
+  "NotFound": {
+    "heading": "Page not found",
+    "backHome": "Back to the home page"
+  }
+}

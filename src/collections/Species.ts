@@ -23,6 +23,7 @@ import {
   getPublishBlockers,
   type PublishCandidate,
 } from "@/domain/publishRules";
+import { fetchPhotosEndpoint } from "@/endpoints/photoActions";
 
 const localNameLanguages = [
   ["da", "Dansk"],
@@ -73,6 +74,7 @@ export const Species: CollectionConfig = {
     listSearchableFields: ["name", "latinName", "slug"],
   },
   versions: { maxPerDoc: 25 },
+  endpoints: [fetchPhotosEndpoint],
   access: {
     read: adminOr({ status: { equals: "published" } }),
     create: isAdmin,
@@ -83,6 +85,15 @@ export const Species: CollectionConfig = {
     beforeChange: [enforcePublishRules],
   },
   fields: [
+    {
+      name: "reviewActions",
+      type: "ui",
+      admin: {
+        components: {
+          Field: "/components/admin/SpeciesActions#SpeciesActions",
+        },
+      },
+    },
     {
       type: "row",
       fields: [

@@ -80,16 +80,16 @@ Versions are kept. Payload's built-in drafts are not used: `status` is the card 
 
 ### `photos` (upload collection)
 
-| Field                              | Type                                                         |
-| ---------------------------------- | ------------------------------------------------------------ |
-| `species`                          | relationship to `species`                                    |
-| `slot`                             | select: wholeTree, leaf, bark, winterTwig, cutWood           |
-| `status`                           | select: candidate, selected, rejected                        |
-| `source`                           | select: commons, inaturalist, upload (later: userSubmission) |
-| `sourceUrl`, `remoteUrl`           | text                                                         |
-| `author`, `license`, `attribution` | text; select (CC0, CC-BY, CC-BY-SA with versions); text      |
-| `alt`                              | text, localized                                              |
-| `fetchedAt`                        | date                                                         |
+| Field                              | Type                                                                                               |
+| ---------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `species`                          | relationship to `species`                                                                          |
+| `slot`                             | select: wholeTree, leaf, bark, winterTwig, cutWood (on candidates, a suggestion from the source)   |
+| `status`                           | select: candidate, selected, rejected                                                              |
+| `source`                           | select: commons, inaturalist, upload (later: userSubmission)                                       |
+| `sourceUrl`, `remoteUrl`           | text                                                                                               |
+| `author`, `license`, `attribution` | text; select (CC0, CC-BY and CC-BY-SA, versioned or unversioned as iNaturalist reports them); text |
+| `alt`                              | text, localized                                                                                    |
+| `fetchedAt`                        | date                                                                                               |
 
 A candidate keeps only `remoteUrl` and metadata. Selecting it downloads the file into the upload collection, stored in Supabase Storage.
 

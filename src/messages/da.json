@@ -9,13 +9,15 @@
     "species": "Arter",
     "getWood": "Skaf træ",
     "about": "Om",
-    "skipToContent": "Spring til indhold"
+    "skipToContent": "Spring til indhold",
+    "filterKey": "Find træet"
   },
   "Home": {
     "heading": "Find det rigtige træ at snitte i",
     "intro": "Treefinder samler viden om de træer, du kan snitte i: hvordan træet er at arbejde med, hvad det egner sig til, hvordan du tørrer det, og hvordan du genkender det.",
     "browseAll": "Se alle arter",
-    "getWoodLink": "Sådan skaffer du træ lovligt"
+    "getWoodLink": "Sådan skaffer du træ lovligt",
+    "filterKeyLink": "Find træet med nøglen"
   },
   "Search": {
     "label": "Søg efter et træ",
@@ -63,5 +65,13 @@
   "NotFound": {
     "heading": "Siden findes ikke",
     "backHome": "Til forsiden"
+  },
+  "FilterKey": {
+    "title": "Find træet",
+    "intro": "Vælg det, du kan se på træet. Spring over, hvad du ikke ved. Listen opdaterer sig med det samme.",
+    "winterHint": "Om vinteren: brug knopstilling, bark og torne, når der ikke er blade.",
+    "submit": "Vis arter",
+    "reset": "Nulstil",
+    "results": "{count, plural, =0 {Ingen arter passer} one {# art passer} other {# arter passer}}"
   }
 }

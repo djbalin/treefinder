@@ -31,6 +31,7 @@ async function createPublished(
     isWarning?: boolean;
     warningReason?: string;
     localNames?: string[];
+    filterTraits?: Record<string, string[]>;
   },
   finalStatus: "published" | "aiDraft" = "published",
 ) {
@@ -61,6 +62,7 @@ async function createPublished(
         bark: text("Glat grå bark."),
       },
       localNames: { da: [data.name], en: data.localNames ?? [] },
+      filterTraits: data.filterTraits,
       sources: [
         {
           title: "Kilde om snitning",
@@ -135,12 +137,28 @@ export default async function globalSetup() {
     ...fixtures.lime,
     latinName: "Tilia cordata",
     localNames: ["Small-leaved lime", "linden"],
+    filterTraits: {
+      leafType: ["broad"],
+      arrangement: ["alternate"],
+      leafShape: ["simple"],
+      leafEdge: ["toothed"],
+      bark: ["smooth"],
+      thorns: ["no"],
+    },
   });
   const yew = await createPublished(payload, {
     ...fixtures.yew,
     latinName: "Taxus baccata",
     isWarning: true,
     warningReason: "Alle dele af taks er giftige.",
+    filterTraits: {
+      leafType: ["needles"],
+      arrangement: ["alternate"],
+      leafShape: ["simple"],
+      leafEdge: ["smooth"],
+      bark: ["peeling"],
+      thorns: ["no"],
+    },
   });
   await payload.update({
     collection: "species",

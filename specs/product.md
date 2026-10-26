@@ -114,7 +114,7 @@ Six traits, each shown as tappable chips with a small line icon. Every trait sta
 **Acceptance criteria**
 
 - [ ] The matching rules above are covered by unit tests.
-- [ ] With leaf type, arrangement and shape answered, every launch species ends up in a result list of 5 or fewer (a Vitest check against the seed data). If it doesn't, refine the traits before launch.
+- [ ] With leaf type, arrangement and shape answered, every launch species ends up in a result list of 5 or fewer (`pnpm check:filter-key` against the database, since traits are added during drafting and review). If it doesn't, refine the traits before launch.
 - [ ] Clearing all traits shows all published species.
 
 ## 7. Admin and review workflow

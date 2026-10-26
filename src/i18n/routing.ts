@@ -20,6 +20,7 @@ export const routing = defineRouting({
     "/": "/",
     "/arter": { da: "/arter", en: "/species" },
     "/arter/[slug]": { da: "/arter/[slug]", en: "/species/[slug]" },
+    "/find-traeet": { da: "/find-traeet", en: "/identify" },
     "/skaf-trae": { da: "/skaf-trae", en: "/get-wood" },
     "/om": { da: "/om", en: "/about" },
   },

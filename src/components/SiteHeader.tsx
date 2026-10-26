@@ -22,6 +22,12 @@ export function SiteHeader() {
         <Link href="/arter" className="underline-offset-4 hover:underline">
           {t("species")}
         </Link>
+        <Link
+          href="/find-traeet"
+          className="underline-offset-4 hover:underline"
+        >
+          {t("filterKey")}
+        </Link>
         <Link href="/skaf-trae" className="underline-offset-4 hover:underline">
           {t("getWood")}
         </Link>

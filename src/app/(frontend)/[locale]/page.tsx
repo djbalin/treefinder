@@ -25,6 +25,11 @@ export default async function HomePage({ params }: Props) {
           </Link>
         </li>
         <li>
+          <Link href="/find-traeet" className="underline">
+            {t("filterKeyLink")}
+          </Link>
+        </li>
+        <li>
           <Link href="/skaf-trae" className="underline">
             {t("getWoodLink")}
           </Link>

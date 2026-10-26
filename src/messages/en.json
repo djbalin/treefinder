@@ -9,13 +9,15 @@
     "species": "Species",
     "getWood": "Get wood",
     "about": "About",
-    "skipToContent": "Skip to content"
+    "skipToContent": "Skip to content",
+    "filterKey": "Identify"
   },
   "Home": {
     "heading": "Find the right wood to carve",
     "intro": "Treefinder collects what you need to know about the trees you can carve: how the wood works, what it suits, how to dry it, and how to recognise it.",
     "browseAll": "Browse all species",
-    "getWoodLink": "How to get wood legally"
+    "getWoodLink": "How to get wood legally",
+    "filterKeyLink": "Identify a tree with the key"
   },
   "Search": {
     "label": "Search for a tree",
@@ -63,5 +65,13 @@
   "NotFound": {
     "heading": "Page not found",
     "backHome": "Back to the home page"
+  },
+  "FilterKey": {
+    "title": "Identify a tree",
+    "intro": "Pick what you can see on the tree. Skip what you don't know. The list updates right away.",
+    "winterHint": "In winter: use bud arrangement, bark and thorns when there are no leaves.",
+    "submit": "Show species",
+    "reset": "Reset",
+    "results": "{count, plural, =0 {No species match} one {# species matches} other {# species match}}"
   }
 }

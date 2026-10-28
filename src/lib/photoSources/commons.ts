@@ -30,6 +30,8 @@ type CommonsPage = {
 
 export type CommonsResponse = {
   query?: { pages?: CommonsPage[] };
+  /** Present when the category has more files: send it back for the next page. */
+  continue?: Record<string, string>;
 };
 
 /** Turns one Commons API response into candidates, dropping unsafe licenses. */
@@ -66,8 +68,13 @@ export function parseCommonsResponse(
   return candidates;
 }
 
-export function commonsQueryUrl(categoryTitle: string, limit: number): string {
+export function commonsQueryUrl(
+  categoryTitle: string,
+  limit: number,
+  continueParams: Record<string, string> = {},
+): string {
   const params = new URLSearchParams({
+    ...continueParams,
     action: "query",
     format: "json",
     formatversion: "2",
@@ -80,6 +87,32 @@ export function commonsQueryUrl(categoryTitle: string, limit: number): string {
     iiurlwidth: "1600",
   });
   return `${API}?${params}`;
+}
+
+/** How many files a Commons category holds directly (0 when it is missing). */
+export async function commonsCategoryFileCount(
+  categoryTitle: string,
+  fetcher: Fetcher = fetch,
+): Promise<number> {
+  const params = new URLSearchParams({
+    action: "query",
+    format: "json",
+    formatversion: "2",
+    prop: "categoryinfo",
+    titles: categoryTitle,
+  });
+  const response = await fetcher(`${API}?${params}`, {
+    headers: { "User-Agent": USER_AGENT, Accept: "application/json" },
+  });
+  if (!response.ok) {
+    throw new Error(
+      `Wikimedia Commons answered ${response.status} for ${categoryTitle}`,
+    );
+  }
+  const data = (await response.json()) as {
+    query?: { pages?: { categoryinfo?: { files?: number } }[] };
+  };
+  return data.query?.pages?.[0]?.categoryinfo?.files ?? 0;
 }
 
 /** Fetches candidates from the species category and its bark and leaf subcategories. */

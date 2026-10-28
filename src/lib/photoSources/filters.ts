@@ -42,3 +42,15 @@ export function newCandidates(
   }
   return result;
 }
+
+/**
+ * A smaller version of a remote photo for the admin grid: Commons thumbnails
+ * take a width in the path (only standard widths such as 330 are served),
+ * iNaturalist has fixed sizes.
+ */
+export function thumbnailUrl(remoteUrl: string, width = 330): string {
+  if (/\/\d+px-/.test(remoteUrl)) {
+    return remoteUrl.replace(/\/\d+px-/, `/${width}px-`);
+  }
+  return remoteUrl.replace(/\/large\.(jpe?g|png)/i, "/medium.$1");
+}

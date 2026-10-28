@@ -66,6 +66,8 @@ export default defineSchema({
     sourceUrl: v.optional(v.string()),
     remoteUrl: v.optional(v.string()),
     storageId: v.optional(v.id("_storage")),
+    /** The one selected photo per slot shown first, and on the home page. */
+    poster: v.optional(v.boolean()),
     author: v.string(),
     license: license,
     attribution: v.string(),
@@ -75,6 +77,14 @@ export default defineSchema({
     .index("by_species_and_status", ["speciesId", "status"])
     .index("by_species_and_source_url", ["speciesId", "sourceUrl"])
     .index("by_status", ["status"]),
+
+  catalogCursors: defineTable({
+    speciesId: v.id("species"),
+    slot: photoSlot,
+    /** A CatalogCursor (src/lib/photoSources/catalog.ts) as JSON. */
+    cursor: v.string(),
+    exhausted: v.boolean(),
+  }).index("by_species_and_slot", ["speciesId", "slot"]),
 
   pages: defineTable({
     slug: v.union(v.literal("about"), v.literal("whereToGetWood")),
@@ -93,6 +103,8 @@ export default defineSchema({
     kind: jobKind,
     speciesId: v.id("species"),
     photoId: v.optional(v.id("photos")),
+    /** For a catalog fetch of one slot ("fetch 20 more"). */
+    slot: v.optional(photoSlot),
     status: jobStatus,
     error: v.optional(v.string()),
     startedAt: v.optional(v.number()),

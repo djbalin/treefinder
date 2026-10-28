@@ -75,6 +75,7 @@ export async function fetchInaturalistCandidates(
   fetcher: Fetcher = fetch,
   limit = 10,
   pause: (ms: number) => Promise<unknown> = sleep,
+  page = 1,
 ): Promise<PhotoCandidate[]> {
   const headers = { "User-Agent": USER_AGENT, Accept: "application/json" };
 
@@ -96,6 +97,7 @@ export async function fetchInaturalistCandidates(
     photos: "true",
     order_by: "votes",
     per_page: String(limit),
+    page: String(page),
   })}`;
   const observations = await fetcher(observationsUrl, { headers });
   if (!observations.ok)

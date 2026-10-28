@@ -71,7 +71,8 @@
     "lookAlikes": "Forveksles med",
     "sources": "Kilder",
     "photoCredit": "Foto: {attribution}",
-    "latinName": "Latinsk navn"
+    "latinName": "Latinsk navn",
+    "galleryOf": "Flere fotos af {slot}"
   },
   "Disclaimer": {
     "text": "Oplysningerne er vejledende og erstatter ikke din egen vurdering. Er du i tvivl om, hvorvidt et træ er sikkert til madredskaber, så lad være med at bruge det."
@@ -125,7 +126,7 @@
     "draftCard": "Skriv AI-udkast",
     "noJobs": "Ingen job endnu.",
     "jobKind": {
-      "fetchPhotos": "Fotokandidater",
+      "fetchCatalog": "Fotokatalog",
       "storePhoto": "Gem foto",
       "draftCard": "AI-udkast"
     },
@@ -170,6 +171,27 @@
     "noCandidates": "Ingen kandidater venter.",
     "keyboardHint": "Tastatur: vælg et foto, tryk 1–5 for plads eller X for at afvise.",
     "pageTitle": "Titel",
-    "pageContent": "Tekst"
+    "pageContent": "Tekst",
+    "catalogTitle": "Fotokatalog",
+    "catalogLink": "Åbn fotokatalog",
+    "fetchCatalog": "Hent fotokatalog",
+    "fetchMore": "Hent 20 flere",
+    "fetching": "Henter fotos … siden opdaterer sig selv.",
+    "exhausted": "Kilden har ikke flere fotos.",
+    "gallery": "Galleri",
+    "galleryCount": "{count} i galleriet",
+    "candidatesTitle": "Kandidater",
+    "candidatesCount": "{count} kandidater",
+    "noGallery": "Ingen fotos i galleriet endnu.",
+    "noCatalogCandidates": "Ingen kandidater. Hent fotos først.",
+    "toggleIn": "Vælg",
+    "toggleOut": "Fjern",
+    "makePoster": "Gør til plakat",
+    "isPoster": "Plakat",
+    "moveTo": "Flyt til …",
+    "catalogKeyboard": "Tastatur: piletaster flytter, mellemrum vælger eller fjerner, P gør til plakat, X afviser.",
+    "openSource": "Se kilden",
+    "previewEmpty": "Vælg et foto for at se det stort.",
+    "postersHeading": "Plakatfotos"
   }
 }

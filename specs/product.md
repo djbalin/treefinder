@@ -95,6 +95,8 @@ Users identify a tree by comparing reference photos and narrowing the list with 
 | Winter twig and bud   | Yes      | Identification without leaves        |
 | Cut wood or end grain | No       | What carvers actually hold           |
 
+Each slot holds a **gallery**: the photos the admin has picked for it, as many as are useful (5 to 10 is the practical aim). One photo per slot is the **poster**, shown first on the card and the one the home page uses. The card shows each gallery so a visitor can look through several photos of the whole tree, the bark and the leaves.
+
 ### 6.2 Filter key (MVP, to be evaluated)
 
 Six traits, each shown as tappable chips with a small line icon. Every trait starts as "ved ikke" (don't know). The result list updates live, with a count.
@@ -130,14 +132,14 @@ The maintainer is the only admin. Each species page in the admin has two buttons
 
 ### 7.2 Photo states
 
-Candidate, then selected (into a slot) or rejected. Each species can have only one selected photo per slot.
+Candidate, then selected (into a slot's gallery) or rejected. A selected photo can be the slot's poster; each slot has at most one poster.
 
 ### 7.3 Publish rules
 
 A species can only move to Published when:
 
 - [ ] the food safety tick is set
-- [ ] all four required photo slots have a selected photo
+- [ ] all four required photo slots have a poster photo
 - [ ] it has at least one source
 - [ ] all required Danish fields are filled in
 - [ ] warning species have a warning reason
@@ -146,13 +148,19 @@ Each rule is enforced server-side and has a unit test.
 
 ### 7.4 Jobs
 
-- **Fetch photo candidates:** pulls about 20 candidates per species from Wikimedia Commons and iNaturalist (research grade). Keeps only CC0, CC-BY and CC-BY-SA, and skips duplicates. A photo is copied into storage only when it's selected.
+- **Fetch photo catalog:** fetches 20 candidates for each of whole tree, bark and leaf, each from the source that suits it best:
+  - Bark: the species' Wikimedia Commons bark category (for example `Category:Tilia cordata (bark)`), and only that; a smaller category simply gives fewer.
+  - Leaf: the Commons leaves category when it holds at least 20 files, otherwise iNaturalist research-grade observations.
+  - Whole tree: the species' main Commons category.
+
+  "Fetch 20 more" continues where the last fetch stopped, per slot. Keeps only CC0, CC-BY and CC-BY-SA, and skips duplicates. A photo is copied into storage only when it's selected.
 - **Draft card:** asks Claude, with web search, to write the card fields in Danish, with sources per field. It only runs on cards in AI draft or Needs changes. Version history keeps the previous text.
 
 ### 7.5 Review queue
 
 - Cards waiting for review, oldest first.
 - Photo candidates grouped by species in a grid. Tap a photo, then a slot. Keyboard shortcuts on desktop: 1 to 5 to pick a slot, X to reject.
+- **Photo catalog per species:** one tab per slot with its candidates and gallery, built for picking many photos quickly: toggle a photo into the gallery, star the poster, move a photo to another slot, reject, and fetch 20 more. Keyboard on desktop: arrow keys move, space toggles, P sets the poster, X rejects.
 - Built so user submissions can later arrive as another source of candidates.
 
 **Acceptance criteria**

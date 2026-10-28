@@ -71,7 +71,8 @@
     "lookAlikes": "Often confused with",
     "sources": "Sources",
     "photoCredit": "Photo: {attribution}",
-    "latinName": "Latin name"
+    "latinName": "Latin name",
+    "galleryOf": "More photos of {slot}"
   },
   "Disclaimer": {
     "text": "This information is guidance only and does not replace your own judgement. If you are unsure whether a wood is safe for food utensils, don't use it."
@@ -125,7 +126,7 @@
     "draftCard": "Write AI draft",
     "noJobs": "No jobs yet.",
     "jobKind": {
-      "fetchPhotos": "Photo candidates",
+      "fetchCatalog": "Photo catalog",
       "storePhoto": "Store photo",
       "draftCard": "AI draft"
     },
@@ -170,6 +171,27 @@
     "noCandidates": "No candidates waiting.",
     "keyboardHint": "Keyboard: focus a photo, press 1–5 for a slot or X to reject.",
     "pageTitle": "Title",
-    "pageContent": "Text"
+    "pageContent": "Text",
+    "catalogTitle": "Photo catalog",
+    "catalogLink": "Open photo catalog",
+    "fetchCatalog": "Fetch photo catalog",
+    "fetchMore": "Fetch 20 more",
+    "fetching": "Fetching photos … the page updates itself.",
+    "exhausted": "The source has no more photos.",
+    "gallery": "Gallery",
+    "galleryCount": "{count} in the gallery",
+    "candidatesTitle": "Candidates",
+    "candidatesCount": "{count} candidates",
+    "noGallery": "No photos in the gallery yet.",
+    "noCatalogCandidates": "No candidates. Fetch photos first.",
+    "toggleIn": "Select",
+    "toggleOut": "Remove",
+    "makePoster": "Make poster",
+    "isPoster": "Poster",
+    "moveTo": "Move to …",
+    "catalogKeyboard": "Keyboard: arrows move, space selects or removes, P makes the poster, X rejects.",
+    "openSource": "View source",
+    "previewEmpty": "Focus a photo to see it large.",
+    "postersHeading": "Poster photos"
   }
 }

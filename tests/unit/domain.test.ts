@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
-import { photosToDemote, validatePhotoChange } from "@/domain/photoRules";
+import { validatePhotoChange } from "@/domain/photoRules";
 import { slugify } from "@/domain/slug";
 import { parseSpeciesTable } from "@/domain/speciesList";
 
@@ -55,15 +55,5 @@ describe("photo rules", () => {
       validatePhotoChange({ status: "selected", slot: "bark" }),
     ).toBeNull();
     expect(validatePhotoChange({ status: "candidate", slot: null })).toBeNull();
-  });
-
-  it("demotes other selected photos in the same slot only", () => {
-    const existing = [
-      { id: 1, status: "selected", slot: "bark" },
-      { id: 2, status: "selected", slot: "leaf" },
-      { id: 3, status: "candidate", slot: "bark" },
-      { id: 4, status: "selected", slot: "bark" },
-    ];
-    expect(photosToDemote({ id: 4, slot: "bark" }, existing)).toEqual([1]);
   });
 });

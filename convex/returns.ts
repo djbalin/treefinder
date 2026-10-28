@@ -18,6 +18,7 @@ import {
 export const publicPhoto = v.object({
   id: v.id("photos"),
   slot: v.union(photoSlot, v.null()),
+  poster: v.boolean(),
   url: v.string(),
   alt: v.union(v.string(), v.null()),
   author: v.string(),

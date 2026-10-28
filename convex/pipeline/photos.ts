@@ -1,18 +1,23 @@
 import { v } from "convex/values";
-import { fetchCommonsCandidates } from "../../src/lib/photoSources/commons";
+import {
+  CATALOG_SLOTS,
+  type CatalogCursor,
+  fetchCatalogBatch,
+  firstCursor,
+} from "../../src/lib/photoSources/catalog";
 import {
   isAllowedImageUrl,
   MAX_IMAGE_BYTES,
 } from "../../src/lib/photoSources/filters";
-import { fetchInaturalistCandidates } from "../../src/lib/photoSources/inaturalist";
 import { internal } from "../_generated/api";
 import { internalAction } from "../_generated/server";
 
 /**
- * Fetches photo candidates from Wikimedia Commons and iNaturalist for the
- * job's species. Each source is stored before the next one is asked.
+ * Fetches the next 20 catalog candidates for each of whole tree, bark and
+ * leaf (or one slot), each from its source (product spec 7.4). Every slot
+ * is stored with its cursor before the next one starts.
  */
-export const fetchPhotos = internalAction({
+export const fetchCatalog = internalAction({
   args: { jobId: v.id("jobs") },
   returns: v.null(),
   handler: async (ctx, args) => {
@@ -20,14 +25,32 @@ export const fetchPhotos = internalAction({
     if (!job) return null;
     await ctx.runMutation(internal.pipeline.data.markRunning, args);
     try {
-      for (const fetchFrom of [
-        fetchCommonsCandidates,
-        fetchInaturalistCandidates,
-      ]) {
-        const candidates = await fetchFrom(job.latinName);
+      const slots = CATALOG_SLOTS.filter(
+        (slot) => !job.slot || job.slot === slot,
+      );
+      for (const slot of slots) {
+        const saved = await ctx.runQuery(internal.pipeline.data.getCursor, {
+          speciesId: job.speciesId,
+          slot,
+        });
+        if (saved?.exhausted) continue;
+        const cursor: CatalogCursor = saved
+          ? JSON.parse(saved.cursor)
+          : await firstCursor(job.latinName, slot);
+        const { candidates, next } = await fetchCatalogBatch(
+          job.latinName,
+          cursor,
+        );
         await ctx.runMutation(internal.pipeline.data.storeCandidates, {
           speciesId: job.speciesId,
+          slot,
           candidates,
+        });
+        await ctx.runMutation(internal.pipeline.data.saveCursor, {
+          speciesId: job.speciesId,
+          slot,
+          cursor: JSON.stringify(next ?? cursor),
+          exhausted: next === null,
         });
       }
       await ctx.runMutation(internal.pipeline.data.markFinished, args);

@@ -4,9 +4,18 @@ import { internal } from "../_generated/api";
 import { mutation } from "../_generated/server";
 import { adminArgs, requireAdmin } from "../lib/admin";
 
-/** Queues a fetch of photo candidates from Commons and iNaturalist. */
-export const fetchPhotos = mutation({
-  args: { ...adminArgs, speciesId: v.id("species") },
+/**
+ * Queues a catalog fetch: the next 20 candidates for each of whole tree,
+ * bark and leaf, or for one of them ("fetch 20 more").
+ */
+export const fetchCatalog = mutation({
+  args: {
+    ...adminArgs,
+    speciesId: v.id("species"),
+    slot: v.optional(
+      v.union(v.literal("wholeTree"), v.literal("bark"), v.literal("leaf")),
+    ),
+  },
   returns: v.id("jobs"),
   handler: async (ctx, args) => {
     await requireAdmin(ctx, args.adminSecret);
@@ -14,11 +23,12 @@ export const fetchPhotos = mutation({
       throw new ConvexError("Arten findes ikke.");
     }
     const jobId = await ctx.db.insert("jobs", {
-      kind: "fetchPhotos",
+      kind: "fetchCatalog",
       speciesId: args.speciesId,
+      slot: args.slot,
       status: "queued",
     });
-    await ctx.scheduler.runAfter(0, internal.pipeline.photos.fetchPhotos, {
+    await ctx.scheduler.runAfter(0, internal.pipeline.photos.fetchCatalog, {
       jobId,
     });
     return jobId;

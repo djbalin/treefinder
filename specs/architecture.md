@@ -97,11 +97,16 @@ A snapshot of a species' card fields before every draft or edit: `speciesId`, `r
 | `source`                           | commons, inaturalist, upload (later: userSubmission)                                     |
 | `sourceUrl`, `remoteUrl`           | string                                                                                   |
 | `storageId`                        | Convex file id, set once a selected photo has been copied into storage                   |
+| `poster`                           | true on the one selected photo per slot that is shown first and used on the home page    |
 | `author`, `license`, `attribution` | string; CC0, CC-BY or CC-BY-SA (versioned or not); string                                |
 | `alt`                              | string, localized                                                                        |
 | `fetchedAt`                        | timestamp                                                                                |
 
 Indexes: `by_species_and_status`, `by_species_and_source_url` (de-duplication), `by_status` (review queue).
+
+### `catalogCursors`
+
+Where the last catalog fetch stopped, per species and slot: the source (Commons category with its continuation token, or an iNaturalist page), and whether it is exhausted.
 
 ### `pages`
 
@@ -113,22 +118,22 @@ Admin accounts only; no public sign-up. `tokenIdentifier` (from the Clerk JWT, i
 
 ### `jobs`
 
-`kind` (fetchPhotos, draftCard, storePhoto), `speciesId`, `status` (queued, running, done, failed), `error`, timestamps. Index `by_species`.
+`kind` (fetchCatalog, draftCard, storePhoto), `speciesId`, `slot` (for a one-slot catalog fetch), `status` (queued, running, done, failed), `error`, timestamps. Index `by_species`.
 
 ## 4. Business rules
 
 - **Publish rules** (product spec 7.3) are pure functions in `src/domain/publishRules.ts`, called by every mutation that can publish. Unit tested, plus a Convex test that a publish attempt with a broken rule throws.
-- **One selected photo per slot:** selecting a photo demotes any previously selected photo in that slot back to candidate, in the same mutation.
+- **One poster per slot:** making a photo the poster clears the poster flag on the slot's other photos, in the same mutation. A slot's gallery has no fixed size.
 - **License filter:** a pure function mapping each source's license string to an allowed license or a rejection. Unit tested with real samples from both APIs.
 - **Visitor access:** public queries return only published species, their selected photos and the pages. Everything else requires the `admin` role, checked server-side in every admin function.
 
 ## 5. Jobs
 
-| Job           | Started by            | Steps                                                                                                                                                                                                | Output                                          |
-| ------------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- |
-| `fetchPhotos` | Admin button          | Query Commons (species category plus bark and leaf subcategories) and iNaturalist (research grade, license filter in the query). Normalize metadata, filter licenses, skip duplicates by source URL. | Up to about 20 `photos` with status `candidate` |
-| `storePhoto`  | Selecting a candidate | Download the remote file (known image hosts over https only) into Convex file storage and set `storageId`.                                                                                           | A stored file for the selected photo            |
-| `draftCard`   | Admin button          | Three sections (carving, safety, identification), one Claude call each with web search and a strict submit tool. Write in Danish, with sources per field. A revision is saved first.                 | Card fields updated, status `aiDraft`           |
+| Job            | Started by                                                | Steps                                                                                                                                                                                                             | Output                                                           |
+| -------------- | --------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| `fetchCatalog` | Admin button (all three slots, or one slot for "20 more") | Per slot, from the source in product spec 7.4: a Commons category page (with its continuation token) or an iNaturalist page. Normalize metadata, filter licenses, skip duplicates by source URL, save the cursor. | Up to 20 `photos` per slot with status `candidate` and that slot |
+| `storePhoto`   | Selecting a candidate                                     | Download the remote file (known image hosts over https only) into Convex file storage and set `storageId`.                                                                                                        | A stored file for the selected photo                             |
+| `draftCard`    | Admin button                                              | Three sections (carving, safety, identification), one Claude call each with web search and a strict submit tool. Write in Danish, with sources per field. A revision is saved first.                              | Card fields updated, status `aiDraft`                            |
 - A mutation inserts the job row and schedules the action with `ctx.scheduler.runAfter(0, ...)`; the action reports progress through internal mutations. Each step is stored before the next starts, so a failed run can be retried from the admin.
 - Convex actions run for up to 10 minutes, so three web-searching Claude calls fit in one run. This removes the Vercel function time limit risk from milestone 2.
 - API etiquette: a descriptive User-Agent for Wikimedia, about 1 request per second for iNaturalist, and a spend limit on the Claude API key.

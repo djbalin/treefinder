@@ -31,14 +31,14 @@ Treefinder is a free web app, designed mobile first, that gives wood carvers a c
 
 Danish lives at the root, English under `/en` with translated paths. English stays hidden until its cards are translated.
 
-| Page              | Danish path     | English path         | What it does                                                                                                                          |
-| ----------------- | --------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| Home              | `/`             | `/en`                | A wall of tree photos with carvability, hardness and food-safety badges, filtered by use; links to the filter key and to getting wood |
-| All species       | `/arter`        | `/en/species`        | Searchable list with photo thumbnails, filtered by carving use and difficulty                                                         |
-| Species card      | `/arter/[slug]` | `/en/species/[slug]` | Carving card and reference photos                                                                                                     |
-| Filter key        | `/find-traeet`  | `/en/identify`       | Pick traits, see matching species                                                                                                     |
-| Where to get wood | `/skaf-trae`    | `/en/get-wood`       | Arborists, storm-felled trees, garden pruning, sankekort, selvskovning                                                                |
-| About             | `/om`           | `/en/about`          | About the project, food safety disclaimer, image credits                                                                              |
+| Page              | Danish path     | English path         | What it does                                                                                                                                                                                   |
+| ----------------- | --------------- | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Home              | `/`             | `/en`                | A wall of trees, each a swipeable carousel of whole tree, bark and leaf photos with carvability, hardness and food-safety badges, filtered by use; links to the filter key and to getting wood |
+| All species       | `/arter`        | `/en/species`        | Searchable list with photo thumbnails, filtered by carving use and difficulty                                                                                                                  |
+| Species card      | `/arter/[slug]` | `/en/species/[slug]` | Carving card and reference photos                                                                                                                                                              |
+| Filter key        | `/find-traeet`  | `/en/identify`       | Pick traits, see matching species                                                                                                                                                              |
+| Where to get wood | `/skaf-trae`    | `/en/get-wood`       | Arborists, storm-felled trees, garden pruning, sankekort, selvskovning                                                                                                                         |
+| About             | `/om`           | `/en/about`          | About the project, food safety disclaimer, image credits                                                                                                                                       |
 
 **Acceptance criteria**
 

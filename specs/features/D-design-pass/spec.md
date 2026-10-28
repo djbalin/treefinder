@@ -13,7 +13,7 @@ The first pass (October 2026) gave the species card a calm "field guide plate" l
 
 1. The visual world is "flat enamel": solid, untinted colour on a white ground. An ink header bar, cobalt for links, actions and the picked filter, forest green for name bands and the food-safety check, signal red only for toxic species. No yellow. Gabarito for names, navigation and labels, Figtree for text. Square-cut tiles, authored glyphs in one stroke weight, no keylines, gradients or shadows. All values live in `src/styles/tokens.css`.
 2. The header is one slim ink bar with the page links and the search, on every page. There is no logo.
-3. The home page is a wall of published trees: each tile is the tree's photo with a full-width name band and three badges in a fixed order: carvability (one to three knife cuts), dry hardness (rising bars) and food safety (checked, not checked, or toxic). Toxic trees get a red band with the word "Giftig".
+3. The home page is a wall of published trees: each tile is a swipeable carousel of the tree's whole tree, bark and leaf photos, switched by three glyph buttons in the top right, with a full-width name band and three badges in a fixed order: carvability (one to three knife cuts), dry hardness (rising bars) and food safety (checked, not checked, or toxic). Toxic trees get a red band with the word "Giftig".
 4. A one-line legend above the wall names the three badges. A single horizontal row of use pills ("Hvad vil du lave?") filters the wall through `?brug=`.
 5. Every photo on the home page is credited with author, license and source.
 6. The species card keeps its numbered plate, ruled key and numbered identification text from the first pass, now in the new tokens, until its own pass in the new world.

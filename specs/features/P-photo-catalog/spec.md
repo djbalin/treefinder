@@ -20,12 +20,12 @@ A card shows one photo per slot. Recognising a tree needs more: several photos o
 
 ## Acceptance criteria
 
-- [ ] Making a photo the poster clears the slot's other poster (Convex test).
-- [ ] Selecting a photo keeps the other selected photos in the slot (Convex test).
-- [ ] Publishing without a poster in a required slot fails (Convex test).
-- [ ] The catalog source is chosen per slot as in product spec 7.4, and a Commons continuation token is followed (unit test).
-- [ ] The catalog page selects, stars and rejects with the keyboard (end-to-end).
-- [ ] The card shows a slot's gallery with credits (end-to-end).
+- [x] Making a photo the poster clears the slot's other poster (Convex test).
+- [x] Selecting a photo keeps the other selected photos in the slot (Convex test).
+- [x] Publishing without a poster in a required slot fails (Convex test).
+- [x] The catalog source is chosen per slot as in product spec 7.4, and a Commons continuation token is followed (unit test).
+- [x] The catalog page selects, stars and rejects with the keyboard (end-to-end).
+- [x] The card shows a slot's gallery with credits (end-to-end).
 
 ## Out of scope
 

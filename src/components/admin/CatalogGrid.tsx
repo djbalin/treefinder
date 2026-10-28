@@ -228,15 +228,20 @@ export function CatalogGrid({
             ) : null}
           </span>
         </button>
-        <div className="flex flex-wrap items-center gap-1 p-1.5 text-sm">
-          <SmallButton onClick={() => toggle(photo)}>
-            {inGallery ? labels.toggleOut : labels.toggleIn}
-          </SmallButton>
-          {inGallery && !photo.poster ? (
-            <SmallButton onClick={() => run(() => makePoster(photo.id))}>
-              {labels.makePoster}
+        <div className="space-y-1 p-1.5 text-sm">
+          <div className="flex flex-wrap gap-1">
+            <SmallButton onClick={() => toggle(photo)}>
+              {inGallery ? labels.toggleOut : labels.toggleIn}
             </SmallButton>
-          ) : null}
+            {inGallery && !photo.poster ? (
+              <SmallButton onClick={() => run(() => makePoster(photo.id))}>
+                {labels.makePoster}
+              </SmallButton>
+            ) : null}
+            <SmallButton tone="warning" onClick={() => reject(photo)}>
+              {labels.reject}
+            </SmallButton>
+          </div>
           <select
             tabIndex={-1}
             aria-label={labels.moveTo}
@@ -244,7 +249,7 @@ export function CatalogGrid({
             onChange={(event) =>
               run(() => moveToSlot(photo.id, event.target.value as PhotoSlot))
             }
-            className="rounded-control border-2 border-accent bg-surface px-1 py-0.5 font-semibold text-accent"
+            className="w-full rounded-control border-2 border-accent bg-surface px-1 py-0.5 font-semibold text-accent"
           >
             <option value="">{labels.moveTo}</option>
             {slotOptions
@@ -255,9 +260,6 @@ export function CatalogGrid({
                 </option>
               ))}
           </select>
-          <SmallButton tone="warning" onClick={() => reject(photo)}>
-            {labels.reject}
-          </SmallButton>
         </div>
       </article>
     );

@@ -29,7 +29,12 @@
     "legendCarving": "Carvability",
     "legendHardness": "Hardness",
     "legendFood": "Food",
-    "photoCredits": "Photos"
+    "photoCredits": "Photos",
+    "views": {
+      "wholeTree": "Show the whole tree",
+      "bark": "Show the bark",
+      "leaf": "Show the leaf"
+    }
   },
   "Search": {
     "label": "Search for a tree",

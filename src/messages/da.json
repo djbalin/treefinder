@@ -29,7 +29,12 @@
     "legendCarving": "Snitbarhed",
     "legendHardness": "Hårdhed",
     "legendFood": "Mad",
-    "photoCredits": "Fotos"
+    "photoCredits": "Fotos",
+    "views": {
+      "wholeTree": "Vis hele træet",
+      "bark": "Vis barken",
+      "leaf": "Vis bladet"
+    }
   },
   "Search": {
     "label": "Søg efter et træ",

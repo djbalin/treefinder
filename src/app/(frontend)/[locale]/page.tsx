@@ -81,7 +81,7 @@ export default async function HomePage({ params, searchParams }: Props) {
                 <TreeSign
                   key={item.id}
                   species={item}
-                  photo={bySlot.wholeTree ?? bySlot.leaf}
+                  photos={bySlot}
                   locale={locale}
                 />
               );
@@ -110,8 +110,11 @@ export default async function HomePage({ params, searchParams }: Props) {
         title={t("photoCredits")}
         credits={species.flatMap((item) => {
           const bySlot = photosBySlot(item.photos);
-          const photo = bySlot.wholeTree ?? bySlot.leaf;
-          return photo ? [{ name: item.name, photo }] : [];
+          // Every photo the carousels show, in their order.
+          return (["wholeTree", "bark", "leaf"] as const).flatMap((slot) => {
+            const photo = bySlot[slot];
+            return photo ? [{ name: item.name, photo }] : [];
+          });
         })}
       />
     </div>

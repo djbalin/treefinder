@@ -14,7 +14,9 @@ export type GlyphName =
   | "broad"
   | "needles"
   | "scales"
-  | "arrow";
+  | "arrow"
+  | "tree"
+  | "bark";
 
 const PATHS: Record<GlyphName, string[]> = {
   spoons: [
@@ -65,6 +67,17 @@ const PATHS: Record<GlyphName, string[]> = {
     "M12 18.5l4.75-3",
   ],
   arrow: ["M4 12h15", "M13.5 6.5 19 12l-5.5 5.5"],
+  tree: [
+    "M6.6 13.75a3.6 3.6 0 0 1 .35-6.75 5.1 5.1 0 0 1 10.1 0 3.6 3.6 0 0 1 .35 6.75Z",
+    "M12 13.75v7",
+    "M12 16.25 9.75 14.5",
+    "M8.75 20.75h6.5",
+  ],
+  bark: [
+    "M7 3.25c1.4 2.75-1.4 5.5 0 8.75s-1.4 6 0 8.75",
+    "M12 3.25c-1.4 2.75 1.4 5.5 0 8.75s1.4 6 0 8.75",
+    "M17 3.25c1.4 2.75-1.4 5.5 0 8.75s-1.4 6 0 8.75",
+  ],
 };
 
 export function Glyph({

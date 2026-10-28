@@ -53,6 +53,7 @@ async function addPhotos(
   t: Awaited<ReturnType<typeof setup>>["t"],
   speciesId: Id<"species">,
   status: "selected" | "candidate",
+  poster = status === "selected",
 ) {
   return t.run(async (ctx) => {
     const ids: Id<"photos">[] = [];
@@ -62,6 +63,7 @@ async function addPhotos(
           speciesId,
           slot,
           status,
+          poster,
           source: "upload",
           license: "own",
           author: "A",
@@ -117,7 +119,7 @@ describe("publishing", () => {
         id,
         status: "published",
       }),
-    ).rejects.toThrow(/Mangler valgt foto/);
+    ).rejects.toThrow(/Mangler plakatfoto/);
   });
 
   it("publishes once every rule holds", async () => {
@@ -135,6 +137,18 @@ describe("publishing", () => {
     expect(card?.name).toBe("Lind");
   });
 
+  it("needs a poster, not just a selected photo, in each required slot", async () => {
+    const { t, id } = await setup();
+    await addPhotos(t, id, "selected", false);
+    await expect(
+      t.mutation(api.admin.species.setStatus, {
+        ...admin,
+        id,
+        status: "published",
+      }),
+    ).rejects.toThrow(/Mangler plakatfoto/);
+  });
+
   it("keeps a published card's required photos", async () => {
     const { t, id } = await setup();
     const photo = first(await addPhotos(t, id, "selected"));
@@ -150,7 +164,7 @@ describe("publishing", () => {
 });
 
 describe("photos", () => {
-  it("demotes the previously selected photo in the same slot", async () => {
+  it("keeps the other selected photos when one is added", async () => {
     const { t, id } = await setup();
     const previous = first(await addPhotos(t, id, "selected"));
     const next = first(await addPhotos(t, id, "candidate"));
@@ -163,20 +177,45 @@ describe("photos", () => {
       (await ctx.db.get("photos", previous))?.status,
       (await ctx.db.get("photos", next))?.status,
     ]);
-    expect(statuses).toEqual(["candidate", "selected"]);
+    expect(statuses).toEqual(["selected", "selected"]);
+  });
+
+  it("allows one poster per slot", async () => {
+    const { t, id } = await setup();
+    const previous = first(await addPhotos(t, id, "selected"));
+    const next = first(await addPhotos(t, id, "selected", false));
+    await t.mutation(api.admin.photos.setPoster, { ...admin, photoId: next });
+    const posters = await t.run(async (ctx) => [
+      (await ctx.db.get("photos", previous))?.poster,
+      (await ctx.db.get("photos", next))?.poster,
+    ]);
+    expect(posters).toEqual([false, true]);
+  });
+
+  it("only stars photos in the gallery", async () => {
+    const { t, id } = await setup();
+    const candidate = first(await addPhotos(t, id, "candidate"));
+    await expect(
+      t.mutation(api.admin.photos.setPoster, { ...admin, photoId: candidate }),
+    ).rejects.toThrow(/galleriet/);
   });
 });
 
 describe("jobs", () => {
-  it("queues a photo fetch and records it", async () => {
+  it("queues a catalog fetch for one slot and records it", async () => {
     vi.useFakeTimers();
     const { t, id } = await setup();
-    const jobId = await t.mutation(api.admin.jobs.fetchPhotos, {
+    const jobId = await t.mutation(api.admin.jobs.fetchCatalog, {
       ...admin,
       speciesId: id,
+      slot: "bark",
     });
     const job = await t.run((ctx) => ctx.db.get("jobs", jobId));
-    expect(job).toMatchObject({ kind: "fetchPhotos", status: "queued" });
+    expect(job).toMatchObject({
+      kind: "fetchCatalog",
+      slot: "bark",
+      status: "queued",
+    });
     vi.useRealTimers();
   });
 

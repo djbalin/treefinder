@@ -77,7 +77,7 @@ export const source = v.object({
 });
 
 export const jobKind = v.union(
-  v.literal("fetchPhotos"),
+  v.literal("fetchCatalog"),
   v.literal("storePhoto"),
   v.literal("draftCard"),
 );

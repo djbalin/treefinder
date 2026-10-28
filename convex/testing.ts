@@ -95,6 +95,24 @@ export const seedFixtures = internalMutation({
       attribution: "E2E kandidat",
     });
 
+    // One more bark photo in lime's gallery, and two bark candidates for
+    // the photo catalog test.
+    const photo = (attribution: string, status: "selected" | "candidate") =>
+      ctx.db.insert("photos", {
+        speciesId: lime,
+        slot: "bark",
+        status,
+        source: "upload",
+        remoteUrl: `https://example.com/${encodeURIComponent(attribution)}.jpg`,
+        sourceUrl: "https://example.com/foto",
+        license: "CC-BY-4.0",
+        author: attribution,
+        attribution,
+      });
+    await photo("Anden Fotograf, bark", "selected");
+    await photo("E2E katalog 1", "candidate");
+    await photo("E2E katalog 2", "candidate");
+
     for (const slug of ["whereToGetWood", "about"] as const) {
       const page = await ctx.db
         .query("pages")
@@ -173,6 +191,7 @@ async function addCard(
       speciesId: id,
       slot,
       status: "selected",
+      poster: true,
       source: "upload",
       license: "CC-BY-4.0",
       author: "Test Fotograf",

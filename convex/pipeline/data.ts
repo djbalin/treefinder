@@ -23,6 +23,7 @@ export const jobContext = internalQuery({
       name: v.string(),
       isWarning: v.boolean(),
       draftable: v.boolean(),
+      slot: v.union(photoSlot, v.null()),
       photo: v.union(
         v.object({
           id: v.id("photos"),
@@ -48,6 +49,7 @@ export const jobContext = internalQuery({
       draftable: (DRAFTABLE_STATUSES as readonly string[]).includes(
         species.status,
       ),
+      slot: job.slot ?? null,
       photo: photo
         ? {
             id: photo._id,
@@ -94,9 +96,13 @@ const candidate = v.object({
   slotHint: v.optional(photoSlot),
 });
 
-/** Stores new photo candidates, skipping any the species already has. */
+/** Stores new photo candidates for a slot, skipping any the species already has. */
 export const storeCandidates = internalMutation({
-  args: { speciesId: v.id("species"), candidates: v.array(candidate) },
+  args: {
+    speciesId: v.id("species"),
+    slot: photoSlot,
+    candidates: v.array(candidate),
+  },
   returns: v.number(),
   handler: async (ctx, args) => {
     const existing = [];
@@ -115,7 +121,7 @@ export const storeCandidates = internalMutation({
       await ctx.db.insert("photos", {
         speciesId: args.speciesId,
         status: "candidate",
-        slot: item.slotHint,
+        slot: args.slot,
         source: item.source,
         sourceUrl: item.sourceUrl,
         remoteUrl: item.remoteUrl,
@@ -126,6 +132,51 @@ export const storeCandidates = internalMutation({
       });
     }
     return fresh.length;
+  },
+});
+
+/** Where the last catalog fetch for a slot stopped, if any. */
+export const getCursor = internalQuery({
+  args: { speciesId: v.id("species"), slot: photoSlot },
+  returns: v.union(
+    v.object({ cursor: v.string(), exhausted: v.boolean() }),
+    v.null(),
+  ),
+  handler: async (ctx, args) => {
+    const row = await ctx.db
+      .query("catalogCursors")
+      .withIndex("by_species_and_slot", (q) =>
+        q.eq("speciesId", args.speciesId).eq("slot", args.slot),
+      )
+      .unique();
+    return row ? { cursor: row.cursor, exhausted: row.exhausted } : null;
+  },
+});
+
+export const saveCursor = internalMutation({
+  args: {
+    speciesId: v.id("species"),
+    slot: photoSlot,
+    cursor: v.string(),
+    exhausted: v.boolean(),
+  },
+  returns: v.null(),
+  handler: async (ctx, args) => {
+    const row = await ctx.db
+      .query("catalogCursors")
+      .withIndex("by_species_and_slot", (q) =>
+        q.eq("speciesId", args.speciesId).eq("slot", args.slot),
+      )
+      .unique();
+    if (row) {
+      await ctx.db.patch("catalogCursors", row._id, {
+        cursor: args.cursor,
+        exhausted: args.exhausted,
+      });
+    } else {
+      await ctx.db.insert("catalogCursors", args);
+    }
+    return null;
   },
 });
 

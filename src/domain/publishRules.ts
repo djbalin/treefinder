@@ -86,7 +86,7 @@ function describeBlocker(blocker: PublishBlocker): string {
     case "foodSafetyNotChecked":
       return "Fødevaresikkerhed er ikke markeret som kontrolleret.";
     case "missingPhotos":
-      return `Mangler valgt foto til: ${blocker.slots.join(", ")}.`;
+      return `Mangler plakatfoto til: ${blocker.slots.join(", ")}.`;
     case "noSources":
       return "Kortet har ingen kilder.";
     case "missingFields":

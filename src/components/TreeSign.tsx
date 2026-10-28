@@ -37,7 +37,7 @@ export function TreeSign({
 }) {
   const t = useTranslations("Card");
   const tHome = useTranslations("Home");
-  const slides: CarouselSlide[] = VIEWS.flatMap((view) => {
+  const available: CarouselSlide[] = VIEWS.flatMap((view) => {
     const photo = photos[view];
     return photo
       ? [
@@ -50,6 +50,10 @@ export function TreeSign({
         ]
       : [];
   });
+  // Each page load starts every tree on a random view: the strip is rotated
+  // so that view comes first, which avoids a jump after hydration.
+  const start = Math.floor(Math.random() * available.length);
+  const slides = [...available.slice(start), ...available.slice(0, start)];
 
   // Fixed cells: every tree has all three, an empty cell when a value is missing.
   const badges: { key: string; label?: string | null; glyph?: ReactNode }[] = [

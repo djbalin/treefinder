@@ -15,6 +15,9 @@ export type CarouselSlide = {
   label: string;
 };
 
+/** The buttons' fixed order, whatever view the strip starts on. */
+const VIEW_ORDER: CarouselView[] = ["wholeTree", "bark", "leaf"];
+
 const GLYPHS: Record<CarouselView, GlyphName> = {
   wholeTree: "tree",
   bark: "bark",
@@ -22,8 +25,9 @@ const GLYPHS: Record<CarouselView, GlyphName> = {
 };
 
 /**
- * A tree's photos as a swipeable strip (whole tree, bark, leaf), with one
- * round glyph button per view in the top right. Swiping or tapping a button
+ * A tree's photos as a swipeable strip, with one round glyph button per view
+ * in the top right, always in the order tree, bark, leaf. The strip may
+ * start on any view (the caller rotates it). Swiping or tapping a button
  * changes the view; tapping the photo opens the card.
  */
 export function TreeCarousel({
@@ -85,7 +89,11 @@ export function TreeCarousel({
 
       {slides.length > 1 ? (
         <div className="absolute top-2 right-2 flex gap-1">
-          {slides.map((slide, index) => (
+          {VIEW_ORDER.flatMap((view) => {
+            const index = slides.findIndex((slide) => slide.view === view);
+            const slide = slides[index];
+            return slide ? [{ slide, index }] : [];
+          }).map(({ slide, index }) => (
             <button
               key={slide.view}
               type="button"

@@ -126,9 +126,13 @@ export async function setStatusAction(id: Id<"species">, status: CardStatus) {
   );
 }
 
-export async function fetchPhotosAction(id: Id<"species">) {
-  await change(`/admin/arter/${id}`, () =>
-    adminMutation(api.admin.jobs.fetchPhotos, { speciesId: id }),
+export async function fetchCatalogAction(
+  id: Id<"species">,
+  slot: "wholeTree" | "bark" | "leaf" | undefined,
+  returnTo: string,
+) {
+  await change(returnTo, () =>
+    adminMutation(api.admin.jobs.fetchCatalog, { speciesId: id, slot }),
   );
 }
 
@@ -160,11 +164,12 @@ export async function rejectPhotoAction(
 
 export async function uploadPhotoAction(
   speciesId: Id<"species">,
+  returnTo: string,
   form: FormData,
 ) {
   const file = form.get("file");
   const slot = oneOf(PHOTO_SLOTS, form.get("slot"));
-  await change(`/admin/arter/${speciesId}`, async () => {
+  await change(returnTo, async () => {
     if (!(file instanceof File) || file.size === 0 || !slot) {
       throw new Error("Vælg en fil og en plads.");
     }

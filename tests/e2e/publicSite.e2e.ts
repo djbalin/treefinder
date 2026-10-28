@@ -64,6 +64,11 @@ test.describe("species card", () => {
 
     await expect(page.getByText("Foto: Test Fotograf, bark")).toBeVisible();
     await expect(
+      page
+        .getByRole("list", { name: "Flere fotos af bark" })
+        .getByText(/Anden Fotograf, bark/),
+    ).toBeVisible();
+    await expect(
       page.getByRole("link", { name: fixtures.yew.name }),
     ).toBeVisible();
     await expectNoHorizontalScroll(page);

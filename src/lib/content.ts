@@ -41,13 +41,30 @@ export async function getPage(
   return fetchQuery(api.pages.get, { slug, locale });
 }
 
-/** A species' selected photos keyed by slot. */
+/** Each slot's poster photo (or its first selected photo, if none is starred). */
 export function photosBySlot(
   photos: readonly PublicPhoto[],
 ): Partial<Record<PhotoSlot, PublicPhoto>> {
   const bySlot: Partial<Record<PhotoSlot, PublicPhoto>> = {};
   for (const photo of photos) {
-    if (photo.slot) bySlot[photo.slot] = photo;
+    if (photo.slot && (!bySlot[photo.slot] || photo.poster)) {
+      bySlot[photo.slot] = photo;
+    }
+  }
+  return bySlot;
+}
+
+/** Each slot's gallery, poster first. */
+export function galleriesBySlot(
+  photos: readonly PublicPhoto[],
+): Partial<Record<PhotoSlot, PublicPhoto[]>> {
+  const bySlot: Partial<Record<PhotoSlot, PublicPhoto[]>> = {};
+  for (const photo of photos) {
+    if (!photo.slot) continue;
+    const gallery = bySlot[photo.slot] ?? [];
+    if (photo.poster) gallery.unshift(photo);
+    else gallery.push(photo);
+    bySlot[photo.slot] = gallery;
   }
   return bySlot;
 }

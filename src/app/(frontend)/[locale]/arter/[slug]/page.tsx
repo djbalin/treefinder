@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CardKey, type KeyRow } from "@/components/CardKey";
 import { Markdown } from "@/components/Markdown";
+import { PhotoGallery } from "@/components/PhotoGallery";
 import { PhotoPlate, type PlateEntry } from "@/components/PhotoPlate";
 import { SourcesDisclosure } from "@/components/SourcesDisclosure";
 import {
@@ -26,6 +27,7 @@ import {
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import {
+  galleriesBySlot,
   getSpeciesBySlug,
   photosBySlot,
   type SpeciesCard,
@@ -62,6 +64,7 @@ export default async function SpeciesCardPage({ params }: Props) {
   const t = await getTranslations("Card");
   const tDisclaimer = await getTranslations("Disclaimer");
   const photos = photosBySlot(species.photos);
+  const galleries = galleriesBySlot(species.photos);
   const lookAlikes = species.lookAlikes;
   const checkedOn = species.foodSafetyCheckedAt
     ? new Intl.DateTimeFormat(locale, { dateStyle: "long" }).format(
@@ -143,7 +146,7 @@ export default async function SpeciesCardPage({ params }: Props) {
   }
 
   return (
-    <article className="grid gap-x-12 gap-y-6 [grid-template-areas:'warning'_'head'_'key'_'plate'_'text'] lg:grid-cols-[var(--container-plate)_minmax(0,var(--container-reading))] lg:grid-rows-[auto_auto_auto_1fr] lg:[grid-template-areas:'warning_warning'_'plate_head'_'plate_key'_'plate_text']">
+    <article className="grid grid-cols-[minmax(0,1fr)] gap-x-12 gap-y-6 [grid-template-areas:'warning'_'head'_'key'_'plate'_'text'] lg:grid-cols-[var(--container-plate)_minmax(0,var(--container-reading))] lg:grid-rows-[auto_auto_auto_1fr] lg:[grid-template-areas:'warning_warning'_'plate_head'_'plate_key'_'plate_text']">
       <header className="[grid-area:head]">
         <PageTitle>{species.name}</PageTitle>
         <p className="mt-1 text-xl italic text-ink-muted">
@@ -195,7 +198,11 @@ export default async function SpeciesCardPage({ params }: Props) {
           <ol className="space-y-5">
             {plate.map(({ number, slot, label }) => {
               const text = species.idFeatures[ID_FEATURE_BY_SLOT[slot]];
-              if (!text) return null;
+              // The plate shows the poster; the gallery shows the rest.
+              const more = (galleries[slot] ?? []).filter(
+                (photo) => !photo.poster,
+              );
+              if (!text && more.length === 0) return null;
               return (
                 <li key={slot} className="flex gap-3">
                   <PlateNumber className="mt-1 border border-accent">
@@ -204,6 +211,12 @@ export default async function SpeciesCardPage({ params }: Props) {
                   <div className="min-w-0 space-y-1">
                     <h3 className="font-label font-semibold">{label}</h3>
                     <Markdown value={text} />
+                    <PhotoGallery
+                      label={t("galleryOf", {
+                        slot: label.toLocaleLowerCase(locale),
+                      })}
+                      photos={more}
+                    />
                   </div>
                 </li>
               );

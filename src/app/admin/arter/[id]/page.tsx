@@ -1,14 +1,14 @@
 import { api } from "@convex/_generated/api";
 import type { Id } from "@convex/_generated/dataModel";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import {
   draftCardAction,
-  fetchPhotosAction,
+  fetchCatalogAction,
   saveSpeciesAction,
   setStatusAction,
-  uploadPhotoAction,
 } from "@/app/admin/actions";
 import {
   Button,
@@ -19,7 +19,6 @@ import {
   TextArea,
   TextField,
 } from "@/components/admin/forms";
-import { PhotoCard } from "@/components/admin/PhotoCard";
 import { PageTitle } from "@/components/ui";
 import { optionLabel } from "@/domain/labels";
 import {
@@ -63,11 +62,10 @@ export default async function SpeciesEditorPage({
 
   const data = await adminQuery(api.admin.species.get, { id });
   if (!data) notFound();
-  const photos = await adminQuery(api.admin.photos.forSpecies, {
+  const catalog = await adminQuery(api.admin.photos.catalog, {
     speciesId: id,
   });
   const { species, blockers, jobs } = data;
-  const returnTo = `/admin/arter/${id}`;
   const features = species.idFeatures ?? {};
   const sources = [
     ...(species.sources ?? []),
@@ -123,8 +121,15 @@ export default async function SpeciesEditorPage({
         <div className="space-y-3">
           <h2 className="font-display text-xl font-bold">{t("jobsHeading")}</h2>
           <div className="flex flex-wrap gap-2">
-            <form action={fetchPhotosAction.bind(null, id)}>
-              <Button>{t("fetchPhotos")}</Button>
+            <form
+              action={fetchCatalogAction.bind(
+                null,
+                id,
+                undefined,
+                `/admin/arter/${id}`,
+              )}
+            >
+              <Button>{t("fetchCatalog")}</Button>
             </form>
             <form action={draftCardAction.bind(null, id)}>
               <Button>{t("draftCard")}</Button>
@@ -149,33 +154,46 @@ export default async function SpeciesEditorPage({
       </section>
 
       <section className="space-y-3">
-        <h2 className="font-display text-xl font-bold">{t("photosHeading")}</h2>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {photos.map((photo) => (
-            <PhotoCard key={photo.id} photo={photo} returnTo={returnTo} />
-          ))}
+        <div className="flex flex-wrap items-baseline gap-4">
+          <h2 className="font-display text-xl font-bold">
+            {t("postersHeading")}
+          </h2>
+          <Link
+            href={`/admin/arter/${id}/fotos`}
+            className="font-display font-bold text-accent hover:underline"
+          >
+            {t("catalogLink")} →
+          </Link>
         </div>
-        <form
-          action={uploadPhotoAction.bind(null, id)}
-          className="flex flex-wrap items-end gap-3"
-        >
-          <label className="block space-y-1 font-display font-semibold">
-            <span>{t("uploadHeading")}</span>
-            <input
-              type="file"
-              name="file"
-              accept="image/*"
-              className="block font-body font-normal"
-            />
-          </label>
-          <Select
-            label={t("slot")}
-            name="slot"
-            options={da(photoSlotOptions)}
-          />
-          <TextField label={t("author")} name="author" />
-          <Button tone="quiet">{t("upload")}</Button>
-        </form>
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          {catalog.map((group) => {
+            const poster = group.selected.find((photo) => photo.poster);
+            return (
+              <Link
+                key={group.slot}
+                href={`/admin/arter/${id}/fotos?plads=${group.slot}`}
+                className="block space-y-1"
+              >
+                <div className="relative aspect-4/3 overflow-hidden rounded-panel bg-surface-muted">
+                  {poster?.thumbUrl ? (
+                    <Image
+                      src={poster.thumbUrl}
+                      alt=""
+                      fill
+                      sizes="12rem"
+                      unoptimized
+                      className="object-cover"
+                    />
+                  ) : null}
+                </div>
+                <p className="text-sm font-semibold">
+                  {optionLabel(photoSlotOptions, group.slot, "da")} ·{" "}
+                  {t("galleryCount", { count: group.selected.length })}
+                </p>
+              </Link>
+            );
+          })}
+        </div>
       </section>
 
       <form action={saveSpeciesAction.bind(null, id)} className="space-y-8">

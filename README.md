@@ -44,4 +44,4 @@ Next.js 16, Convex (database, file storage, functions and jobs), Vercel, next-in
 
 ## Working on this repo
 
-See [`AGENTS.md`](AGENTS.md) for the workflow and conventions (used by both humans and coding agents).
+See [`AGENTS.md`](AGENTS.md) for the workflow and conventions (used by both humans and coding agents)

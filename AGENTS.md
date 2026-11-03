@@ -37,7 +37,7 @@ The visual direction is set with the impeccable design skill, one page at a time
 ## Stack notes
 
 - **Next.js 16:** this version has breaking changes. APIs, conventions and file structure may differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing Next.js code, and heed deprecation notices.
-- **Convex** holds the data, file storage, functions and background jobs. Read `convex/_generated/ai/guidelines.md` before writing Convex code. Public queries return only published content; every admin function calls `requireAdmin` in `convex/lib/admin.ts`.
+- **Convex** holds the data, file storage, functions and background jobs. Read `convex/_generated/ai/guidelines.md` before writing Convex code. Public queries return only published content (a dev deployment can show drafts with `SHOW_DRAFTS=true`, never prod); every admin function calls `requireAdmin` in `convex/lib/admin.ts`.
 - **Package manager:** pnpm. **Lint and format:** Biome.
 
 ## Code conventions

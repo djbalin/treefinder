@@ -43,7 +43,7 @@ Danish lives at the root, English under `/en` with translated paths. English sta
 **Acceptance criteria**
 
 - [ ] Searching for the Latin name or any local name finds the species ("lind", "linden" and "Tilia cordata" all find small-leaved lime).
-- [ ] Only published species appear on the public site.
+- [ ] Only published species appear on the public site. (From launch. Until then every species is shown, see `architecture.md` §4.)
 - [ ] Every page works at 360 px width without horizontal scrolling.
 - [ ] `/admin` is excluded from search engines.
 - [ ] `/en` routes return 404 until English is enabled.

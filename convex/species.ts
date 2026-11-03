@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
 import { query } from "./_generated/server";
 import { type Locale, pick } from "./lib/localize";
-import { isVisible, showDrafts } from "./lib/visibility";
+import { isVisible, SHOW_UNPUBLISHED } from "./lib/visibility";
 import { type PublicPhoto, selectedPhotos } from "./photos";
 import { speciesCard, speciesListItem } from "./returns";
 import { locale } from "./validators";
@@ -12,13 +12,13 @@ const MAX_SPECIES = 500;
 
 /**
  * Every published species with its selected photos, for the home page and the
- * list. With SHOW_DRAFTS on, every species (see lib/visibility.ts).
+ * list. Before launch, every species (see lib/visibility.ts).
  */
 export const listPublished = query({
   args: { locale },
   returns: v.array(speciesListItem),
   handler: async (ctx, args) => {
-    const species = showDrafts()
+    const species = SHOW_UNPUBLISHED
       ? await ctx.db.query("species").take(MAX_SPECIES)
       : await ctx.db
           .query("species")
@@ -36,7 +36,7 @@ export const listPublished = query({
 
 /**
  * One published species' card, or null when it is missing or unpublished.
- * With SHOW_DRAFTS on, any species' card (see lib/visibility.ts).
+ * Before launch, any species' card (see lib/visibility.ts).
  */
 export const getPublishedBySlug = query({
   args: { slug: v.string(), locale },

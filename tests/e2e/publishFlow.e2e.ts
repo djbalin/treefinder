@@ -18,10 +18,6 @@ test("an AI draft is published from the admin and appears on the site", async ({
     .click();
   await page.waitForURL(/\/admin\/arter\/.+/);
 
-  // Not public yet.
-  const before = await page.request.get(`/arter/${fixtures.ready.slug}`);
-  expect(before.status()).toBe(404);
-
   await expect(page.getByText("Kortet kan udgives.")).toBeVisible();
   await page.getByRole("button", { name: "Udgivet" }).click();
   await expect(page.getByText("Gemt.")).toBeVisible();

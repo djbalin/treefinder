@@ -3,6 +3,7 @@ import { convexTest } from "convex-test";
 import { describe, expect, it } from "vitest";
 import { api } from "./_generated/api";
 import type { Id } from "./_generated/dataModel";
+import { visibleStatus } from "./lib/visibility";
 import schema from "./schema";
 
 const modules = import.meta.glob("./**/*.ts");
@@ -52,28 +53,32 @@ async function setup() {
 }
 
 describe("visitor access", () => {
-  it("lists only published species", async () => {
+  it("lists every species before launch, whatever its status", async () => {
     const { t } = await setup();
     const list = await t.query(api.species.listPublished, { locale: "da" });
-    expect(list.map((item) => item.slug)).toEqual(["lind"]);
+    expect(list.map((item) => item.slug).sort()).toEqual([
+      "godkendt",
+      "kladde",
+      "lind",
+    ]);
   });
 
   it("returns only selected photos", async () => {
     const { t } = await setup();
-    const [lime] = await t.query(api.species.listPublished, { locale: "da" });
+    const list = await t.query(api.species.listPublished, { locale: "da" });
+    const lime = list.find((item) => item.slug === "lind");
     expect(lime?.photos.map((photo) => photo.attribution)).toEqual([
       "Fotograf, selected",
     ]);
   });
 
-  it("hides unpublished cards and unpublished look-alikes", async () => {
+  it("returns unpublished cards and look-alikes before launch", async () => {
     const { t } = await setup();
-    expect(
-      await t.query(api.species.getPublishedBySlug, {
-        slug: "kladde",
-        locale: "da",
-      }),
-    ).toBeNull();
+    const draft = await t.query(api.species.getPublishedBySlug, {
+      slug: "kladde",
+      locale: "da",
+    });
+    expect(draft?.name).toBe("kladde da");
 
     const card = await t.query(api.species.getPublishedBySlug, {
       slug: "lind",
@@ -81,7 +86,20 @@ describe("visitor access", () => {
     });
     expect(card?.name).toBe("lind da");
     expect(card?.drying).toBe("Tørrer hurtigt.");
-    expect(card?.lookAlikes).toEqual([]);
+    expect(card?.lookAlikes.map((item) => item.slug)).toEqual([
+      "kladde",
+      "godkendt",
+    ]);
+  });
+
+  it("returns null for a species that does not exist", async () => {
+    const { t } = await setup();
+    expect(
+      await t.query(api.species.getPublishedBySlug, {
+        slug: "findes-ikke",
+        locale: "da",
+      }),
+    ).toBeNull();
   });
 
   it("falls back to Danish when English text is missing", async () => {
@@ -109,5 +127,25 @@ describe("visitor access", () => {
     expect(
       await t.query(api.pages.get, { slug: "about", locale: "en" }),
     ).toEqual({ title: "About", content: "Tekst." });
+  });
+});
+
+describe("visibility rule", () => {
+  it("shows only published species once unpublished ones are hidden", () => {
+    expect(visibleStatus("published", false)).toBe(true);
+    for (const status of ["aiDraft", "needsChanges", "approved"] as const) {
+      expect(visibleStatus(status, false)).toBe(false);
+    }
+  });
+
+  it("shows every status before launch", () => {
+    for (const status of [
+      "aiDraft",
+      "needsChanges",
+      "approved",
+      "published",
+    ] as const) {
+      expect(visibleStatus(status, true)).toBe(true);
+    }
   });
 });

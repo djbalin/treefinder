@@ -126,6 +126,7 @@ Admin accounts only; no public sign-up. `tokenIdentifier` (from the Clerk JWT, i
 - **One poster per slot:** making a photo the poster clears the poster flag on the slot's other photos, in the same mutation. A slot's gallery has no fixed size.
 - **License filter:** a pure function mapping each source's license string to an allowed license or a rejection. Unit tested with real samples from both APIs.
 - **Visitor access:** public queries return only published species, their selected photos and the pages. Everything else requires the `admin` role, checked server-side in every admin function.
+- **Before launch:** `SHOW_UNPUBLISHED` in `convex/lib/visibility.ts` is `true`, so the public queries return every species whatever its status. This lets the maintainer see cards on preview deployments while they are being written. It is set to `false` as part of milestone 8 (launch content), which restores the published-only rule above.
 
 ## 5. Jobs
 

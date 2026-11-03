@@ -2,6 +2,7 @@ import { v } from "convex/values";
 import type { Doc } from "./_generated/dataModel";
 import { query } from "./_generated/server";
 import { type Locale, pick } from "./lib/localize";
+import { isVisible, SHOW_UNPUBLISHED } from "./lib/visibility";
 import { type PublicPhoto, selectedPhotos } from "./photos";
 import { speciesCard, speciesListItem } from "./returns";
 import { locale } from "./validators";
@@ -9,15 +10,20 @@ import { locale } from "./validators";
 /** Far above the roughly 40 species the product will ever hold. */
 const MAX_SPECIES = 500;
 
-/** Every published species with its selected photos, for the home page and the list. */
+/**
+ * Every published species with its selected photos, for the home page and the
+ * list. Before launch, every species (see lib/visibility.ts).
+ */
 export const listPublished = query({
   args: { locale },
   returns: v.array(speciesListItem),
   handler: async (ctx, args) => {
-    const species = await ctx.db
-      .query("species")
-      .withIndex("by_status", (q) => q.eq("status", "published"))
-      .take(MAX_SPECIES);
+    const species = SHOW_UNPUBLISHED
+      ? await ctx.db.query("species").take(MAX_SPECIES)
+      : await ctx.db
+          .query("species")
+          .withIndex("by_status", (q) => q.eq("status", "published"))
+          .take(MAX_SPECIES);
 
     return await Promise.all(
       species.map(async (item) => ({
@@ -28,7 +34,10 @@ export const listPublished = query({
   },
 });
 
-/** One published species' card, or null when it is missing or unpublished. */
+/**
+ * One published species' card, or null when it is missing or unpublished.
+ * Before launch, any species' card (see lib/visibility.ts).
+ */
 export const getPublishedBySlug = query({
   args: { slug: v.string(), locale },
   returns: v.union(speciesCard, v.null()),
@@ -37,12 +46,12 @@ export const getPublishedBySlug = query({
       .query("species")
       .withIndex("by_slug", (q) => q.eq("slug", args.slug))
       .unique();
-    if (item?.status !== "published") return null;
+    if (!item || !isVisible(item)) return null;
 
     const lookAlikes = [];
     for (const id of item.lookAlikes ?? []) {
       const other = await ctx.db.get("species", id);
-      if (other?.status === "published") {
+      if (other && isVisible(other)) {
         lookAlikes.push(summary(other, args.locale));
       }
     }

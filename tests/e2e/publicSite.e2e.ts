@@ -11,7 +11,8 @@ async function expectNoHorizontalScroll(page: Page) {
 }
 
 test.describe("species list", () => {
-  test("lists published species only", async ({ page }) => {
+  // Before launch every species is listed, drafts included (architecture §4).
+  test("lists every species before launch", async ({ page }) => {
     await page.goto("/arter");
 
     await expect(
@@ -22,7 +23,7 @@ test.describe("species list", () => {
     ).toBeVisible();
     await expect(
       page.getByRole("link", { name: fixtures.draft.name }),
-    ).toHaveCount(0);
+    ).toBeVisible();
     await expectNoHorizontalScroll(page);
   });
 
@@ -106,8 +107,16 @@ test.describe("species card", () => {
     expect(bannerBox?.y).toBeLessThan(headingBox?.y ?? 0);
   });
 
-  test("returns 404 for unpublished species", async ({ page }) => {
+  test("shows an unpublished species before launch", async ({ page }) => {
     const response = await page.goto(`/arter/${fixtures.draft.slug}`);
+    expect(response?.status()).toBe(200);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      fixtures.draft.name,
+    );
+  });
+
+  test("returns 404 for a species that does not exist", async ({ page }) => {
+    const response = await page.goto("/arter/e2e-findes-ikke");
     expect(response?.status()).toBe(404);
   });
 });

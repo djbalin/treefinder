@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { convexTest } from "convex-test";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { api } from "./_generated/api";
 import type { Id } from "./_generated/dataModel";
 import schema from "./schema";
@@ -109,5 +109,48 @@ describe("visitor access", () => {
     expect(
       await t.query(api.pages.get, { slug: "about", locale: "en" }),
     ).toEqual({ title: "About", content: "Tekst." });
+  });
+});
+
+describe("SHOW_DRAFTS on a development deployment", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
+  it("lists every species, whatever its status", async () => {
+    vi.stubEnv("SHOW_DRAFTS", "true");
+    const { t } = await setup();
+    const list = await t.query(api.species.listPublished, { locale: "da" });
+    expect(list.map((item) => item.slug).sort()).toEqual([
+      "godkendt",
+      "kladde",
+      "lind",
+    ]);
+  });
+
+  it("returns unpublished cards and look-alikes", async () => {
+    vi.stubEnv("SHOW_DRAFTS", "true");
+    const { t } = await setup();
+    const draft = await t.query(api.species.getPublishedBySlug, {
+      slug: "kladde",
+      locale: "da",
+    });
+    expect(draft?.name).toBe("kladde da");
+
+    const card = await t.query(api.species.getPublishedBySlug, {
+      slug: "lind",
+      locale: "da",
+    });
+    expect(card?.lookAlikes.map((item) => item.slug)).toEqual([
+      "kladde",
+      "godkendt",
+    ]);
+  });
+
+  it("shows only published species unless the value is exactly true", async () => {
+    vi.stubEnv("SHOW_DRAFTS", "1");
+    const { t } = await setup();
+    const list = await t.query(api.species.listPublished, { locale: "da" });
+    expect(list.map((item) => item.slug)).toEqual(["lind"]);
   });
 });
